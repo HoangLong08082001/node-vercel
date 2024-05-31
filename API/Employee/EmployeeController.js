@@ -2,7 +2,7 @@ const pool = require("../../config/database.js");
 const {
   createJwtReNew,
   createJwtWebsite,
-} = require ("../../middleware/JwtAction.js");
+} = require("../../middleware/JwtAction.js");
 const { ServiceEmployee } = require("./EmployeeModal.js");
 const bcrypt = require("bcrypt");
 const salt = 10;
@@ -45,15 +45,15 @@ const createEmployee = (req, res) => {
 const loginEmployee = (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  pool.query(ServiceEmployee.checkLogin[(username, username)], (err, data) => {
+  pool.query(ServiceEmployee.checkLogin, [username, username], (err, data) => {
     if (err) {
-      throw er;
+      throw err;
     }
     if (data.length > 0) {
       console.log(data[0]);
       bcrypt.compare(password.toString(), data[0].password, (err, result) => {
         if (err) {
-          throw er;
+          throw err;
         }
         if (result) {
           pool.query(
@@ -61,7 +61,7 @@ const loginEmployee = (req, res) => {
             [username],
             (err, response) => {
               if (err) {
-                throw er;
+                throw err;
               }
               if (response) {
                 let payload = {

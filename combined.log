@@ -325,3 +325,10 @@
 2024-05-31T07:46:11.295Z [info]: Request: POST /collaborator/login from IP: ::ffff:192.168.1.171, OS: Other 0.0.0
 2024-05-31T07:47:54.235Z [info]: Request: POST /collaborator/login from IP: ::ffff:192.168.1.171, OS: Other 0.0.0
 2024-05-31T07:48:23.829Z [info]: Request: POST /collaborator/login from IP: ::ffff:192.168.1.171, OS: Other 0.0.0
+2024-05-31T08:25:09.347Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:25:51.352Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:26:19.163Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:27:30.954Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:28:59.900Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:29:53.031Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
+2024-05-31T08:41:49.491Z [info]: Request: POST /employee/login-emoloyee from IP: ::1, OS: Mac OS X 10.15.7
