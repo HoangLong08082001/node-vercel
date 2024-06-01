@@ -423,39 +423,49 @@ const reNewpassword = (req, res) => {
 };
 const resendCodeVerify = (req, res) => {
   let email = req.body.email;
-  pool.query(ServiceCollaborator.resendCode, [email], (err, result) => {
-    if (err) {
-      throw err;
+  pool.query(
+    ServiceCollaborator.resendCode,
+    [randomNumberCodeVerfify(), email],
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        pool.query(ServiceCollaborator.sendCode, [email], (err, result) => {
+          if (err) {
+            throw err;
+          }
+          if (result) {
+            const transport = nodemailer.createTransport({
+              host: "smtp.gmail.com",
+              port: 587,
+              service: "gmail",
+              secure: false,
+              auth: {
+                user: "longhoang882001@gmail.com",
+                pass: "dyygjdykverudrtb",
+              },
+            });
+            // Thiết lập email options
+            const mailOptions = {
+              from: "longhoang882001@gmail.com", // Địa chỉ email của người gửi
+              to: `${email}`, // Địa chỉ email của người nhận
+              subject: "Ecoop send code verify", // Tiêu đề email
+              text: `Verify code from Ecoop ${result[0].code_verify}`, // Nội dung email
+            };
+            transport.sendMail(mailOptions, (error, info) => {
+              if (error) {
+                throw error;
+              }
+              if (info) {
+                return res.status(200).json({ message: "success" });
+              }
+            });
+          }
+        });
+      }
     }
-    if (result) {
-      const transport = nodemailer.createTransport({
-        host: "smtp.gmail.com",
-        port: 587,
-        service: "gmail",
-        secure: false,
-        auth: {
-          user: "longhoang882001@gmail.com",
-          pass: "dyygjdykverudrtb",
-        },
-      });
-
-      // Thiết lập email options
-      const mailOptions = {
-        from: "longhoang882001@gmail.com", // Địa chỉ email của người gửi
-        to: `${email}`, // Địa chỉ email của người nhận
-        subject: "Ecoop send code verify", // Tiêu đề email
-        text: `Verify code from Ecoop ${result[0].code_verify}`, // Nội dung email
-      };
-      transport.sendMail(mailOptions, (error, info) => {
-        if (error) {
-          throw error;
-        }
-        if (info) {
-          return res.status(200).json({ message: "success" });
-        }
-      });
-    }
-  });
+  );
 };
 
 module.exports = {

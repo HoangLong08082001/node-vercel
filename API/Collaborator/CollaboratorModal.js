@@ -19,7 +19,8 @@ class ServiceCollaborator {
     "UPDATE collaborator SET name_collaborator=?, email_collaborator=?, presenter_phone=?, status_collaborator=? WHERE email_collaborator=? AND presenter_phone is NULL";
   static checkEmail = "SELECT * FROM collaborator WHERE email_collaborator=?";
   static resendCode =
-    "SELECT code_verify from collaborator WHERE email_collaborator=?";
+    "UPDATE collaborator SET code_verify=? WHERE email_collaborator=?";
+  static sendCode = "SELECT code_verify FROM collaborator WHERE email_collaborator=?";
 }
 
 module.exports = { ServiceCollaborator };
