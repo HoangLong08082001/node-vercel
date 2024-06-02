@@ -35,4 +35,33 @@ const deleteCampaign = (req, res) => {
   return res.send("Delete");
 };
 
-module.exports = { createCampaign, deleteCampaign };
+const getAllCampaign = (req, res) => {
+  pool.query(
+    "SELECT * FROM campaign JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign JOIN products ON campaign_products.id_products = products.id_products",
+    [],
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        const campaign = {};
+        let url = null;
+        data.forEach((row) => {
+          url = row.link_product;
+          if (!campaign[row.name_campaign]) {
+            campaign[row.name_campaign] = {
+              name: row.name_campaign,
+              products: [],
+            };
+          }
+          campaign[row.name_campaign].products.push({
+            alias: url + row.alias + "/?bwaf=",
+          });
+        });
+        return res.status(200).json({ data: campaign });
+      }
+    }
+  );
+};
+
+module.exports = { createCampaign, deleteCampaign, getAllCampaign };
