@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { ServiceCollaborator } = require("./CollaboratorModal.js");
 const { createJwtApp } = require("../../middleware/JwtAction.js");
 const nodemailer = require("nodemailer");
+const ServicePayment = require("../Payment/PaymentModal.js");
 const salt = 10;
 const randomNumberCodeVerfify = () => {
   return Math.floor(100000 + Math.random() * 900000);
