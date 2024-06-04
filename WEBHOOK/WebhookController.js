@@ -98,7 +98,9 @@ const getOrders = async (req, res) => {
                                 throw err;
                               }
                               if (result) {
-                                console.log(result);
+                                return res
+                                  .status(200)
+                                  .json({ message: "success" });
                               }
                             }
                           );

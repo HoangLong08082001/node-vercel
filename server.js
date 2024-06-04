@@ -15,12 +15,15 @@ const logger = require("./middleware/logger.js");
 import EmployeeRoutes from "./API/Employee/EmployeeRoutes.js";
 import DepartmentRoutes from "./API/Department/DepartmentRoutes.js";
 import CampaignRoutes from "./API/Campaign/CampaignRoutes.js";
+import { ConfigSocketIo } from "./Socket/Socket.js";
+import axios from "axios";
 const path = require("path");
-const socketIO = require("socket.io");
-const io = socketIO();
+const WebSocket = require("ws");
 dotenv.config();
 const app = express();
-const server = http.createServer(app);
+const server = http.createServer(app); // Tạo server trước khi tạo WebSocket server
+const wss = new WebSocket.Server({ server });
+
 const port = process.env.PORT_SERVER || 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -42,19 +45,48 @@ app.set("views", path.join(__dirname, "./views"));
 app.use(express.static(path.join(__dirname, "./public")));
 
 app.use(cors(corsOptions));
+const arrayLog = [];
 
 app.use((req, res, next) => {
-  // Lấy địa chỉ IP của client
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  var options = {
+    weekday: "long",
+    year: "numeric",
+    month: "long",
+    day: "numeric",
+  };
 
-  // Lấy thông tin hệ điều hành từ User-Agent
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
   const agent = useragent.parse(req.headers["user-agent"]);
   const os = agent.os.toString();
 
-  // Ghi log thông tin
-  logger.info(`Request: ${req.method} ${req.url} from IP: ${ip}, OS: ${os}`);
+  const logMessage = `Request: ${res.statusCode} ${new Date().toLocaleDateString(
+    "en-US",
+    options
+  )} ${req.method} ${req.url} from IP: ${ip}, OS: ${os}`;
+  logger.info(logMessage);
+
+  arrayLog.push(logMessage);
+
+  wss.clients.forEach((client) => {
+    if (client.readyState === WebSocket.OPEN) {
+      client.send(JSON.stringify({ log: logMessage }));
+    }
+  });
+
   next();
 });
+
+wss.on("connection", (ws) => {
+  console.log("Client connected");
+  arrayLog.forEach((log) => {
+    ws.send(JSON.stringify({ log }));
+  });
+
+  ws.on("close", () => {
+    console.log("Client disconnected");
+  });
+});
+
 WebhookRoute(app);
 CollaboratorRoute(app);
 TeamRoutes(app);
@@ -62,7 +94,7 @@ ViewRoutes(app);
 EmployeeRoutes(app);
 DepartmentRoutes(app);
 CampaignRoutes(app);
-app.listen(port, (err) => {
+server.listen(port, (err) => {
   if (err) {
     throw err;
   } else {

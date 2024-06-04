@@ -1,2 +1,3 @@
 ::1 - - [29/May/2024:08:23:10 +0000] "GET /webhook/orders HTTP/1.1" 304 - "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
 ::1 - - [29/May/2024:08:23:14 +0000] "GET /webhook/ws/ws HTTP/1.1" 404 152 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.36"
+2024-06-04T08:38:13.162Z [info]: Request: GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7

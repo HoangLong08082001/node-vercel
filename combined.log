@@ -505,3 +505,47 @@
 2024-06-04T03:10:13.449Z [info]: Request: POST /collaborator/login from IP: ::ffff:192.168.1.171, OS: Other 0.0.0
 2024-06-04T03:11:55.599Z [info]: Request: GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
 2024-06-04T03:12:55.501Z [info]: Request: POST /collaborator/login from IP: ::ffff:192.168.1.171, OS: Other 0.0.0
+2024-06-04T07:47:41.466Z [info]: Request: GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:01.017Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YEypa from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:06.051Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YE-29 from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:11.065Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YE_Gn from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:16.075Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YF0V6 from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:21.090Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YF1jP from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:26.100Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YF2xk from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:31.111Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YF4A0 from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:35.524Z [info]: Request: GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:36.720Z [info]: Request: GET /socket.io/?EIO=4&transport=polling&t=O_YF5Xd from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:52:49.184Z [info]: Request: GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:53:11.160Z [info]: Request: GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:55:52.776Z [info]: Request: GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:55:57.209Z [info]: Request: GET /favicon.ico from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:56:19.814Z [info]: Request: GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:58:15.948Z [info]: Request: GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:58:30.664Z [info]: Request: GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:58:34.139Z [info]: Request: GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T07:58:52.875Z [info]: Request: GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:40:55.695Z [info]: Request: undefined GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:41:52.142Z [info]: Request: Tue Jun 04 2024 15:41:52 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:43:58.603Z [info]: Request: function status(code) {
+  if ((typeof code === 'string' || Math.floor(code) !== code) && code > 99 && code < 1000) {
+    deprecate('res.status(' + JSON.stringify(code) + '): use res.status(' + Math.floor(code) + ') instead')
+  }
+  this.statusCode = code;
+  return this;
+} Tue Jun 04 2024 15:43:58 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:45:48.773Z [info]: Request: null Tue Jun 04 2024 15:45:48 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:46:15.807Z [info]: Request: 200 Tue Jun 04 2024 15:46:15 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:53:47.114Z [info]: [object Object]
+2024-06-04T08:54:20.902Z [info]: [object Object]
+2024-06-04T08:55:16.288Z [info]: [object Object]
+2024-06-04T08:55:56.994Z [info]: [object Object]
+2024-06-04T08:56:16.934Z [info]: [object Object]
+2024-06-04T08:56:58.405Z [info]: [object Object]
+2024-06-04T08:58:22.780Z [info]: [object Object]
+2024-06-04T08:59:27.455Z [info]: Request: 200 Tue Jun 04 2024 15:59:27 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T08:59:59.047Z [info]: Request: 200 Tue Jun 04 2024 15:59:59 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T09:00:44.270Z [info]: Request: null Tue Jun 04 2024 16:00:44 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T09:00:57.266Z [info]: Request: 200 Tue Jun 04 2024 16:00:57 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T09:01:35.571Z [info]: Request: 200 Tue Jun 04 2024 16:01:35 GMT+0700 (Indochina Time) GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T09:08:43.795Z [info]: Request: 200 Tuesday, June 4, 2024 GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-04T09:16:46.695Z [info]: Request: 200 Tuesday, June 4, 2024 GET /team/all-team from IP: ::1, OS: Mac OS X 10.15.7
