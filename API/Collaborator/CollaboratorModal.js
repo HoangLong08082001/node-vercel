@@ -4,7 +4,7 @@ class ServiceCollaborator {
   static register =
     "INSERT INTO collaborator(name_collaborator, password_collaborator, email_collaborator, phone, status_collaborator, status_leader, status_verify, status_account, code_verify) VALUES(?,?,?,?,?,?,?,?,?)";
   static login =
-    "SELECT * FROM collaborator WHERE email_collaborator=? OR phone=?";
+    "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE email_collaborator=? OR phone=?";
   static verify = "SELECT * FROM collaborator WHERE code_verify=?";
   static updateStatusVerify =
     "UPDATE collaborator SET status_verify=? WHERE code_verify=?";
@@ -20,7 +20,8 @@ class ServiceCollaborator {
   static checkEmail = "SELECT * FROM collaborator WHERE email_collaborator=?";
   static resendCode =
     "UPDATE collaborator SET code_verify=? WHERE email_collaborator=?";
-  static sendCode = "SELECT code_verify FROM collaborator WHERE email_collaborator=?";
+  static sendCode =
+    "SELECT code_verify FROM collaborator WHERE email_collaborator=?";
 }
 
 module.exports = { ServiceCollaborator };
