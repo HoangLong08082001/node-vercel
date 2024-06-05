@@ -44,21 +44,31 @@ const getAllCampaign = (req, res) => {
         throw err;
       }
       if (data) {
-        const campaign = {};
-        let url = null;
+        const campaigns = [];
+
         data.forEach((row) => {
-          url = row.link_product;
-          if (!campaign[row.name_campaign]) {
-            campaign[row.name_campaign] = {
-              name: row.name_campaign,
+          const { id_campaign, name_campaign, id_products_sapo, link_product, alias } = row;
+
+          // Tìm chiến dịch hiện tại trong mảng
+          let campaign = campaigns.find((c) => c.id === id_campaign);
+
+          // Nếu chiến dịch chưa tồn tại trong mảng, thêm vào
+          if (!campaign) {
+            campaign = {
+              id: id_campaign,
+              name: name_campaign,
               products: [],
             };
+            campaigns.push(campaign);
           }
-          campaign[row.name_campaign].products.push({
-            alias: url + row.alias + "/?bwaf=",
+
+          // Thêm sản phẩm vào danh sách sản phẩm của chiến dịch
+          campaign.products.push({
+            id: id_products_sapo,
+            alias: link_product + alias,
           });
         });
-        return res.status(200).json({ data: campaign });
+        return res.status(200).json({ message: "success", data: campaigns });
       }
     }
   );

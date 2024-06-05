@@ -572,3 +572,8 @@
 2024-06-05T03:49:18.935Z [info]: Request:  200 Wednesday, June 5, 2024 GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
 2024-06-05T03:55:02.682Z [info]: Request:  200 Wednesday, June 5, 2024 GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
 2024-06-05T03:55:17.425Z [info]: Request:  200 Wednesday, June 5, 2024 GET /webhook/orders from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-05T07:41:17.073Z [info]: Request:  200 Wednesday, June 5, 2024 GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-05T07:46:08.386Z [info]: Request:  200 Wednesday, June 5, 2024 GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-05T07:46:56.416Z [info]: Request:  200 Wednesday, June 5, 2024 GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-05T07:49:18.254Z [info]: Request:  200 Wednesday, June 5, 2024 GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-05T07:50:34.105Z [info]: Request:  200 Wednesday, June 5, 2024 GET /campaign/all-campaign from IP: ::1, OS: Mac OS X 10.15.7
