@@ -14,6 +14,7 @@ class ServiceWebhook {
     "UPDATE payment SET total_withdrawn=? WHERE id_collaborator=? ";
   static checkPayment =
     "SELECT payment.total_withdrawn FROM payment WHERE id_collaborator=? ";
+  static countTotal = "SELECT COUNT(*) as total FROM orders";
 }
 
 module.exports = {
