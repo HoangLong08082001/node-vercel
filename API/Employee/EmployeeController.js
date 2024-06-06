@@ -25,8 +25,10 @@ const getToday = () => {
 };
 //id_department	username	password	phone	status	code_verify	date_create	time_create
 const createEmployee = (req, res) => {
+  let passRnadom = "";
   let username = req.body.username;
   let password = req.body.password;
+  let name = req.body.name;
   let phone = req.body.phone;
   let id_department = req.body.id_department;
   pool.query(ServiceEmployee.checkEmail, [username], (err, result) => {
@@ -36,19 +38,45 @@ const createEmployee = (req, res) => {
     if (result.length > 0) {
       return res.status(400).json({ message: "Email đã tồn tại" });
     } else {
-      bcrypt.hash(password, salt, (err, hash) => {
+      passRnadom = randomNumberCodeVerfify();
+      bcrypt.hash(passRnadom.toString(), salt, (err, hash) => {
         if (err) {
           throw er;
         }
         if (hash) {
           pool.query(
             ServiceEmployee.create,
-            [id_department, username, hash, phone, 1, getToday()],
+            [id_department, name, username, hash, phone, 1, getToday()],
             (err, data) => {
               if (err) {
-                throw er;
+                throw err;
               }
               if (data) {
+                const transport = nodemailer.createTransport({
+                  host: "smtp.gmail.com",
+                  port: 587,
+                  service: "gmail",
+                  secure: false,
+                  auth: {
+                    user: "ecoopmart.app@gmail.com",
+                    pass: "gfiexhusjpvwkhsi",
+                  },
+                });
+
+                // Thiết lập email options
+                const mailOptions = {
+                  from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
+                  to: `${username}`, // Địa chỉ email của người nhận
+                  subject: `Ecoop sending account to ${username}`, // Tiêu đề email
+                  text: `Send account from Ecoop to login Admin page`, // Nội dung email
+                  html: `<p>username: ${username}</p><br/><p>password:${passRnadom.toString()}</p>`,
+                };
+                transport.sendMail(mailOptions, (error, info) => {
+                  if (error) {
+                    throw error;
+                  }
+                  console.log("Verify code from Ecoop: " + info.response);
+                });
                 return res.status(200).json({ message: "success" });
               }
             }
@@ -112,7 +140,7 @@ const getAllEmployee = (req, res) => {
         throw err;
       }
       if (data) {
-        console.log(data);
+        return res.status(200).json(data);
       }
     });
   } catch (error) {
@@ -153,14 +181,14 @@ const rePassword = (req, res) => {
                       service: "gmail",
                       secure: false,
                       auth: {
-                        user: "longhoang882001@gmail.com",
-                        pass: "dyygjdykverudrtb",
+                        user: "ecoopmart.app@gmail.com",
+                        pass: "gfiexhusjpvwkhsi",
                       },
                     });
 
                     // Thiết lập email options
                     const mailOptions = {
-                      from: "longhoang882001@gmail.com", // Địa chỉ email của người gửi
+                      from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
                       to: `${username}`, // Địa chỉ email của người nhận
                       subject: "Ecoop send new password", // Tiêu đề email
                       text: `Send mail from Ecoop to renew password: ${newpass}`, // Nội dung email
@@ -246,7 +274,77 @@ const setNewPassword = (req, res) => {
   }
 };
 
-const updateInformation = (req, res) => {};
+const updateInformation = (req, res) => {
+  let username = req.body.email;
+  let name = req.body.name;
+  let phone = req.body.phone;
+  let oldusername = req.body.oldusername;
+  let oldname = req.body.oldname;
+  let oldphone = req.body.oldphone;
+  // if (name !== "" || name !== undefined) {
+  //   pool.query(
+  //     "UPDATE employee SET name=? WHERE username=?",
+  //     [name, username],
+  //     (err, data) => {
+  //       if (err) {
+  //         throw err;
+  //       }
+  //       if (data) {
+
+  //       }
+  //     }
+  //   );
+  // } else {
+  // }
+  console.log(username + " " + name + " " + phone);
+};
+
+const blockEmployee = (req, res) => {
+  let id_employee = req.body.employees;
+  console.log(id_employee);
+  try {
+    if (!Array.isArray(id_employee) || id_employee.length === 0) {
+      return res.status(400).json({ error: "Invalid input" });
+    }
+    pool.query(ServiceEmployee.checkStatus, [id_employee], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        console.log(true);
+        pool.query(
+          ServiceEmployee.updateStatusTrue,
+          [id_employee],
+          (err, results) => {
+            if (err) {
+              throw err;
+            }
+            if (results) {
+              return res.status(200).json({ message: "success" });
+            }
+          }
+        );
+      } else {
+        console.log(false);
+        pool.query(
+          ServiceEmployee.updateStatusFalse,
+          [id_employee],
+          (err, results) => {
+            if (err) {
+              throw err;
+            }
+            if (results) {
+              return res.status(200).json({ message: "success" });
+            }
+          }
+        );
+      }
+    });
+  } catch (error) {
+    console.log(error);
+    return res.status(500).json({ message: "fails" });
+  }
+};
 
 module.exports = {
   createEmployee,
@@ -255,4 +353,5 @@ module.exports = {
   rePassword,
   setNewPassword,
   updateInformation,
+  blockEmployee,
 };

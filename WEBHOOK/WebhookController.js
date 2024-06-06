@@ -47,6 +47,7 @@ const getOrders = async (req, res) => {
         //   );
         // }
         //paid fulfilled open
+        console.log(response);
         const mapValues = response.data.orders.map((item) => [
           item.id,
           item.financial_status,

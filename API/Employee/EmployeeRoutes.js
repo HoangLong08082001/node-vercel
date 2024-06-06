@@ -1,5 +1,7 @@
 import {
+  blockEmployee,
   createEmployee,
+  deleteEmployee,
   getAllEmployee,
   loginEmployee,
   rePassword,
@@ -14,5 +16,6 @@ export default function EmployeeRoutes(app) {
   router.post("/login", loginEmployee);
   router.put("/re-password", rePassword);
   router.put("/renew-password", setNewPassword);
+  router.post("/block", blockEmployee);
   return app.use("/employee", router);
 }

@@ -124,14 +124,14 @@ const loginAccount = (req, res) => {
                           service: "gmail",
                           secure: false,
                           auth: {
-                            user: "longhoang882001@gmail.com",
-                            pass: "dyygjdykverudrtb",
+                            user: "ecoopmart.app@gmail.com",
+                            pass: "gfiexhusjpvwkhsi",
                           },
                         });
 
                         // Thiết lập email options
                         const mailOptions = {
-                          from: "longhoang882001@gmail.com", // Địa chỉ email của người gửi
+                          from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
                           to: `${data[0].email_collaborator}`, // Địa chỉ email của người nhận
                           subject: "Ecoop send code verify", // Tiêu đề email
                           text: `Verify code from Ecoop ${data[0].code_verify}`, // Nội dung email
@@ -390,8 +390,8 @@ const reNewpassword = (req, res) => {
           service: "gmail",
           secure: false,
           auth: {
-            user: "longhoang882001@gmail.com",
-            pass: "dyygjdykverudrtb",
+            user: "ecoopmart.app@gmail.com",
+            pass: "gfiexhusjpvwkhsi",
           },
         });
 
@@ -443,13 +443,13 @@ const resendCodeVerify = (req, res) => {
               service: "gmail",
               secure: false,
               auth: {
-                user: "longhoang882001@gmail.com",
-                pass: "dyygjdykverudrtb",
+                user: "ecoopmart.app@gmail.com",
+                pass: "gfiexhusjpvwkhsi",
               },
             });
             // Thiết lập email options
             const mailOptions = {
-              from: "longhoang882001@gmail.com", // Địa chỉ email của người gửi
+              from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
               to: `${email}`, // Địa chỉ email của người nhận
               subject: "Ecoop send code verify", // Tiêu đề email
               text: `Verify code from Ecoop ${result[0].code_verify}`, // Nội dung email
