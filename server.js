@@ -59,10 +59,11 @@ app.use((req, res, next) => {
   const agent = useragent.parse(req.headers["user-agent"]);
   const os = agent.os.toString();
 
-  const logMessage = `Request:  ${res.statusCode} ${new Date().toLocaleDateString(
-    "en-US",
-    options
-  )} ${req.method} ${req.url} from IP: ${ip}, OS: ${os}`;
+  const logMessage = `Request:  ${
+    res.statusCode
+  } ${new Date().toLocaleDateString("en-US", options)} ${req.method} ${
+    req.url
+  } from IP: ${ip}, OS: ${os}`;
   logger.info(logMessage);
 
   arrayLog.push(logMessage);

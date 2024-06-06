@@ -47,7 +47,17 @@ const getAllCampaign = (req, res) => {
         const campaigns = [];
 
         data.forEach((row) => {
-          const { id_campaign, name_campaign, id_products_sapo, link_product, alias } = row;
+          const {
+            id_campaign,
+            name_campaign,
+            id_products_sapo,
+            link_product,
+            alias,
+            affiliate_tax,
+            description,
+            date_start,
+            date_end,
+          } = row;
 
           // Tìm chiến dịch hiện tại trong mảng
           let campaign = campaigns.find((c) => c.id === id_campaign);
@@ -57,6 +67,11 @@ const getAllCampaign = (req, res) => {
             campaign = {
               id: id_campaign,
               name: name_campaign,
+              tax: affiliate_tax,
+              description: description,
+              start: date_start,
+              end: date_end,
+              url: link_product,
               products: [],
             };
             campaigns.push(campaign);

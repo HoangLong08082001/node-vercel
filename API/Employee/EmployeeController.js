@@ -89,4 +89,19 @@ const loginEmployee = (req, res) => {
   });
 };
 
-module.exports = { createEmployee, loginEmployee };
+const getAllEmployee = (req, res) => {
+  try {
+    pool.query(ServiceEmployee.getAll, [], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json({ result: data });
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "Không thể get dữ liệu" });
+  }
+};
+
+module.exports = { createEmployee, loginEmployee, getAllEmployee };
