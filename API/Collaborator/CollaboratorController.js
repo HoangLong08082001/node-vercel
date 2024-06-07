@@ -469,6 +469,31 @@ const resendCodeVerify = (req, res) => {
   );
 };
 
+const getAllCollaborator = (req, res) => {
+  try {
+    pool.query(ServiceCollaborator.get, [], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json(data);
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
+const setStatus = (req, res) => {
+  let id_collaborator = req.body.collaborators;
+  console.log(id_collaborator);
+  try {
+    
+  } catch (error) {
+    
+  }
+};
+
 module.exports = {
   registerAccount,
   loginAccount,
@@ -479,4 +504,6 @@ module.exports = {
   updateInformation,
   reNewpassword,
   resendCodeVerify,
+  getAllCollaborator,
+  setStatus,
 };

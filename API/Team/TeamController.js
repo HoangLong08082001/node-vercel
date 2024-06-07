@@ -63,13 +63,40 @@ const createTeam = (req, res) => {
     );
   } catch (error) {
     console.error(error);
-    return res.status(500).json("fails");
+    return res.status(500).json({ message: "fails" });
   }
 };
 
 const joinTeam = (req, res) => {
+  let id_collaborator = req.body.id_collaborator;
+  let id_team = req.body.id_team;
   try {
-  } catch (error) {}
+    pool.query(TeamModal.checkTeam, [id_collaborator], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 2) {
+        return res.status(400).json({
+          message: "Bạn đã tham gia đủ nhóm! Không thể tham gia vào nhóm",
+        });
+      } else {
+        pool.query(
+          TeamModal.join,
+          [id_team, id_collaborator],
+          (err, result) => {
+            if (err) {
+              throw err;
+            }
+            if (result) {
+              return res.status(200).json({ message: "success" });
+            }
+          }
+        );
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
 };
 
 const getAllTeam = (req, res) => {

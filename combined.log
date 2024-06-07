@@ -1025,3 +1025,45 @@
 2024-06-06T08:16:59.142Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
 2024-06-06T08:16:59.305Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
 2024-06-06T08:22:02.086Z [info]: Request:  200 Thursday, June 6, 2024 POST /employee/block from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-06T08:41:46.788Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:41:46.839Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:41:47.138Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:41:47.521Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:41:47.760Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:41:48.019Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:00.967Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:00.969Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:01.261Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:01.515Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:02.903Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:03.171Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:40.675Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:40.677Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:40.951Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:41.236Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:42.752Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:43.017Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:51.615Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:51.624Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:51.897Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:52.180Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:52.449Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T08:42:52.867Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:13.167Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:13.196Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:34.243Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:34.387Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:34.579Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:34.779Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:34.987Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:35.173Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:52.391Z [info]: Request:  200 Thursday, June 6, 2024 POST /employee/block from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:52.871Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:52.875Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:53.085Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:09:53.328Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:12:50.403Z [info]: Request:  200 Thursday, June 6, 2024 POST /employee/block from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:12:50.916Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:12:50.918Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:12:51.117Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-06T09:12:51.315Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7

@@ -8,7 +8,9 @@ class TeamModal {
   static alreadyExistsTeam =
     "SELECT * FROM team_collaborator WHERE id_collaborator=?";
   static allTeam = "SELECT * FROM Team";
-  
+  static checkTeam = "SELECT * FROM team_collaborator WHERE id_collaborator=?";
+  static join =
+    "INSERT INTO team_collaborator (id_team, id_collaborator) VALUES(?,?)";
 }
 
 module.exports = { TeamModal };

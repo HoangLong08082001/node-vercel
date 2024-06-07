@@ -2,11 +2,13 @@ import express from "express";
 import {
   codeVerify,
   getAccount,
+  getAllCollaborator,
   loginAccount,
   presenterPhone,
   reNewpassword,
   registerAccount,
   resendCodeVerify,
+  setStatus,
   signOutAccount,
   updateInformation,
 } from "./CollaboratorController";
@@ -21,5 +23,7 @@ export default function CollaboratorRoute(app) {
   router.put("/update-collaborator", updateInformation);
   router.post("/renew-password", reNewpassword);
   router.post("/resend", resendCodeVerify);
+  router.get("/get-all", getAllCollaborator);
+  router.post("/block", setStatus);
   return app.use("/collaborator", router);
 }

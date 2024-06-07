@@ -22,6 +22,11 @@ class ServiceCollaborator {
     "UPDATE collaborator SET code_verify=? WHERE email_collaborator=?";
   static sendCode =
     "SELECT code_verify FROM collaborator WHERE email_collaborator=?";
+  static get = "SELECT * FROM collaborator";
+  static setStatusTrue =
+    "UPDATE collaborator SET status_collaborator = 1 WHERE id_collaborator IN (?)";
+  static setStatusFalse =
+    "UPDATE collaborator SET status_collaborator = 0 WHERE id_collaborator IN (?)";
 }
 
 module.exports = { ServiceCollaborator };
