@@ -1,6 +1,7 @@
 import express from "express";
 import {
   codeVerify,
+  deleteCollaborator,
   getAccount,
   getAllCollaborator,
   loginAccount,
@@ -24,6 +25,7 @@ export default function CollaboratorRoute(app) {
   router.post("/renew-password", reNewpassword);
   router.post("/resend", resendCodeVerify);
   router.get("/get-all", getAllCollaborator);
+  router.delete("/delete", deleteCollaborator);
   router.post("/block", setStatus);
   return app.use("/collaborator", router);
 }

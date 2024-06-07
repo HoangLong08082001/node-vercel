@@ -1,19 +1,15 @@
 const pool = require("../../config/database.js");
 
-const { ServiceRule } = require("./RuleModel.js");
-
+const { RuleService } = require("./RuleModel.js");
 const GetRule = (req, res) => {
   try {
-    pool.query(ServiceRule.GetRule, (err, data) => {
+    pool.query(RuleService.GetRule, [], (err, data) => {
       if (err) {
         console.log(err);
         throw err;
       }
       if (data) {
-        return res.status(200).json({
-          message: "success",
-          data,
-        });
+        return res.status(200).json(data);
       }
     });
   } catch (error) {
@@ -21,7 +17,7 @@ const GetRule = (req, res) => {
     return res.status(500).json({ message: "fails" });
   }
 };
-const CraeteRule = (req, res) => {
+const CraeteRule = (req, res, io) => {
   try {
     let rule = req.body.rule;
     pool.query(ServiceRule.CreateRule, [rule], (err, result) => {
@@ -31,7 +27,7 @@ const CraeteRule = (req, res) => {
       }
       if (result) {
         console.log(result);
-        return res.status(200).json({ message: "Rule craeted successfully" });
+        return res.status(200).json({ message: "success" });
       }
     });
   } catch (error) {
@@ -59,8 +55,8 @@ const UpdateRule = (req, res) => {
 };
 
 const DeleteRule = (req, res) => {
+  let id_rule = req.body.id_rule;
   try {
-    let id_rule = req.body.id_rule;
     // res.status(200).json({ data: id_rule });
     pool.query(ServiceRule.DeleteRule, [id_rule], (err, result) => {
       if (err) {

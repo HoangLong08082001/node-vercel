@@ -24,7 +24,7 @@ const getToday = () => {
   return formattedDate;
 };
 //id_department	username	password	phone	status	code_verify	date_create	time_create
-const createEmployee = (req, res) => {
+const createEmployee = (req, res, io) => {
   let passRnadom = "";
   let username = req.body.username;
   let password = req.body.password;
@@ -77,6 +77,8 @@ const createEmployee = (req, res) => {
                   }
                   console.log("Verify code from Ecoop: " + info.response);
                 });
+                const newItem = { id: data.insertId, username };
+                io.emit("item_added", newItem);
                 return res.status(200).json({ message: "success" });
               }
             }

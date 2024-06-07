@@ -3,7 +3,6 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const useragent = require("useragent");
 const morgan = require("morgan");
-
 const cors = require("cors");
 const http = require("http");
 import CollaboratorRoute from "./API/Collaborator/CollaboratorRoute.js";
@@ -15,10 +14,11 @@ const logger = require("./middleware/logger.js");
 import EmployeeRoutes from "./API/Employee/EmployeeRoutes.js";
 import DepartmentRoutes from "./API/Department/DepartmentRoutes.js";
 import CampaignRoutes from "./API/Campaign/CampaignRoutes.js";
-import { ConfigSocketIo } from "./Socket/Socket.js";
+import RuleRoute from "./API/Rule/RuleRoutes.js";
 import axios from "axios";
 const path = require("path");
 const WebSocket = require("ws");
+const socketIO = require("socket.io");
 dotenv.config();
 const app = express();
 const server = http.createServer(app); // Tạo server trước khi tạo WebSocket server
@@ -40,6 +40,14 @@ const corsOptions = {
   methods: ["GET", "POST", "PUT", "DELETE"],
   allowedHeaders: ["Content-Type"],
 };
+const io = socketIO(server, {
+  cors: {
+    origin: "http://localhost:3000", // Chỉnh sửa nếu frontend chạy ở port khác
+    methods: ["GET", "POST", "PUT", "DELETE"],
+  },
+});
+app.set("io", io);
+
 app.set("view engine", "ejs");
 app.set("views", path.join(__dirname, "./views"));
 app.use(express.static(path.join(__dirname, "./public")));
@@ -95,6 +103,15 @@ ViewRoutes(app);
 EmployeeRoutes(app);
 DepartmentRoutes(app);
 CampaignRoutes(app);
+RuleRoute(app);
+
+io.on("connection", (socket) => {
+  console.log("A user connected");
+  socket.on("disconnect", () => {
+    console.log("A user disconnected");
+  });
+});
+
 server.listen(port, (err) => {
   if (err) {
     throw err;

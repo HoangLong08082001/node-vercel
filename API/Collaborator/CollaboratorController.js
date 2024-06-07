@@ -9,7 +9,7 @@ const salt = 10;
 const randomNumberCodeVerfify = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
-const registerAccount = async (req, res) => {
+const registerAccount = async (req, res ) => {
   try {
     //name_collaborator	password_collaborator	email_collaborator	gender	address_collaborator	phone	presenter_phone	status_collaborator
     let name = req.body.name;
@@ -226,14 +226,14 @@ const presenterPhone = (req, res) => {
     }
   );
 };
-
 const getAccount = (req, res) => {
-  return res.status(200).json({
-    message: "success",
-    data: {
-      access_token: req.token,
-      email: req.user,
-    },
+  pool.query(ServiceCollaborator.getAll, [], (err, data) => {
+    if (err) {
+      throw err;
+    }
+    if (data) {
+      return res.status(200).json(data);
+    }
   });
 };
 
@@ -488,9 +488,63 @@ const setStatus = (req, res) => {
   let id_collaborator = req.body.collaborators;
   console.log(id_collaborator);
   try {
-    
+    if (!Array.isArray(id_collaborator) || id_collaborator.length === 0) {
+      return res.status(400).json({ error: "Invalid input" });
+    }
+    pool.query(
+      ServiceCollaborator.checkStatus,
+      [id_collaborator],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          pool.query(
+            ServiceCollaborator.setStatusTrue,
+            [id_collaborator],
+            (err, result) => {
+              if (err) {
+                throw err;
+              }
+              if (result) {
+                return res.status(200).json({ message: "success" });
+              }
+            }
+          );
+        } else {
+          pool.query(
+            ServiceCollaborator.setStatusFalse,
+            [id_collaborator],
+            (err, result) => {
+              if (err) {
+                throw err;
+              }
+              if (result) {
+                return res.status(200).json({ message: "success" });
+              }
+            }
+          );
+        }
+      }
+    );
   } catch (error) {
-    
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
+const deleteCollaborator = (req, res) => {
+  let id = req.body.idCollaborator;
+  try {
+    pool.query(ServiceCollaborator.delete, [id], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json(data);
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
   }
 };
 
@@ -506,4 +560,5 @@ module.exports = {
   resendCodeVerify,
   getAllCollaborator,
   setStatus,
+  deleteCollaborator,
 };

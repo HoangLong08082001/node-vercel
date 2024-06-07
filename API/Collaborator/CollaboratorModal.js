@@ -27,6 +27,10 @@ class ServiceCollaborator {
     "UPDATE collaborator SET status_collaborator = 1 WHERE id_collaborator IN (?)";
   static setStatusFalse =
     "UPDATE collaborator SET status_collaborator = 0 WHERE id_collaborator IN (?)";
+  static delete = "DELETE FROM collaborator WHERE id_collaborator=?";
+  static getAll = "SELECT * FROM collaborator";
+  static checkStatus =
+    "SELECT * FROM collaborator WHERE id_collaborator IN (?) AND status_collaborator = 0";
 }
 
 module.exports = { ServiceCollaborator };

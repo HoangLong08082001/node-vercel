@@ -1067,3 +1067,600 @@
 2024-06-06T09:12:50.918Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
 2024-06-06T09:12:51.117Z [info]: Request:  200 Thursday, June 6, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
 2024-06-06T09:12:51.315Z [info]: Request:  200 Thursday, June 6, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T02:19:37.186Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T02:20:07.657Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T02:22:50.540Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: undefined, OS: Windows 10.0.0
+2024-06-07T02:22:53.516Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:22:53.688Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:22:54.279Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:22:55.213Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T02:23:41.748Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:23:41.773Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:23:42.051Z [info]: Request:  200 Friday, June 7, 2024 GET /department%20%20%20/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:24:04.868Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:24:05.103Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:24:05.617Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:24:38.545Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:24:41.526Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:25:49.500Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:25:54.491Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:26:51.812Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:29:22.155Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:29:22.442Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:29:24.522Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:30:55.646Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:31:32.261Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:31:39.794Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:32:28.835Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:21.558Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:21.568Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:21.874Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:21.935Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:22.274Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:25.500Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:25.502Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:38.625Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:38.634Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:38.674Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:38.920Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:33:39.260Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:34:19.745Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:34:19.763Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:34:19.770Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:34:20.067Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:34:20.410Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:46.287Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:46.301Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:46.314Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:46.499Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:47.004Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:52.384Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:52.389Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:52.403Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:52.621Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:36:52.823Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:38:46.307Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:38:46.335Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:38:46.595Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:38:46.816Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:38:47.233Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:40:38.540Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:40:38.890Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:40:39.599Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:41:23.648Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:41:23.661Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:42:59.771Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T02:42:59.788Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:00:10.411Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:00:10.544Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:00:21.562Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:00:21.590Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:01:22.429Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:01:22.432Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:13:43.689Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:13:43.705Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:16:06.986Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:16:07.094Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:16:07.421Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:16:07.701Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:16:10.827Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:19:50.537Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:19:50.570Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:19:50.787Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:19:51.045Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:19:51.293Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:20:44.706Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:20:44.720Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:20:53.773Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:20:53.784Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:21:12.298Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:21:12.299Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:21:12.549Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:21:12.770Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:21:13.418Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:26:21.864Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:26:21.873Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:28:51.499Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:28:51.520Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:18.911Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:18.913Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:20.647Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:20.652Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:32.300Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:32.321Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:41.423Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:41.443Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:53.281Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:30:53.290Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:03.984Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:03.987Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:12.676Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:12.679Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:13.073Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:13.165Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:31:13.306Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:35:41.829Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:35:41.903Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:43.185Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:43.186Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:51.514Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:51.515Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:51.737Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:51.932Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:36:55.613Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:37.363Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:37.365Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:43.546Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:43.551Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:49.786Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:49.789Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:57.299Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:38:57.302Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:04.775Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:04.780Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:10.219Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:10.223Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:25.064Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:25.639Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:25.853Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:47.979Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:47.986Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:48.212Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:48.393Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:39:48.587Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:02.988Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:03.463Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:04.190Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:06.248Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:06.268Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:12.191Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:12.192Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:38.124Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:38.589Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:40:38.903Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:07.373Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:07.386Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:07.750Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:07.955Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:08.138Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:25.316Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:26.095Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:43:27.236Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:07.099Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:07.101Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:07.323Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:07.568Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:07.743Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:38.181Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:38.882Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:44:39.104Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:17.267Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:17.279Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:17.546Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:17.842Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:18.227Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:32.154Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:32.160Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:32.475Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:32.782Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:45:33.040Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:46:15.259Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T03:46:15.443Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:03:52.107Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create/ from IP: ::ffff:127.0.0.1, OS: Other 0.0.0
+2024-06-07T04:04:31.712Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:04:31.735Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:04:31.944Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:04:32.159Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:04:32.423Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:04:46.387Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create/ from IP: ::ffff:127.0.0.1, OS: Other 0.0.0
+2024-06-07T04:05:05.860Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:05:20.377Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:08:23.812Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:11:09.637Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:13:38.804Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:14:17.494Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:14:52.576Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:15:12.575Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:15:28.762Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:15:49.448Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:16:34.342Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:17:36.155Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:19:50.897Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:26:22.597Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:27:20.184Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:28:08.082Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:29:21.555Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:30:55.645Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:30:55.651Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:30:55.933Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:30:56.201Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:33:24.298Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:33:36.703Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:33:36.706Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:33:36.964Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:33:37.214Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:33:37.520Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:39:49.004Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:40:17.535Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:17.540Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:17.765Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:17.992Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:24.052Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:38.100Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:40:38.140Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:41:01.351Z [info]: Request:  200 Friday, June 7, 2024 POST /department/create from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:41:01.880Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:41:02.144Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:41:24.349Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:41:24.354Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:23.371Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:23.375Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:23.582Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:23.814Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:24.323Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:34.733Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:34.735Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:34.944Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:35.139Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:43:35.381Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:08.628Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:08.630Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:14.875Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:14.878Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:22.449Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:22.451Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:57.482Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:44:57.488Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:48:36.248Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:48:36.255Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:48:36.463Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:48:36.658Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:48:36.855Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:51:12.217Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T04:55:34.895Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:55:34.913Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:55:35.178Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:55:35.455Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:55:35.984Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:21.184Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:21.196Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:21.473Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:21.765Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:22.009Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:26.704Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:56:26.712Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:59:06.664Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:59:06.681Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:59:15.679Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T04:59:15.691Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:00:11.560Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:00:11.861Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:00:12.522Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:00:13.660Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:00:14.029Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:17.944Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:18.095Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:45.530Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:45.535Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:48.706Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:48.708Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:57.572Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:57.580Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:57.824Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:58.049Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:01:58.538Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:26.397Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:26.399Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:31.505Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:31.506Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:35.105Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:35.107Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:37.960Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:37.969Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:41.680Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:41.682Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:44.612Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:44.613Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:50.178Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:02:50.185Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:06.084Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:06.108Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:12.577Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:12.580Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:17.781Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:03:17.920Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:04:26.826Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:04:26.837Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:05:01.063Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:05:01.066Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:05:10.905Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:05:10.923Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:06:56.658Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:06:56.679Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:07:22.279Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:07:22.301Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:07:22.620Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:07:22.874Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:07:23.096Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:07:23.435Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T05:08:17.042Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:17.046Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:41.353Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:41.398Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:52.824Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:52.826Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:53.200Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:53.376Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:08:54.055Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:33.790Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:33.795Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:37.812Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:37.866Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:45.283Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:45.284Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:50.727Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:50.729Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:53.635Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:53.636Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:56.670Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:10:56.675Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:11:05.832Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:11:05.834Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:12:23.465Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:12:23.470Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:13:52.883Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:13:52.911Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:13:57.244Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:13:57.258Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:14.744Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:14.750Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:14.983Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:15.207Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:15.437Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:51.423Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:14:51.429Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:18.185Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:18.186Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:22.602Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:22.609Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:38.303Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:15:38.305Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:16:01.307Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:16:01.318Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:16:01.563Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:16:01.958Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:16:02.104Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:17:07.548Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:17:07.557Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:17:17.888Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:17:17.895Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:19:52.077Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:19:52.080Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:01.769Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:01.774Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:02.020Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:02.254Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:02.482Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:43.038Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:43.039Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:47.984Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:47.985Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:58.154Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:20:58.197Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:21:12.457Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:21:12.487Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:21:12.705Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:21:12.952Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:21:13.486Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:23:30.019Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:23:30.024Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:23:30.263Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:23:30.510Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:23:30.727Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:24:31.066Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:24:31.075Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:24:31.303Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:24:31.532Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:24:31.803Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:11.888Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:11.891Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:26.055Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:26.056Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:26.294Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:26.519Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:26:26.889Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:47.314Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:47.317Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:54.944Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:54.948Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:58.354Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:58.362Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:58.675Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:58.972Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:27:59.259Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:01.444Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:01.448Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:05.922Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:06.028Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:06.177Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:06.397Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:30:06.650Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:51:21.052Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:52:55.437Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:52:55.450Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:52:55.968Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:52:56.176Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:52:56.383Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:53:04.749Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:53:05.228Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:53:20.348Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:53:20.351Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:53:32.948Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:53:32.951Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:54:53.946Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create/ from IP: ::ffff:127.0.0.1, OS: Other 0.0.0
+2024-06-07T05:55:55.460Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:55:55.740Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:00.284Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:56:00.608Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:56:05.626Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:05.628Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:26.822Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:26.824Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:27.081Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:27.322Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:27.640Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:56:36.919Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:56:37.181Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T05:57:14.407Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create/ from IP: ::ffff:127.0.0.1, OS: Other 0.0.0
+2024-06-07T05:59:57.188Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:59:57.201Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:59:57.665Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:59:57.957Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T05:59:58.102Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:00:17.822Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:00:17.823Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:00:18.291Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:00:18.459Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:00:18.696Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.157, OS: Windows 10.0.0
+2024-06-07T06:10:34.042Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:10:34.047Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:26.427Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:26.444Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:26.648Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:26.861Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:27.068Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:11:27.275Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:14:21.043Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/block from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:14:21.790Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:14:21.797Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:14:22.004Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:14:22.212Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:15:47.336Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/block from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:15:47.905Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:15:47.908Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:15:48.139Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:15:48.353Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:17:43.954Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:17:43.959Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T06:19:07.500Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:19:07.504Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:19:07.757Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:19:07.961Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:19:08.327Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:19:08.500Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:12.820Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:13.039Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:14.655Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:24.309Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:42.959Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:43.172Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:21:48.361Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:22:08.054Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:22:15.473Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:22:22.885Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:22:25.714Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:23:55.715Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:23:56.679Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:23:58.145Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:24:21.236Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:24:33.514Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:24:40.485Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:24:40.706Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:25:59.759Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:26:02.489Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:26:02.491Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:26:29.827Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:30:51.075Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:30:51.093Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:30:51.290Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:30:51.522Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:31:45.213Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:32:35.603Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:32:35.623Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:32:35.881Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:32:36.179Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:33:02.326Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:33:42.030Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:33:42.046Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:33:42.268Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:33:42.484Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:34:48.390Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:35:13.376Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:35:13.379Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:35:14.410Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:35:14.743Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:47:04.316Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T06:47:04.321Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:14:25.492Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:25.508Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:26.517Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:26.797Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:26.997Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:27.271Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:52.575Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:52.577Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:52.814Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:53.078Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:53.413Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:14:53.644Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:20.024Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:20.033Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:20.274Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:20.498Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:20.769Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:16:21.070Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:17:25.284Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/login from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:17:58.303Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/login from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:18:05.375Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/login from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:18:25.362Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/login from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:18:42.229Z [info]: Request:  200 Friday, June 7, 2024 PUT /employee/re-password from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:20:41.272Z [info]: Request:  200 Friday, June 7, 2024 PUT /employee/re-password from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:23:56.327Z [info]: Request:  200 Friday, June 7, 2024 PUT /employee/re-password from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:29:18.131Z [info]: Request:  200 Friday, June 7, 2024 PUT /employee/re-password from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:32:45.460Z [info]: Request:  200 Friday, June 7, 2024 PUT /employee/re-password from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:32:59.709Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/login from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:41.167Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:41.186Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:41.467Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:41.794Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:42.111Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:33:42.406Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:28.528Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:28.532Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:29.541Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:29.543Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:30.772Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:50.173Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:50.176Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:50.512Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:50.822Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:35:51.662Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:36:02.745Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:36:02.748Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:36:03.012Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:36:03.274Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:36:04.363Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:42:27.836Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:42:28.295Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:43:04.997Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:43:05.774Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:43:06.033Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:44:07.223Z [info]: Request:  200 Friday, June 7, 2024 GET //get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:44:07.508Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:44:18.409Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:44:18.412Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:44:18.630Z [info]: Request:  200 Friday, June 7, 2024 GET /rule/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:44:18.846Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:44:19.259Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-with-rule from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:47:23.561Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::1, OS: Mac OS X 10.15.7
+2024-06-07T07:47:34.716Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:47:34.725Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:47:34.940Z [info]: Request:  200 Friday, June 7, 2024 GET /department/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:47:35.159Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:47:35.989Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:48:03.366Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:48:04.131Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:48:04.350Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:49:50.662Z [info]: Request:  200 Friday, June 7, 2024 POST /employee/create from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:49:51.242Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
+2024-06-07T07:49:51.462Z [info]: Request:  200 Friday, June 7, 2024 GET /employee/get-all from IP: ::ffff:192.168.1.71, OS: Mac OS X 10.15.7
