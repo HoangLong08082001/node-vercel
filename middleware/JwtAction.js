@@ -5,7 +5,7 @@ const createJwtWebsite = (payload) => {
   let token = null;
   try {
     token = jwt.sign(payload, "apec-global-0827778666", {
-      expiresIn: 2629800,
+      expiresIn: 86400,
     });
   } catch (error) {
     throw error;

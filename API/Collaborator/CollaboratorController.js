@@ -9,7 +9,7 @@ const salt = 10;
 const randomNumberCodeVerfify = () => {
   return Math.floor(100000 + Math.random() * 900000);
 };
-const registerAccount = async (req, res ) => {
+const registerAccount = async (req, res) => {
   try {
     //name_collaborator	password_collaborator	email_collaborator	gender	address_collaborator	phone	presenter_phone	status_collaborator
     let name = req.body.name;
@@ -118,6 +118,11 @@ const loginAccount = (req, res) => {
                         res.cookie("jwt", token, { httpOnly: true });
                       }
                       if (data[0].status_verify === 0) {
+                        res.status(200).json({
+                          message: "success",
+                          data,
+                          access_token: token,
+                        });
                         const transport = nodemailer.createTransport({
                           host: "smtp.gmail.com",
                           port: 587,
@@ -145,11 +150,6 @@ const loginAccount = (req, res) => {
                           );
                         });
                       }
-                      return res.status(200).json({
-                        message: "success",
-                        data,
-                        access_token: token,
-                      });
                     } else {
                       return res
                         .status(400)
@@ -212,19 +212,36 @@ const presenterPhone = (req, res) => {
   let email = req.body.email;
   let phone = req.body.phone;
   console.log(email + phone);
-  pool.query(
-    ServiceCollaborator.updatePresenter,
-    [phone, 2, email],
-    (err, data) => {
-      if (err) {
-        throw err;
-      }
-      if (data) {
-        console.log(data);
-        return res.status(200).json({ message: "success" });
-      }
+  pool.query(ServiceCollaborator.checkPresenterPhone, [phone], (err, data) => {
+    if (err) {
+      throw err;
     }
-  );
+    if (data.length > 0) {
+      pool.query(
+        ServiceCollaborator.updatePresenter,
+        [phone, 2, email],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            pool.query(
+              ServiceCollaborator.updateStatusPhone,
+              [phone],
+              (err, data) => {
+                console.log(data);
+                return res.status(200).json({ message: "success" });
+              }
+            );
+          }
+        }
+      );
+    } else {
+      return res
+        .status(400)
+        .json({ message: "Số điện thoại này chưa tồn tại" });
+    }
+  });
 };
 const getAccount = (req, res) => {
   pool.query(ServiceCollaborator.getAll, [], (err, data) => {
@@ -547,6 +564,21 @@ const deleteCollaborator = (req, res) => {
     return res.status(500).json({ message: "fails" });
   }
 };
+const getById = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(ServiceCollaborator.getByid, [id], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json({ message: "success", data: data });
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 
 module.exports = {
   registerAccount,
@@ -561,4 +593,5 @@ module.exports = {
   getAllCollaborator,
   setStatus,
   deleteCollaborator,
+  getById,
 };

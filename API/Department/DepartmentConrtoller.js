@@ -80,4 +80,69 @@ const getAlDepartment = (req, res) => {
   }
 };
 
-module.exports = { createDepartment, getAlDepartment, getDepartmentWithRule };
+const checkPermission = (req, res) => {
+  const { ids_department, ids_rule } = req.body;
+  console.log(ids_department + " " + ids_rule);
+
+  if (!ids_department || !Array.isArray(ids_rule)) {
+    return res.status(400).json({ error: "Invalid input" });
+  }
+
+  // Convert quyenList to an array of quyen ids
+  const quyenIds = ids_rule.map((quyen) => quyen);
+
+  // Query to get current permissions for the given id_phongban
+  const getCurrentPermissionsQuery =
+    "SELECT id_rule FROM department_rule WHERE id_department = ?";
+  pool.query(getCurrentPermissionsQuery, [ids_department], (err, results) => {
+    if (err) {
+      return res.status(500).json({ error: err.message });
+    }
+
+    const currentPermissions = results.map((row) => row.id_rule);
+
+    // Determine which permissions to add and which to remove
+    const permissionsToAdd = quyenIds.filter(
+      (id) => !currentPermissions.includes(id)
+    );
+    const permissionsToRemove = currentPermissions.filter(
+      (id) => !quyenIds.includes(id)
+    );
+
+    // Add new permissions
+    if (permissionsToAdd.length > 0) {
+      const addPermissionsQuery =
+        "INSERT INTO department_rule (id_department, id_rule) VALUES ?";
+      const valuesToAdd = permissionsToAdd.map((id) => [ids_department, id]);
+      pool.query(addPermissionsQuery, [valuesToAdd], (err, results) => {
+        if (err) {
+          return res.status(500).json({ error: err.message });
+        }
+      });
+    }
+
+    // Remove old permissions
+    if (permissionsToRemove.length > 0) {
+      const removePermissionsQuery =
+        "DELETE FROM department_rule WHERE id_department = ? AND id_rule IN (?)";
+      pool.query(
+        removePermissionsQuery,
+        [ids_department, permissionsToRemove],
+        (err, results) => {
+          if (err) {
+            return res.status(500).json({ error: err.message });
+          }
+        }
+      );
+    }
+
+    res.status(200).json({ message: "Permissions updated successfully" });
+  });
+};
+
+module.exports = {
+  createDepartment,
+  getAlDepartment,
+  getDepartmentWithRule,
+  checkPermission,
+};

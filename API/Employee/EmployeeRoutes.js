@@ -1,3 +1,4 @@
+import setName from "../../middleware/setName";
 import {
   blockEmployee,
   createEmployee,
@@ -14,7 +15,7 @@ export default function EmployeeRoutes(app) {
   router.post("/create", (req, res) =>
     createEmployee(req, res, req.app.get("io"))
   );
-  router.get("/get-all", getAllEmployee);
+  router.get("/get-all", app.set("name", "get-all-employee"), getAllEmployee);
   router.post("/login", loginEmployee);
   router.put("/re-password", rePassword);
   router.put("/renew-password", setNewPassword);

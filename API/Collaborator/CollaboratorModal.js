@@ -31,6 +31,12 @@ class ServiceCollaborator {
   static getAll = "SELECT * FROM collaborator";
   static checkStatus =
     "SELECT * FROM collaborator WHERE id_collaborator IN (?) AND status_collaborator = 0";
+  static checkPresenterPhone =
+    "SELECT * FROM collaborator WHERE presenter_phone=?";
+  static updateStatusPhone =
+    "UPDATE collaborator SET status_leader=1 WHERE presenter_phone=?";
+  static getByid =
+    "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE id_collaborator=?";
 }
 
 module.exports = { ServiceCollaborator };

@@ -18,9 +18,9 @@ const GetRule = (req, res) => {
   }
 };
 const CraeteRule = (req, res, io) => {
+  let rule = req.body.rule;
   try {
-    let rule = req.body.rule;
-    pool.query(ServiceRule.CreateRule, [rule], (err, result) => {
+    pool.query(RuleService.CreateRule, [rule], (err, result) => {
       if (err) {
         console.log(err);
         throw err;
@@ -36,11 +36,12 @@ const CraeteRule = (req, res, io) => {
   }
 };
 const UpdateRule = (req, res) => {
+  let id_rule = req.body.id_rule;
+  let rule = req.body.rule;
+  console.log(id_rule + " " + rule);
   try {
-    let id_rule = req.body.id_rule;
-    let rule = req.body.rule;
     // Thực hiện truy vấn cập nhật
-    pool.query(ServiceRule.UpdateRule, [rule, id_rule], (err, result) => {
+    pool.query(RuleService.updateRule, [rule, id_rule], (err, result) => {
       if (err) {
         console.log(err);
         throw err;
@@ -54,22 +55,24 @@ const UpdateRule = (req, res) => {
   }
 };
 
+// Check lai
 const DeleteRule = (req, res) => {
   let id_rule = req.body.id_rule;
-  try {
-    // res.status(200).json({ data: id_rule });
-    pool.query(ServiceRule.DeleteRule, [id_rule], (err, result) => {
-      if (err) {
-        console.log(err);
-        throw err;
-      }
-      console.log("Rule updated:", result);
-      return res.status(200).json({ message: "Rule deleting successfully" });
-    });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ message: "fails" });
-  }
+  console.log(id_rule);
+  // try {
+  //   // res.status(200).json({ data: id_rule });
+  //   pool.query(RuleService.DeleteRule, [id_rule], (err, result) => {
+  //     if (err) {
+  //       console.log(err);
+  //       throw err;
+  //     }
+  //     console.log("Rule updated:", result);
+  //     return res.status(200).json({ message: "Rule deleting successfully" });
+  //   });
+  // } catch (error) {
+  //   console.error(error);
+  //   return res.status(500).json({ message: "fails" });
+  // }
 };
 
 module.exports = {
