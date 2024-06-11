@@ -533,6 +533,7 @@ const setStatus = (req, res) => {
             ServiceCollaborator.setStatusFalse,
             [id_collaborator],
             (err, result) => {
+              
               if (err) {
                 throw err;
               }
@@ -566,6 +567,7 @@ const deleteCollaborator = (req, res) => {
 };
 const getById = (req, res) => {
   let id = req.params.id;
+  console.log(id);
   try {
     pool.query(ServiceCollaborator.getByid, [id], (err, data) => {
       if (err) {

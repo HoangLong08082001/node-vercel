@@ -5,7 +5,7 @@ const handleCommission = (total_price, personal_tax, affiliate_tax) => {
 
 class ServiceWebhook {
   static insertOrder =
-    "INSERT INTO orders (id_orders_sapo, financial_status, fulfillment_status, status, total_price, referral_link) VALUES ? ON DUPLICATE KEY UPDATE id_orders_sapo = VALUES(id_orders_sapo), financial_status = VALUES(financial_status), fulfillment_status = VALUES(fulfillment_status), status = VALUES(status), total_price = VALUES(total_price), referral_link = VALUES(referral_link)";
+    "INSERT INTO orders (id_orders_sapo,financial_status, fulfillment_status, status, total_price, referral_link) VALUES(?,?,?,?,?,?)";
   static getAllOrders =
     "SELECT * FROM orders ORDER BY orders.id_orders DESC LIMIT 1";
   static checkCollaborator =
@@ -16,6 +16,8 @@ class ServiceWebhook {
     "SELECT payment.total_withdrawn FROM payment WHERE id_collaborator=? ";
   static countTotal = "SELECT COUNT(*) as total FROM orders";
   static getLast = "SELECT * FROM orders";
+  static checkIdSapo = "SELECT * FROM orders WHERE id_orders_sapo=?";
+  
 }
 
 module.exports = {

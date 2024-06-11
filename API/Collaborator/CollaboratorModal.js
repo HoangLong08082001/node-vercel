@@ -36,7 +36,7 @@ class ServiceCollaborator {
   static updateStatusPhone =
     "UPDATE collaborator SET status_leader=1 WHERE presenter_phone=?";
   static getByid =
-    "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE id_collaborator=?";
+    "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE payment.id_collaborator = ?";
 }
 
 module.exports = { ServiceCollaborator };
