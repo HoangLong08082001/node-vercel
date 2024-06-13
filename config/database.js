@@ -10,6 +10,14 @@ const pool = mysql.createConnection({
   database: "b5pgj1fg42icdb7zpjdu",
   connectionLimit: 10,
 });
+// const pool = mysql.createConnection({
+//   port: 3306,
+//   host: "localhost",
+//   user: "root",
+//   password: "",
+//   database: "b5pgj1fg42icdb7zpjdu",
+//   connectionLimit: 10,
+// });
 
 pool.connect((err) => {
   if (err) {

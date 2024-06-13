@@ -118,11 +118,6 @@ const loginAccount = (req, res) => {
                         res.cookie("jwt", token, { httpOnly: true });
                       }
                       if (data[0].status_verify === 0) {
-                        res.status(200).json({
-                          message: "success",
-                          data,
-                          access_token: token,
-                        });
                         const transport = nodemailer.createTransport({
                           host: "smtp.gmail.com",
                           port: 587,
@@ -148,6 +143,18 @@ const loginAccount = (req, res) => {
                           console.log(
                             "Verify code from Ecoop: " + info.response
                           );
+                        });
+                        return res.status(200).json({
+                          message: "success",
+                          data,
+                          access_token: token,
+                        });
+                      }
+                      if (data[0].status_verify === 1) {
+                        return res.status(200).json({
+                          message: "success",
+                          data,
+                          access_token: token,
                         });
                       }
                     } else {
@@ -229,8 +236,173 @@ const presenterPhone = (req, res) => {
               ServiceCollaborator.updateStatusPhone,
               [phone],
               (err, data) => {
-                console.log(data);
-                return res.status(200).json({ message: "success" });
+                if (err) {
+                  throw err;
+                }
+                if (data) {
+                  let id_lv1 = null;
+                  let id_lv2 = null;
+                  pool.query(
+                    ServiceCollaborator.checkExistsPhone,
+                    [phone],
+                    (err, data) => {
+                      if (err) {
+                        throw err;
+                      }
+                      if (data.length > 0) {
+                        id_lv1 = data[0].id_collaborator;
+                        pool.query(
+                          ServiceCollaborator.checkExistsEmail,
+                          [email],
+                          (err, data) => {
+                            if (err) {
+                              throw err;
+                            }
+                            if (data.length > 0) {
+                              id_lv2 = data[0].id_collaborator;
+                              pool.query(
+                                ServiceCollaborator.checkIdCap1,
+                                [id_lv1],
+                                (err, data) => {
+                                  if (err) {
+                                    throw err;
+                                  }
+                                  if (data.length > 0) {
+                                    pool.query(
+                                      ServiceCollaborator.checkIdCap1Team,
+                                      [id_lv1],
+                                      (err, data) => {
+                                        if (err) {
+                                          throw err;
+                                        }
+                                        if (data) {
+                                          let id_team = data[0].id_team;
+                                          pool.query(
+                                            ServiceCollaborator.createTeamCTV,
+                                            [id_team, id_lv2],
+                                            (err, data) => {
+                                              if (err) {
+                                                throw err;
+                                              }
+                                              if (data) {
+                                                pool.query(
+                                                  ServiceCollaborator.getCount,
+                                                  [id_team],
+                                                  (err, data) => {
+                                                    if (err) {
+                                                      throw err;
+                                                    }
+                                                    if (data)
+                                                      console.log(
+                                                        data[0].soluong
+                                                      );
+                                                    pool.query(
+                                                      ServiceCollaborator.updateQuantity,
+                                                      [
+                                                        data[0].soluong,
+                                                        id_team,
+                                                      ],
+                                                      (err, data) => {
+                                                        if (err) {
+                                                          throw err;
+                                                        }
+                                                        if (data) {
+                                                          return res
+                                                            .status(200)
+                                                            .json({
+                                                              message:
+                                                                "success",
+                                                            });
+                                                        }
+                                                      }
+                                                    );
+                                                  }
+                                                );
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
+                                    );
+                                  } else {
+                                    pool.query(
+                                      ServiceCollaborator.createTeam,
+                                      [0, "https://ecoopglobal.mysapo.net/"],
+                                      (err, data) => {
+                                        if (err) {
+                                          throw err;
+                                        }
+                                        if (data) {
+                                          let idTeam = data.insertId;
+                                          pool.query(
+                                            ServiceCollaborator.createTeamCTVC1,
+                                            [idTeam, id_lv1],
+                                            (err, data) => {
+                                              if (err) {
+                                                throw err;
+                                              }
+                                              if (data) {
+                                                pool.query(
+                                                  ServiceCollaborator.createTeamCTVC1,
+                                                  [idTeam, id_lv2],
+                                                  (err, data) => {
+                                                    if (err) {
+                                                      throw err;
+                                                    }
+                                                    if (data) {
+                                                      pool.query(
+                                                       ServiceCollaborator.getCount,
+                                                        [idTeam],
+                                                        (err, data) => {
+                                                          if (err) {
+                                                            throw err;
+                                                          }
+                                                          if (data) {
+                                                            console.log(
+                                                              data[0].soluong
+                                                            );
+                                                            pool.query(
+                                                              ServiceCollaborator.updateQuantity,
+                                                              [
+                                                                data[0].soluong,
+                                                                idTeam,
+                                                              ],
+                                                              (err, data) => {
+                                                                if (err) {
+                                                                  throw err;
+                                                                }
+                                                                if (data) {
+                                                                  return res
+                                                                    .status(200)
+                                                                    .json({
+                                                                      message:
+                                                                        "success",
+                                                                    });
+                                                                }
+                                                              }
+                                                            );
+                                                          }
+                                                        }
+                                                      );
+                                                    }
+                                                  }
+                                                );
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
+                                    );
+                                  }
+                                }
+                              );
+                            }
+                          }
+                        );
+                      }
+                    }
+                  );
+                }
               }
             );
           }
@@ -533,7 +705,6 @@ const setStatus = (req, res) => {
             ServiceCollaborator.setStatusFalse,
             [id_collaborator],
             (err, result) => {
-              
               if (err) {
                 throw err;
               }

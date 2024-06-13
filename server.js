@@ -6,7 +6,7 @@ const morgan = require("morgan");
 const cors = require("cors");
 const http = require("http");
 const WebhookModal = require("./WEBHOOK/WebhookModal.js");
-
+const jwt = require("jsonwebtoken");
 import CollaboratorRoute from "./API/Collaborator/CollaboratorRoute.js";
 import TeamRoutes from "./API/Team/TeamRoutes.js";
 import "./config/database.js";
@@ -57,6 +57,30 @@ app.set("views", path.join(__dirname, "./views"));
 app.use(express.static(path.join(__dirname, "./public")));
 
 app.use(cors(corsOptions));
+
+const verifyToken = (req, res, next) => {
+  const token = req.headers["x-access-token"];
+  if (!token) {
+    return res.status(403).send({ auth: false, message: "No token provided." });
+  }
+
+  jwt.verify(token, secretKey, (err, decoded) => {
+    if (err) {
+      return res
+        .status(500)
+        .send({ auth: false, message: "Failed to authenticate token." });
+    }
+
+    req.userId = decoded.id;
+    next();
+  });
+};
+
+// Một route được bảo vệ bởi JWT
+app.get("/protected", verifyToken, (req, res) => {
+  res.status(200).send("This is a protected route");
+});
+
 const arrayLog = [];
 
 app.use((req, res, next) => {
@@ -241,6 +265,48 @@ const getOrders = async () => {
                                         WebhookModal.ServiceWebhook
                                           .updatePayment,
                                         [new_commission, secondNumber],
+                                        (err, result) => {
+                                          if (err) {
+                                          }
+                                          if (result) {
+                                          }
+                                        }
+                                      );
+                                    }
+                                  }
+                                );
+                              } else {
+                                var parts = bwaf.split("=");
+
+                                // Lấy chuỗi chứa "78-100"
+                                var numberStr = parts[1];
+
+                                // Cắt chuỗi "78-100" thành hai phần "78" và "100"
+                                var numbers = numberStr.split("-");
+
+                                // Gán kết quả vào các biến
+                                var firstNumber = numbers[0];
+                                var secondNumber = numbers[1];
+                                const orderValue = data[0].total_price;
+                                let precent_tax = WebhookModal.handleCommission(
+                                  orderValue,
+                                  10,
+                                  1
+                                );
+                                pool.query(
+                                  WebhookModal.ServiceWebhook.checkPayment,
+                                  [firstNumber],
+                                  (err, data) => {
+                                    if (err) {
+                                      throw err;
+                                    }
+                                    if (data.length > 0) {
+                                      let new_commission =
+                                        data[0].total_withdrawn + precent_tax;
+                                      pool.query(
+                                        WebhookModal.ServiceWebhook
+                                          .updatePayment,
+                                        [new_commission, firstNumber],
                                         (err, result) => {
                                           if (err) {
                                           }

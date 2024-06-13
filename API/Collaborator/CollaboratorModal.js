@@ -31,12 +31,34 @@ class ServiceCollaborator {
   static getAll = "SELECT * FROM collaborator";
   static checkStatus =
     "SELECT * FROM collaborator WHERE id_collaborator IN (?) AND status_collaborator = 0";
-  static checkPresenterPhone =
-    "SELECT * FROM collaborator WHERE presenter_phone=?";
+  static checkPresenterPhone = "SELECT * FROM collaborator WHERE phone=?";
   static updateStatusPhone =
     "UPDATE collaborator SET status_leader=1 WHERE presenter_phone=?";
   static getByid =
     "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE payment.id_collaborator = ?";
+  static checkPresenterPhoneTeam =
+    "SELECT * FROM collaborator join team_collaborator on collaborator.id_collaborator=team_collaborator.id_collaborator WHERE team_collaborator.id_collaborator=?";
+  static createTeam =
+    "INSERT INTO Team (quantity, link_team, qr_code) VALUES (?,?,?)";
+  static createTeamCollaborator =
+    "INSERT INTO team_collaborator (id_team, id_campaign) VALUES (?,?)";
+  static checkExistsPhone =
+    "SELECT collaborator.id_collaborator FROM collaborator WHERE phone=?";
+  static checkExistsEmail =
+    "SELECT collaborator.id_collaborator FROM collaborator WHERE email_collaborator=?";
+  static checkIdCap1 =
+    "SELECT * FROM collaborator join team_collaborator on collaborator.id_collaborator=team_collaborator.id_collaborator WHERE team_collaborator.id_collaborator=?";
+  static checkIdCap1Team =
+    "SELECT team_collaborator.id_team FROM team_collaborator WHERE team_collaborator.id_collaborator=?";
+  static createTeamCTV =
+    "INSERT INTO team_collaborator (id_team,id_collaborator) VALUES(?,?)";
+  static getCount =
+    "SELECT COUNT(team_collaborator.id_team) as soluong FROM `team_collaborator` WHERE id_team=?";
+  static updateQuantity = "UPDATE Team SET quantity=? WHERE id_team=?";
+  static createTeam = "INSERT INTO Team(quantity, link_team) VALUES(?,?)";
+  static createTeamCTVC1 =
+    "INSERT INTO team_collaborator (id_team, id_collaborator) VALUES (?,?)";
+    
 }
 
 module.exports = { ServiceCollaborator };
