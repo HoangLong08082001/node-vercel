@@ -33,7 +33,7 @@ class ServiceCollaborator {
     "SELECT * FROM collaborator WHERE id_collaborator IN (?) AND status_collaborator = 0";
   static checkPresenterPhone = "SELECT * FROM collaborator WHERE phone=?";
   static updateStatusPhone =
-    "UPDATE collaborator SET status_leader=1 WHERE presenter_phone=?";
+    "UPDATE collaborator SET status_leader=1 WHERE phone=?";
   static getByid =
     "SELECT * FROM collaborator join payment on collaborator.id_collaborator=payment.id_collaborator WHERE payment.id_collaborator = ?";
   static checkPresenterPhoneTeam =

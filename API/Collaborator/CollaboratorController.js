@@ -327,7 +327,7 @@ const presenterPhone = (req, res) => {
                                   } else {
                                     pool.query(
                                       ServiceCollaborator.createTeam,
-                                      [0, "https://ecoopglobal.mysapo.net/"],
+                                      [0, `https://ecoop.vn/?bwaf=`],
                                       (err, data) => {
                                         if (err) {
                                           throw err;
@@ -351,7 +351,7 @@ const presenterPhone = (req, res) => {
                                                     }
                                                     if (data) {
                                                       pool.query(
-                                                       ServiceCollaborator.getCount,
+                                                        ServiceCollaborator.getCount,
                                                         [idTeam],
                                                         (err, data) => {
                                                           if (err) {

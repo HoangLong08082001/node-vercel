@@ -14,6 +14,7 @@ import {
   signOutAccount,
   updateInformation,
 } from "./CollaboratorController";
+import { authenticationToken } from "../../middleware/JwtAction";
 const router = express.Router();
 export default function CollaboratorRoute(app) {
   router.post(
@@ -47,6 +48,7 @@ export default function CollaboratorRoute(app) {
   );
   router.get(
     "/get-all",
+    authenticationToken,
     app.set("name", "Lấy danh sách cộng tác viên"),
     getAllCollaborator
   );

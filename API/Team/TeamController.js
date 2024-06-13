@@ -100,13 +100,53 @@ const joinTeam = (req, res) => {
 };
 
 const getAllTeam = (req, res) => {
+  let email = req.params.id;
+  let presenter_phone = null;
+  let id_collaborator = null;
+  let link_team = "";
+  let quantity = "";
+  let time_create = "";
+  let id_team = "";
+  let name_leader = "";
+  let avatar_leader = "";
   try {
-    pool.query(TeamModal.allTeam, [], (err, result) => {
+    pool.query(TeamModal.getCollaboratorTeam, [email], (err, data) => {
       if (err) {
         throw err;
       }
-      if (result) {
-        return res.status(200).json(result);
+      if (data) {
+        link_team = data[0].link_team;
+        quantity = data[0].quantity;
+        time_create = data[0].time_create;
+        id_team = data[0].id_team;
+        presenter_phone = data[0].presenter_phone;
+        pool.query(TeamModal.getByPhone, [presenter_phone], (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            name_leader = data[0].name_collaborator;
+            avatar_leader = data[0].avatar;
+            id_collaborator = data[0].id_collaborator;
+            pool.query(TeamModal.allTeam, [id_team], (err, data) => {
+              if (err) {
+                throw err;
+              }
+              if (data) {
+                return res.status(200).json({
+                  name_leader: name_leader,
+                  avatar_leader: avatar_leader,
+                  id_leader: id_collaborator,
+                  link_team: link_team,
+                  quantity: quantity,
+                  time_create: time_create,
+                  id_team: id_team,
+                  data: data,
+                });
+              }
+            });
+          }
+        });
       }
     });
   } catch (error) {
