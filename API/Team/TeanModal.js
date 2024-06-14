@@ -10,12 +10,12 @@ class TeamModal {
   static allTeam =
     "SELECT collaborator.avatar FROM team_collaborator join collaborator on team_collaborator.id_collaborator = collaborator.id_collaborator join Team on team_collaborator.id_team=Team.id_team WHERE team_collaborator.id_team=?";
   static getCollaboratorTeam =
-    "SELECT * FROM team_collaborator join collaborator on team_collaborator.id_collaborator=collaborator.id_collaborator join Team on team_collaborator.id_team = Team.id_team WHERE collaborator.email_collaborator=?";
+    "SELECT * FROM collaborator left join team_collaborator on team_collaborator.id_collaborator=collaborator.id_collaborator left join Team on team_collaborator.id_team = Team.id_team WHERE collaborator.email_collaborator=?";
   static checkTeam = "SELECT * FROM team_collaborator WHERE id_collaborator=?";
   static join =
     "INSERT INTO team_collaborator (id_team, id_collaborator) VALUES(?,?)";
-    static getByEmail = "SELECT * FROM collaborator WHERE email_collaborator=?"
-    static getByPhone = "SELECT * FROM collaborator WHERE phone=?"
+  static getByEmail = "SELECT * FROM collaborator WHERE email_collaborator=?";
+  static getByPhone = "SELECT * FROM collaborator WHERE phone=?";
 }
 
 module.exports = { TeamModal };

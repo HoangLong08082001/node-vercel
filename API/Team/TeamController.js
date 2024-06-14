@@ -115,38 +115,55 @@ const getAllTeam = (req, res) => {
         throw err;
       }
       if (data) {
-        link_team = data[0].link_team;
-        quantity = data[0].quantity;
-        time_create = data[0].time_create;
-        id_team = data[0].id_team;
-        presenter_phone = data[0].presenter_phone;
-        pool.query(TeamModal.getByPhone, [presenter_phone], (err, data) => {
-          if (err) {
-            throw err;
-          }
-          if (data) {
-            name_leader = data[0].name_collaborator;
-            avatar_leader = data[0].avatar;
-            id_collaborator = data[0].id_collaborator;
-            pool.query(TeamModal.allTeam, [id_team], (err, data) => {
-              if (err) {
-                throw err;
-              }
-              if (data) {
-                return res.status(200).json({
-                  name_leader: name_leader,
-                  avatar_leader: avatar_leader,
-                  id_leader: id_collaborator,
-                  link_team: link_team,
-                  quantity: quantity,
-                  time_create: time_create,
-                  id_team: id_team,
-                  data: data,
-                });
-              }
-            });
-          }
-        });
+        if (
+          !data[0].link_team &&
+          !data[0].quantity &&
+          !data[0].time_create &&
+          !data[0].id_team &&
+          !data[0].presenter_phone
+        ) {
+          return res.status(200).json({ message: "sucess" });
+        }
+        if (
+          data[0].link_team &&
+          data[0].quantity &&
+          data[0].time_create &&
+          data[0].id_team &&
+          data[0].presenter_phone
+        ) {
+          link_team = data[0].link_team;
+          quantity = data[0].quantity;
+          time_create = data[0].time_create;
+          id_team = data[0].id_team;
+          presenter_phone = data[0].presenter_phone;
+          pool.query(TeamModal.getByPhone, [presenter_phone], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              name_leader = data[0].name_collaborator;
+              avatar_leader = data[0].avatar;
+              id_collaborator = data[0].id_collaborator;
+              pool.query(TeamModal.allTeam, [id_team], (err, data) => {
+                if (err) {
+                  throw err;
+                }
+                if (data) {
+                  return res.status(200).json({
+                    name_leader: name_leader,
+                    avatar_leader: avatar_leader,
+                    id_leader: id_collaborator,
+                    link_team: link_team,
+                    quantity: quantity,
+                    time_create: time_create,
+                    id_team: id_team,
+                    data: data,
+                  });
+                }
+              });
+            }
+          });
+        }
       }
     });
   } catch (error) {

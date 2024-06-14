@@ -84,12 +84,16 @@ app.get("/protected", verifyToken, (req, res) => {
 const arrayLog = [];
 
 app.use((req, res, next) => {
-  function formatDateToDDMMYYYY(date) {
+  function formatDateTimeToDDMMYYYYHHMMSS(date) {
     const day = String(date.getDate()).padStart(2, "0");
     const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() returns month from 0-11
     const year = date.getFullYear();
 
-    return `${day}/${month}/${year}`;
+    const hours = String(date.getHours()).padStart(2, "0");
+    const minutes = String(date.getMinutes()).padStart(2, "0");
+    const seconds = String(date.getSeconds()).padStart(2, "0");
+
+    return `${day}/${month}/${year} ${hours}:${minutes}:${seconds}`;
   }
   var options = {
     weekday: "long",
@@ -112,7 +116,7 @@ app.use((req, res, next) => {
   const newLogMessages = {
     name: req.app.get("name"),
     status: res.statusCode,
-    date: formatDateToDDMMYYYY(new Date()),
+    date: formatDateTimeToDDMMYYYYHHMMSS(new Date()),
     method: req.method,
     api: req.url,
     ip: ip,

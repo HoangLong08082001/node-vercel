@@ -42,6 +42,7 @@ const registerAccount = async (req, res) => {
                   hash,
                   email,
                   phone,
+
                   1,
                   1,
                   0,
@@ -738,7 +739,6 @@ const deleteCollaborator = (req, res) => {
 };
 const getById = (req, res) => {
   let id = req.params.id;
-  console.log(id);
   try {
     pool.query(ServiceCollaborator.getByid, [id], (err, data) => {
       if (err) {
