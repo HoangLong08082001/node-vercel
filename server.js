@@ -84,16 +84,12 @@ app.get("/protected", verifyToken, (req, res) => {
 const arrayLog = [];
 
 app.use((req, res, next) => {
-  function getVNDateTime(date) {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const ngày = date.toLocaleDateString("vi-VN", options);
-    const giờ = date.toLocaleTimeString("vi-VN");
-    return `${ngày} ${giờ}`;
+  function formatDateToDDMMYYYY(date) {
+    const day = String(date.getDate()).padStart(2, "0");
+    const month = String(date.getMonth() + 1).padStart(2, "0"); // getMonth() returns month from 0-11
+    const year = date.getFullYear();
+
+    return `${day}/${month}/${year}`;
   }
   var options = {
     weekday: "long",
@@ -116,7 +112,7 @@ app.use((req, res, next) => {
   const newLogMessages = {
     name: req.app.get("name"),
     status: res.statusCode,
-    date: getVNDateTime(new Date()),
+    date: formatDateToDDMMYYYY(new Date()),
     method: req.method,
     api: req.url,
     ip: ip,
