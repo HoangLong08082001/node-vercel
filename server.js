@@ -106,26 +106,26 @@ app.use((req, res, next) => {
   const agent = useragent.parse(req.headers["user-agent"]);
   const os = agent.os.toString();
 
-  const logMessage = `Request: ${req.app.get("name")} ${
-    res.statusCode
-  } ${getVNDateTime(new Date())} ${req.method} ${
-    req.url
-  } from IP: ${ip}, OS: ${os}`;
-  logger.info(logMessage);
-  arrayLog.push(logMessage);
-  // const newLogMessages = {
-  //   name: req.app.get("name"),
-  //   status: res.statusCode,
-  //   date: getVNDateTime(new Date()),
-  //   method: req.method,
-  //   api: req.url,
-  //   ip: ip,
-  //   os: os,
-  // };
-  // arrayLog.push(newLogMessages);
+  // const logMessage = `Request: ${req.app.get("name")} ${
+  //   res.statusCode
+  // } ${getVNDateTime(new Date())} ${req.method} ${
+  //   req.url
+  // } from IP: ${ip}, OS: ${os}`;
+  // logger.info(logMessage);
+  // arrayLog.push(logMessage);
+  const newLogMessages = {
+    name: req.app.get("name"),
+    status: res.statusCode,
+    date: getVNDateTime(new Date()),
+    method: req.method,
+    api: req.url,
+    ip: ip,
+    os: os,
+  };
+  arrayLog.push(newLogMessages);
   wss.clients.forEach((client) => {
     if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify({ log: logMessage }));
+      client.send(JSON.stringify(newLogMessages));
     }
   });
   next();
