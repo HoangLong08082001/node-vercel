@@ -1,6 +1,6 @@
-import { authenticationToken } from "../../middleware/JwtAction";
-import setName from "../../middleware/setName";
-import {
+const { authenticationToken } = require("../../middleware/JwtAction");
+const setName = require("../../middleware/setName");
+const {
   blockEmployee,
   createEmployee,
   deleteEmployee,
@@ -8,17 +8,17 @@ import {
   loginEmployee,
   rePassword,
   setNewPassword,
-} from "./EmployeeController";
+} = require("./EmployeeController");
 
 const express = require("express");
 const router = express.Router();
-export default function EmployeeRoutes(app) {
+module.exports = function EmployeeRoutes(app) {
   router.post("/create", (req, res) =>
     createEmployee(req, res, req.app.get("io"))
   );
   router.get(
     "/get-all",
-    
+
     app.set("name", "get-all-employee"),
     getAllEmployee
   );
@@ -27,4 +27,4 @@ export default function EmployeeRoutes(app) {
   router.put("/renew-password", setNewPassword);
   router.post("/block", blockEmployee);
   return app.use("/employee", router);
-}
+};

@@ -141,23 +141,31 @@ const getAllTeam = (req, res) => {
               throw err;
             }
             if (data) {
-              name_leader = data[0].name_collaborator;
-              avatar_leader = data[0].avatar;
               id_collaborator = data[0].id_collaborator;
-              pool.query(TeamModal.allTeam, [id_team], (err, data) => {
+              pool.query(TeamModal.getByTeamNull, [id_team], (err, data) => {
                 if (err) {
                   throw err;
                 }
                 if (data) {
-                  return res.status(200).json({
-                    name_leader: name_leader,
-                    avatar_leader: avatar_leader,
-                    id_leader: id_collaborator,
-                    link_team: link_team,
-                    quantity: quantity,
-                    time_create: time_create,
-                    id_team: id_team,
-                    data: data,
+                  name_leader = data[0].name_collaborator;
+                  avatar_leader = data[0].avatar;
+                  pool.query(TeamModal.allTeam, [id_team], (err, data) => {
+                    if (err) {
+                      throw err;
+                    }
+                    if (data) {
+                      console.log(data);
+                      return res.status(200).json({
+                        name_leader: name_leader,
+                        avatar_leader: avatar_leader,
+                        id_leader: id_collaborator,
+                        link_team: link_team,
+                        quantity: quantity,
+                        time_create: time_create,
+                        id_team: id_team,
+                        data: data,
+                      });
+                    }
                   });
                 }
               });

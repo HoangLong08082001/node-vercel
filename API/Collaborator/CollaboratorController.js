@@ -85,6 +85,7 @@ const loginAccount = (req, res) => {
   try {
     let email = req.body.payload.email;
     let password = req.body.payload.password;
+    console.log(email, password);
     if (
       (email !== "" && password !== "") ||
       (email !== null && password !== null)

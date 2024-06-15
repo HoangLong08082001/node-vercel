@@ -1,5 +1,5 @@
-import express from "express";
-import {
+const express = require("express");
+const {
   codeVerify,
   deleteCollaborator,
   getAccount,
@@ -13,10 +13,10 @@ import {
   setStatus,
   signOutAccount,
   updateInformation,
-} from "./CollaboratorController";
-import { authenticationToken } from "../../middleware/JwtAction";
+} = require("./CollaboratorController");
+const { authenticationToken } = require("../../middleware/JwtAction");
 const router = express.Router();
-export default function CollaboratorRoute(app) {
+module.exports = function CollaboratorRoute(app) {
   router.post(
     "/register",
     app.set("name", "Đăng ký tài khoản mới"),
@@ -59,4 +59,4 @@ export default function CollaboratorRoute(app) {
   router.post("/block", app.set("name", "Khoá người dùng"), setStatus);
   router.get("/get-by-id/:id", getById);
   return app.use("/collaborator", router);
-}
+};

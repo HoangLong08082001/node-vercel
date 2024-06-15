@@ -1,4 +1,4 @@
-import {
+const {
   getCarrierServices,
   getCarrierServicesById,
   getCollectById,
@@ -44,11 +44,11 @@ import {
   getTransactionById,
   getTransactionTotal,
   getVariants,
-} from "./WebhookController";
+} = require("./WebhookController");
 
 const express = require("express");
 const router = express.Router();
-export default function WebhookRoute(app) {
+module.exports = function WebhookRoute(app) {
   //orders
   router.get("/orders", getOrders);
   router.get("/orders-by-id/:orders_id", getOrderById);
@@ -129,4 +129,4 @@ export default function WebhookRoute(app) {
   //Variant
   router.get("/products-variant", getVariants);
   return app.use("/webhook", router);
-}
+};

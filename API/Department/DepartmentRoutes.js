@@ -1,13 +1,13 @@
-import {
+const {
   checkPermission,
   createDepartment,
   getAlDepartment,
   getDepartmentWithRule,
-} from "./DepartmentConrtoller";
+} = require("./DepartmentConrtoller");
 
 const express = require("express");
 const router = express.Router();
-export default function DepartmentRoutes(app) {
+module.exports = function DepartmentRoutes(app) {
   router.post("/create", createDepartment);
   router.get(
     "/get-all",
@@ -17,4 +17,4 @@ export default function DepartmentRoutes(app) {
   router.get("/get-with-rule", getDepartmentWithRule);
   router.post("/check-permission", checkPermission);
   return app.use("/department", router);
-}
+};

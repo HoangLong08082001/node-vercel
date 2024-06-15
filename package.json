@@ -9,7 +9,11 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node ./server.js"
+    "start:lb": "nodemon --exec babel-node ./server.js",
+    "start:3031": "nodemon --exec babel-node ./3031.js",
+    "start:3032": "nodemon --exec babel-node ./3032.js",
+    "start:3033": "nodemon --exec babel-node ./3033.js",
+    "start:all": "concurrently \"npm run start:lb\" \"npm run start:3031\" \"npm run start:3032\" \"npm run start:3033\""
   },
   "keywords": [],
   "author": "",
@@ -26,9 +30,11 @@
     "dotenv": "^16.4.5",
     "ejs": "^3.1.10",
     "express": "^4.19.2",
+    "http-proxy-middleware": "^3.0.0",
     "jsonwebtoken": "^9.0.2",
     "morgan": "^1.10.0",
     "mysql": "^2.18.1",
+    "mysql2": "^3.10.1",
     "nodemailer": "^6.9.13",
     "nodemon": "^3.1.0",
     "request": "^2.88.2",
@@ -36,5 +42,8 @@
     "useragent": "^2.3.0",
     "winston": "^3.13.0",
     "ws": "^8.17.0"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.2"
   }
 }

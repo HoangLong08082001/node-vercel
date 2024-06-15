@@ -1,13 +1,13 @@
-import {
+const {
   createCampaign,
   deleteCampaign,
   getAllCampaign,
-} from "./CampaignController";
+} = require("./CampaignController");
 
 const express = require("express");
 const router = express.Router();
 
-export default function CampaignRoutes(app) {
+module.exports = function CampaignRoutes(app) {
   router.post("/create", app.set("name", "Tạo chiến dịch mới"), createCampaign);
   router.delete("/delete", app.set("name", "Xoá chiến dịch"), deleteCampaign);
   router.get(
@@ -16,4 +16,4 @@ export default function CampaignRoutes(app) {
     getAllCampaign
   );
   return app.use("/campaign", router);
-}
+};

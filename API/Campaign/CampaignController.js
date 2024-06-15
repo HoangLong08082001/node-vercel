@@ -83,6 +83,7 @@ const getAllCampaign = (req, res) => {
             alias: link_product + alias,
           });
         });
+        console.log(campaigns);
         return res.status(200).json({ message: "success", data: campaigns });
       }
     }

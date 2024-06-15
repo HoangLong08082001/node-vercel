@@ -9,6 +9,7 @@ const GetRule = (req, res) => {
         throw err;
       }
       if (data) {
+        console.log(data);
         return res.status(200).json(data);
       }
     });
