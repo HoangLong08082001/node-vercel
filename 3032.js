@@ -14,7 +14,6 @@ const port = 3032;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 CollaboratorRoute(app);
 WebhookRoute(app);
 TeamRoutes(app);
@@ -23,6 +22,7 @@ EmployeeRoutes(app);
 DepartmentRoutes(app);
 CampaignRoutes(app);
 RuleRoute(app);
+
 app.listen(port, () => {
   console.log(`Server 2 running on port ${port}`);
 });

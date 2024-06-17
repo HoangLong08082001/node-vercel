@@ -14,9 +14,8 @@ const port = 3033;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
-WebhookRoute(app);
 CollaboratorRoute(app);
+WebhookRoute(app);
 TeamRoutes(app);
 ViewRoutes(app);
 EmployeeRoutes(app);

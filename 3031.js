@@ -14,9 +14,14 @@ const port = 3031;
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-
 CollaboratorRoute(app);
-
+WebhookRoute(app);
+TeamRoutes(app);
+ViewRoutes(app);
+EmployeeRoutes(app);
+DepartmentRoutes(app);
+CampaignRoutes(app);
+RuleRoute(app);
 app.listen(port, () => {
   console.log(`Server 1 running on port ${port}`);
 });

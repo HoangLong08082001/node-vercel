@@ -31,18 +31,19 @@ const wss = new WebSocket.Server({ server });
 const port = process.env.PORT_SERVER || 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const targetServers = [
-  "http://192.168.1.71:3031",
-  "http://192.168.1.71:3032",
-  "http://192.168.1.71:3033",
-];
-let currentIndex = 0;
-
-const getNextServer = () => {
-  const server = targetServers[currentIndex];
-  currentIndex = (currentIndex + 1) % targetServers.length;
-  return server;
+const option = {
+  target: "http://192.168.1.71:3030", // port chính
+  changeOrigin: true,
+  router: {
+    // Các đường dẫn khác nhau đến các port khác nhau
+    "/": "http://192.168.1.71:3031",
+    "/": "http://192.168.1.71:3032",
+    "/": "http://192.168.1.71:3033",
+  },
 };
+
+app.use("/", createProxyMiddleware(option));
+
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -96,13 +97,7 @@ app.use((req, res, next) => {
   const agent = useragent.parse(req.headers["user-agent"]);
   const os = agent.os.toString();
 
-  // const logMessage = `Request: ${req.app.get("name")} ${
-  //   res.statusCode
-  // } ${getVNDateTime(new Date())} ${req.method} ${
-  //   req.url
-  // } from IP: ${ip}, OS: ${os}`;
-  // logger.info(logMessage);
-  // arrayLog.push(logMessage);
+
   const newLogMessages = {
     name: req.app.get("name"),
     status: res.statusCode,
@@ -139,214 +134,18 @@ io.on("connection", (socket) => {
   });
 });
 
-app.use((req, res, next) => {
-  const target = getNextServer();
-  createProxyMiddleware({
-    target: target,
-    changeOrigin: true,
-    onProxyReq: (proxyReq, req, res) => {
-      console.log(`Proxying request to: ${target}`);
-    },
-  })(req, res, next);
-});
+// app.use((req, res, next) => {
+//   const target = getNextServer();
+//   createProxyMiddleware({
+//     target: target,
+//     changeOrigin: true,
+//     onProxyReq: (proxyReq, req, res) => {
+//       console.log(`Proxying request to: ${target}`);
+//     },
+//   })(req, res, next);
+// });
 
-// WebhookRoute(app);
-// CollaboratorRoute(app);
-// TeamRoutes(app);
-// ViewRoutes(app);
-// EmployeeRoutes(app);
-// DepartmentRoutes(app);
-// CampaignRoutes(app);
-// RuleRoute(app);
-// const getOrders = async () => {
-//   try {
-//     // Thực hiện yêu cầu HTTP sử dụng axios
-//     await axios
-//       .get(`https://ecoopglobal.mysapo.net/admin/orders.json`, {
-//         auth: {
-//           username: "9059b72869d54094aae39f7c7800ac33", // API Key
-//           password: "09a67961520b42af90723498e5e512fe", // API Secret
-//         },
-//       })
-//       .then((response) => {
-//         let orders = response.data.orders;
-//         orders.forEach((order) => {
-//           const {
-//             id,
-//             financial_status,
-//             fulfillment_status,
-//             status,
-//             total_price,
-//             landing_site,
-//           } = order;
 
-//           if (
-//             financial_status === "paid" &&
-//             fulfillment_status === "fulfilled" &&
-//             status === "open" &&
-//             (landing_site !== "" || !landing_site)
-//           ) {
-//             pool.query(
-//               WebhookModal.ServiceWebhook.checkIdSapo,
-//               [id],
-//               (err, data) => {
-//                 if (err) {
-//                   throw err;
-//                 }
-//                 if (data.length > 0) {
-//                 } else {
-//                   pool.query(
-//                     WebhookModal.ServiceWebhook.insertOrder,
-//                     [
-//                       id,
-//                       financial_status,
-//                       fulfillment_status,
-//                       status,
-//                       total_price,
-//                       landing_site,
-//                     ],
-//                     (err, data) => {
-//                       if (err) {
-//                         throw err;
-//                       }
-//                       if (data) {
-//                         pool.query(
-//                           WebhookModal.ServiceWebhook.checkIdSapo,
-//                           [id],
-//                           (err, data) => {
-//                             if (data.length > 0) {
-//                               const bwaf = data[0].referral_link; // Giả sử cột chứa dữ liệu là 'bwaf'
-//                               if (bwaf.includes("-")) {
-//                                 // Cắt chuỗi để lấy phần sau dấu "="
-//                                 var parts = bwaf.split("=");
-
-//                                 // Lấy chuỗi chứa "78-100"
-//                                 var numberStr = parts[1];
-
-//                                 // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-//                                 var numbers = numberStr.split("-");
-
-//                                 // Gán kết quả vào các biến
-//                                 var firstNumber = numbers[0];
-//                                 var secondNumber = numbers[1];
-//                                 const orderValue = data[0].total_price;
-//                                 let precent_tax = WebhookModal.handleCommission(
-//                                   orderValue,
-//                                   10,
-//                                   1
-//                                 );
-//                                 pool.query(
-//                                   WebhookModal.ServiceWebhook.checkPayment,
-//                                   [firstNumber],
-//                                   (err, data) => {
-//                                     if (err) {
-//                                       throw err;
-//                                     }
-//                                     if (data.length > 0) {
-//                                       let new_commission =
-//                                         data[0].total_withdrawn + precent_tax;
-//                                       pool.query(
-//                                         WebhookModal.ServiceWebhook
-//                                           .updatePayment,
-//                                         [new_commission, firstNumber],
-//                                         (err, result) => {
-//                                           if (err) {
-//                                           }
-//                                           if (result) {
-//                                           }
-//                                         }
-//                                       );
-//                                     }
-//                                   }
-//                                 );
-//                                 pool.query(
-//                                   WebhookModal.ServiceWebhook.checkPayment,
-//                                   [secondNumber],
-//                                   (err, data) => {
-//                                     if (err) {
-//                                       throw err;
-//                                     }
-//                                     if (data.length > 0) {
-//                                       let new_commission =
-//                                         data[0].total_withdrawn + precent_tax;
-//                                       pool.query(
-//                                         WebhookModal.ServiceWebhook
-//                                           .updatePayment,
-//                                         [new_commission, secondNumber],
-//                                         (err, result) => {
-//                                           if (err) {
-//                                           }
-//                                           if (result) {
-//                                           }
-//                                         }
-//                                       );
-//                                     }
-//                                   }
-//                                 );
-//                               } else {
-//                                 var parts = bwaf.split("=");
-
-//                                 // Lấy chuỗi chứa "78-100"
-//                                 var numberStr = parts[1];
-
-//                                 // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-//                                 var numbers = numberStr.split("-");
-
-//                                 // Gán kết quả vào các biến
-//                                 var firstNumber = numbers[0];
-//                                 var secondNumber = numbers[1];
-//                                 const orderValue = data[0].total_price;
-//                                 let precent_tax = WebhookModal.handleCommission(
-//                                   orderValue,
-//                                   10,
-//                                   1
-//                                 );
-//                                 pool.query(
-//                                   WebhookModal.ServiceWebhook.checkPayment,
-//                                   [firstNumber],
-//                                   (err, data) => {
-//                                     if (err) {
-//                                       throw err;
-//                                     }
-//                                     if (data.length > 0) {
-//                                       let new_commission =
-//                                         data[0].total_withdrawn + precent_tax;
-//                                       pool.query(
-//                                         WebhookModal.ServiceWebhook
-//                                           .updatePayment,
-//                                         [new_commission, firstNumber],
-//                                         (err, result) => {
-//                                           if (err) {
-//                                           }
-//                                           if (result) {
-//                                           }
-//                                         }
-//                                       );
-//                                     }
-//                                   }
-//                                 );
-//                               }
-//                             }
-//                           }
-//                         );
-//                       }
-//                     }
-//                   );
-//                 }
-//               }
-//             );
-//           }
-//         });
-//       });
-//   } catch (error) {
-//     // Xử lý lỗi nếu có
-//     console.error("Error fetching orders:", error);
-//   }
-// };
-
-// setInterval(() => {
-//   getOrders();
-// }, 10000);
 
 server.listen(port, (err) => {
   if (err) {
