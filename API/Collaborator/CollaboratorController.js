@@ -85,7 +85,7 @@ const loginAccount = (req, res) => {
   try {
     let email = req.body.payload.email;
     let password = req.body.payload.password;
-    console.log(email, password);
+    //console.log(email, password);
     if (
       (email !== "" && password !== "") ||
       (email !== null && password !== null)
@@ -95,7 +95,7 @@ const loginAccount = (req, res) => {
           throw err;
         }
         if (data.length > 0) {
-          console.log(data[0]);
+          //console.log(data[0]);
           bcrypt.compare(
             password.toString(),
             data[0].password_collaborator,

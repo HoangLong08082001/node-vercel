@@ -8,17 +8,10 @@ const ViewRoutes = require("./routes-views/routers.js");
 const DepartmentRoutes = require("./API/Department/DepartmentRoutes.js");
 const CampaignRoutes = require("./API/Campaign/CampaignRoutes.js");
 const RuleRoute = require("./API/Rule/RuleRoutes.js");
-const cors = require("cors");
 
-const corsOptions = {
-  origin: "*",
-  methods: ["GET", "POST", "PUT", "DELETE"],
-  allowedHeaders: ["Content-Type"],
-};
 const app = express();
 const port = 3032;
 
-app.use(cors(corsOptions));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 CollaboratorRoute(app);
