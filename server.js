@@ -31,18 +31,18 @@ const wss = new WebSocket.Server({ server });
 const port = process.env.PORT_SERVER || 4000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-const option = {
-  target: "http://192.168.1.71:3030", // port chính
-  changeOrigin: true,
-  router: {
-    // Các đường dẫn khác nhau đến các port khác nhau
-    "/": "http://192.168.1.71:3031",
-    "/": "http://192.168.1.71:3032",
-    "/": "http://192.168.1.71:3033",
-  },
-};
+const targetServers = [
+  "http://192.168.1.71:3031",
+  "http://192.168.1.71:3032",
+  "http://192.168.1.71:3033",
+];
+let currentIndex = 0;
 
-app.use("/", createProxyMiddleware(option));
+const getNextServer = () => {
+  const server = targetServers[currentIndex];
+  currentIndex = (currentIndex + 1) % targetServers.length;
+  return server;
+};
 
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -97,7 +97,6 @@ app.use((req, res, next) => {
   const agent = useragent.parse(req.headers["user-agent"]);
   const os = agent.os.toString();
 
-
   const newLogMessages = {
     name: req.app.get("name"),
     status: res.statusCode,
@@ -134,18 +133,16 @@ io.on("connection", (socket) => {
   });
 });
 
-// app.use((req, res, next) => {
-//   const target = getNextServer();
-//   createProxyMiddleware({
-//     target: target,
-//     changeOrigin: true,
-//     onProxyReq: (proxyReq, req, res) => {
-//       console.log(`Proxying request to: ${target}`);
-//     },
-//   })(req, res, next);
-// });
-
-
+app.use((req, res, next) => {
+  const target = getNextServer();
+  createProxyMiddleware({
+    target: target,
+    changeOrigin: true,
+    onProxyReq: (proxyReq, req, res) => {
+      console.log(`Proxying request to: ${target}`);
+    },
+  })(req, res, next);
+});
 
 server.listen(port, (err) => {
   if (err) {
