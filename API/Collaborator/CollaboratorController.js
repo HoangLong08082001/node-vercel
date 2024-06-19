@@ -111,7 +111,7 @@ const loginAccount = (req, res) => {
                     if (err) {
                       throw err;
                     }
-                    if (data) {
+                    if (data.length > 0) {
                       let payload = {
                         data: data,
                       };
