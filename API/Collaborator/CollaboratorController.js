@@ -112,6 +112,18 @@ const loginAccount = (req, res) => {
                       throw err;
                     }
                     if (data.length > 0) {
+                      let payload = {
+                        data: data,
+                      };
+                      let token = createJwtApp(payload);
+                      if (data && token) {
+                        res.cookie("jwt", token, { httpOnly: true });
+                      }
+                      res.status(200).json({
+                        message: "success",
+                        data,
+                        access_token: token,
+                      });
                       if (data[0].status_verify === 0) {
                         const transport = nodemailer.createTransport({
                           host: "smtp.gmail.com",
@@ -146,18 +158,6 @@ const loginAccount = (req, res) => {
                           access_token: token,
                         });
                       }
-                      let payload = {
-                        data: data,
-                      };
-                      let token = createJwtApp(payload);
-                      if (data && token) {
-                        res.cookie("jwt", token, { httpOnly: true });
-                      }
-                      return res.status(200).json({
-                        message: "success",
-                        data,
-                        access_token: token,
-                      });
                     } else {
                       return res
                         .status(400)
