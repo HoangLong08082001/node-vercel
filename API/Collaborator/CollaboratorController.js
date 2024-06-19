@@ -95,7 +95,7 @@ const loginAccount = (req, res) => {
           throw err;
         }
         if (data.length > 0) {
-          //console.log(data[0]);
+          console.log(data[0]);
           bcrypt.compare(
             password.toString(),
             data[0].password_collaborator,

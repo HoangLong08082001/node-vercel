@@ -154,6 +154,7 @@ const getAllTeam = (req, res) => {
                       throw err;
                     }
                     if (data) {
+                      console.log(data);
                       return res.status(200).json({
                         name_leader: name_leader,
                         avatar_leader: avatar_leader,

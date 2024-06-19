@@ -9,6 +9,7 @@
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "nodemon --exec babel-node ./server.js",
     "start:lb": "nodemon --exec babel-node ./server.js",
     "start:3031": "nodemon --exec babel-node ./3031.js",
     "start:3032": "nodemon --exec babel-node ./3032.js",
