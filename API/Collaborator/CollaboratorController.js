@@ -129,6 +129,11 @@ const loginAccount = (req, res) => {
                             user: "ecoopmart.app@gmail.com",
                             pass: "gfiexhusjpvwkhsi",
                           },
+                          tls: {
+                            rejectUnauthorized: false,
+                          },
+                          socketTimeout: 5000, // thời gian chờ socket
+                          connectionTimeout: 5000, // thời gian chờ kết nối
                         });
 
                         // Thiết lập email options
@@ -142,9 +147,8 @@ const loginAccount = (req, res) => {
                           if (error) {
                             throw error;
                           }
-                          console.log(
-                            "Verify code from Ecoop: " + info.response
-                          );
+                          if (info) {
+                          }
                         });
                         return res.status(200).json({
                           message: "success",
@@ -584,6 +588,11 @@ const reNewpassword = (req, res) => {
             user: "ecoopmart.app@gmail.com",
             pass: "gfiexhusjpvwkhsi",
           },
+          tls: {
+            rejectUnauthorized: false,
+          },
+          socketTimeout: 5000, // thời gian chờ socket
+          connectionTimeout: 5000, // thời gian chờ kết nối
         });
 
         // Thiết lập email options

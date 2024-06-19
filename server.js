@@ -155,10 +155,10 @@ const getOrders = async () => {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://ecoopglobal.mysapo.net/admin/orders.json`, {
+      .get(`https://ecoopglobalvn.mysapo.net/admin/orders.json`, {
         auth: {
-          username: "9059b72869d54094aae39f7c7800ac33", // API Key
-          password: "09a67961520b42af90723498e5e512fe", // API Secret
+          username: "9d28ed79bc9447dfabe8ab7c94c54ba9", // API Key
+          password: "f9f1006a296940f1ab070c5f4cd2a638", // API Secret
         },
       })
       .then((response) => {
