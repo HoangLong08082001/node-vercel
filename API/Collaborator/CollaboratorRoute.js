@@ -13,6 +13,7 @@ const {
   setStatus,
   signOutAccount,
   updateInformation,
+  sendMailVerify,
 } = require("./CollaboratorController");
 const { authenticationToken } = require("../../middleware/JwtAction");
 const router = express.Router();
@@ -58,5 +59,6 @@ module.exports = function CollaboratorRoute(app) {
   );
   router.post("/block", app.set("name", "Khoá người dùng"), setStatus);
   router.get("/get-by-id/:id", getById);
+  router.post("/send-mail-verify", sendMailVerify);
   return app.use("/collaborator", router);
 };

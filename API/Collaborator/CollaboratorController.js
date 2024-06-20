@@ -82,10 +82,11 @@ const registerAccount = async (req, res) => {
 };
 
 const loginAccount = (req, res) => {
+  let email = req.body.payload.email;
+  let password = req.body.payload.password;
+  console.log("Login:"+email);
   try {
-    let email = req.body.payload.email;
-    let password = req.body.payload.password;
-    //console.log(email, password);
+  console.log(email, password);
     if (
       (email !== "" && password !== "") ||
       (email !== null && password !== null)
@@ -95,7 +96,6 @@ const loginAccount = (req, res) => {
           throw err;
         }
         if (data.length > 0) {
-          console.log(data[0]);
           bcrypt.compare(
             password.toString(),
             data[0].password_collaborator,
@@ -112,52 +112,18 @@ const loginAccount = (req, res) => {
                       throw err;
                     }
                     if (data.length > 0) {
-                      if (data[0].status_verify === 0) {
-                        const transport = nodemailer.createTransport({
-                          host: "smtp.gmail.com",
-                          port: 587,
-                          service: "gmail",
-                          secure: false,
-                          auth: {
-                            user: "ecoopmart.app@gmail.com",
-                            pass: "gfiexhusjpvwkhsi",
-                          }, // thời gian chờ kết nối
-                        });
-
-                        // Thiết lập email options
-                        const mailOptions = {
-                          from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
-                          to: `${data[0].email_collaborator}`, // Địa chỉ email của người nhận
-                          subject: "Ecoop send code verify", // Tiêu đề email
-                          text: `Verify code from Ecoop ${data[0].code_verify}`, // Nội dung email
-                        };
-                        transport.sendMail(mailOptions, (error, info) => {
-                          if (error) {
-                            throw error;
-                          }
-                          if (info) {
-                          }
-                        });
-                        let payload = {
-                          data: data,
-                        };
-                        let token = createJwtApp(payload);
-                        if (data && token) {
-                          res.cookie("jwt", token, { httpOnly: true });
-                        }
-                        res.status(200).json({
-                          message: "success",
-                          data,
-                          access_token: token,
-                        });
+                      let payload = {
+                        data: data,
+                      };
+                      let token = createJwtApp(payload);
+                      if (data && token) {
+                        res.cookie("jwt", token, { httpOnly: true });
                       }
-                      if (data[0].status_verify === 1) {
-                        return res.status(200).json({
-                          message: "success",
-                          data,
-                          access_token: token,
-                        });
-                      }
+                      res.status(200).json({
+                        message: "success",
+                        data,
+                        access_token: token,
+                      });
                     } else {
                       return res
                         .status(400)
@@ -758,6 +724,58 @@ const getById = (req, res) => {
   }
 };
 
+const sendMailVerify = (req, res) => {
+  let email = req.body.payload.email;
+  console.log("mail:"+email);
+  try {
+    pool.query(ServiceCollaborator.checkStatusVerify, [email], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        if (data[0].status_verify === 0) {
+          const transport = nodemailer.createTransport({
+            host: "smtp.gmail.com",
+            port: 587,
+            service: "gmail",
+            secure: false,
+            auth: {
+              user: "ecoopmart.app@gmail.com",
+              pass: "gfiexhusjpvwkhsi",
+            }, // thời gian chờ kết nối
+          });
+
+          // Thiết lập email options
+          const mailOptions = {
+            from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
+            to: `${data[0].email_collaborator}`, // Địa chỉ email của người nhận
+            subject: "Ecoop send code verify", // Tiêu đề email
+            text: `Verify code from Ecoop ${data[0].code_verify}`, // Nội dung email
+          };
+          transport.sendMail(mailOptions, (error, info) => {
+            if (error) {
+              throw error;
+            }
+            if (info) {
+            }
+          });
+
+          res.status(200).json({
+            message: "success",
+          });
+        }
+        if (data[0].status_verify === 1) {
+          return res.status(200).json({
+            message: "success",
+          });
+        }
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
 module.exports = {
   registerAccount,
   loginAccount,
@@ -772,4 +790,5 @@ module.exports = {
   setStatus,
   deleteCollaborator,
   getById,
+  sendMailVerify,
 };
