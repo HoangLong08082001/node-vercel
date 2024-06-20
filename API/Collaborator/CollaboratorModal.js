@@ -59,7 +59,7 @@ class ServiceCollaborator {
   static createTeamCTVC1 =
     "INSERT INTO team_collaborator (id_team, id_collaborator) VALUES (?,?)";
   static checkStatusVerify =
-    "SELECT * FROM collaborator WHERE email_collaborator=?";
+    "SELECT collaborator.email_collaborator, collaborator.status_verify, collaborator.code_verify FROM collaborator WHERE email_collaborator=?";
 }
 
 module.exports = { ServiceCollaborator };
