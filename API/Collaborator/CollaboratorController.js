@@ -84,9 +84,9 @@ const registerAccount = async (req, res) => {
 const loginAccount = (req, res) => {
   let email = req.body.payload.email;
   let password = req.body.payload.password;
-  console.log("Login:"+email);
+  console.log("Login:" + email);
   try {
-  console.log(email, password);
+    console.log(email, password);
     if (
       (email !== "" && password !== "") ||
       (email !== null && password !== null)
@@ -726,7 +726,7 @@ const getById = (req, res) => {
 
 const sendMailVerify = (req, res) => {
   let email = req.body.payload.email;
-  console.log("mail:"+email);
+  console.log("mail:" + email);
   try {
     pool.query(ServiceCollaborator.checkStatusVerify, [email], (err, data) => {
       if (err) {
@@ -757,11 +757,10 @@ const sendMailVerify = (req, res) => {
               throw error;
             }
             if (info) {
+              res.status(200).json({
+                message: "success",
+              });
             }
-          });
-
-          res.status(200).json({
-            message: "success",
           });
         }
         if (data[0].status_verify === 1) {
