@@ -58,7 +58,7 @@ class ServiceCollaborator {
   static createTeam = "INSERT INTO Team(quantity, link_team) VALUES(?,?)";
   static createTeamCTVC1 =
     "INSERT INTO team_collaborator (id_team, id_collaborator) VALUES (?,?)";
- static checkStatusVerify="SELECT * FROM collaborator WHERE email_collaborator=?"   
+    
 }
 
 module.exports = { ServiceCollaborator };
