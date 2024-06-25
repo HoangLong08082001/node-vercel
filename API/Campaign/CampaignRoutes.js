@@ -2,6 +2,7 @@ const {
   createCampaign,
   deleteCampaign,
   getAllCampaign,
+  addProductToCampaign,
 } = require("./CampaignController");
 
 const express = require("express");
@@ -15,5 +16,6 @@ module.exports = function CampaignRoutes(app) {
     app.set("name", "Lấy danh sách chiến dịch"),
     getAllCampaign
   );
+  router.post('/add-product-campaign', addProductToCampaign);
   return app.use("/campaign", router);
 };

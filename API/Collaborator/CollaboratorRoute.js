@@ -14,6 +14,7 @@ const {
   signOutAccount,
   updateInformation,
   sendEmailVerifyCode,
+  newPass,
 } = require("./CollaboratorController");
 const { authenticationToken } = require("../../middleware/JwtAction");
 const router = express.Router();
@@ -60,5 +61,6 @@ module.exports = function CollaboratorRoute(app) {
   router.post("/block", app.set("name", "Khoá người dùng"), setStatus);
   router.get("/get-by-id/:id", getById);
   router.post("/send-email", sendEmailVerifyCode);
+  router.put("/renew-password", newPass);
   return app.use("/collaborator", router);
 };

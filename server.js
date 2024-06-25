@@ -22,6 +22,9 @@ const path = require("path");
 const WebSocket = require("ws");
 const socketIO = require("socket.io");
 const { createProxyMiddleware } = require("http-proxy-middleware");
+const { default: ProductRoutes } = require("./API/Product/ProductRoutes.js");
+// const admin = require("firebase-admin");
+// const serviceAccount = require("./serviceAccountKey.json");
 
 dotenv.config();
 const app = express();
@@ -71,7 +74,11 @@ app.set("views", path.join(__dirname, "./views"));
 app.use(express.static(path.join(__dirname, "./public")));
 
 app.use(cors(corsOptions));
-
+// admin.initializeApp({
+//   credential: admin.credential.cert(serviceAccount),
+//   databaseURL:
+//     "https://ecooptest-76244-default-rtdb.asia-southeast1.firebasedatabase.app",
+// });
 const arrayLog = [];
 
 app.use((req, res, next) => {
@@ -151,7 +158,65 @@ EmployeeRoutes(app);
 DepartmentRoutes(app);
 CampaignRoutes(app);
 RuleRoute(app);
+ProductRoutes(app);
+
+// app.post("/store-token", async (req, res) => {
+//   const { token } = req.body;
+//   if (!token) {
+//     return res.status(400).send("Token is required");
+//   }
+//   try {
+//     // Lưu token vào Firebase Realtime Database
+//     const tokenRef = admin.database().ref("/tokens").push();
+//     await tokenRef.set(token);
+//     res.status(200).send("Token stored successfully");
+//   } catch (error) {
+//     console.error("Error storing token:", error);
+//     res.status(500).send("Error storing token: " + error.message);
+//   }
+// });
+
+// // Hàm để gửi thông báo đến tất cả các token đã lưu
+// async function sendNotificationToAll(title, body) {
+//   const tokensSnapshot = await admin.database().ref("/tokens").once("value");
+//   const tokens = tokensSnapshot.val();
+//   if (!tokens) {
+//     console.log("No tokens found");
+//     return;
+//   }
+//   const tokenList = Object.values(tokens);
+//   const message = {
+//     notification: { title, body },
+//     tokens: tokenList,
+//   };
+//   admin
+//     .messaging()
+//     .sendMulticast(message)
+//     .then((response) => {
+//       console.log("Successfully sent message:", response);
+//     })
+//     .catch((error) => {
+//       console.error("Error sending message:", error);
+//     });
+// }
+
+// // Endpoint để gửi thông báo
+// app.post("/send-notification", async (req, res) => {
+//   const { title, body } = req.body;
+//   if (!title || !body) {
+//     return res.status(400).send("Title and body are required");
+//   }
+//   try {
+//     await sendNotificationToAll(title, body);
+//     res.status(200).send("Notification sent successfully");
+//   } catch (error) {
+//     console.error("Error sending notification:", error);
+//     res.status(500).send("Error sending notification: " + error.message);
+//   }
+// });
+
 const getOrders = async () => {
+  let sdt = "";
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
@@ -172,7 +237,6 @@ const getOrders = async () => {
             total_price,
             landing_site,
           } = order;
-
           if (
             financial_status === "paid" &&
             fulfillment_status === "fulfilled" &&
@@ -184,9 +248,10 @@ const getOrders = async () => {
               [id],
               (err, data) => {
                 if (err) {
-                  throw err;
+                  return;
                 }
                 if (data.length > 0) {
+                  return;
                 } else {
                   pool.query(
                     WebhookModal.ServiceWebhook.insertOrder,
@@ -233,11 +298,23 @@ const getOrders = async () => {
                                   [firstNumber],
                                   (err, data) => {
                                     if (err) {
-                                      throw err;
+                                      console.log("error");
                                     }
                                     if (data.length > 0) {
-                                      let new_commission =
-                                        data[0].total_withdrawn + precent_tax;
+                                      const sum = (a, b) => {
+                                        return parseInt(a + b);
+                                      };
+                                      let new_commission = sum(
+                                        parseInt(
+                                          data[0].total_withdrawn
+                                            ? data[0].total_withdrawn
+                                            : 0
+                                        ),
+                                        parseInt(precent_tax)
+                                      );
+                                      console.log(data[0].total_withdrawn);
+                                      console.log(precent_tax);
+                                      console.log(new_commission);
                                       pool.query(
                                         WebhookModal.ServiceWebhook
                                           .updatePayment,
@@ -253,23 +330,58 @@ const getOrders = async () => {
                                   }
                                 );
                                 pool.query(
-                                  WebhookModal.ServiceWebhook.checkPayment,
+                                  WebhookModal.ServiceWebhook
+                                    .checkAffiliateLevel2,
                                   [secondNumber],
                                   (err, data) => {
                                     if (err) {
-                                      throw err;
+                                      console.log("error");
                                     }
                                     if (data.length > 0) {
-                                      let new_commission =
-                                        data[0].total_withdrawn + precent_tax;
                                       pool.query(
                                         WebhookModal.ServiceWebhook
-                                          .updatePayment,
-                                        [new_commission, secondNumber],
-                                        (err, result) => {
-                                          if (err) {
-                                          }
-                                          if (result) {
+                                          .checkAffiliateLevel1,
+                                        [firstNumber, data[0].phone],
+                                        (err, data) => {
+                                          if (data.length > 0) {
+                                            pool.query(
+                                              WebhookModal.ServiceWebhook
+                                                .checkPayment,
+                                              [secondNumber],
+                                              (err, data) => {
+                                                if (err) {
+                                                  console.log("error");
+                                                }
+                                                if (data.length > 0) {
+                                                  const sum = (a, b) => {
+                                                    return parseInt(a + b);
+                                                  };
+                                                  let new_commission = sum(
+                                                    parseInt(
+                                                      data[0].total_withdrawn
+                                                        ? data[0]
+                                                            .total_withdrawn
+                                                        : 0
+                                                    ),
+                                                    parseInt(precent_tax)
+                                                  );
+                                                  pool.query(
+                                                    WebhookModal.ServiceWebhook
+                                                      .updatePayment,
+                                                    [
+                                                      new_commission,
+                                                      secondNumber,
+                                                    ],
+                                                    (err, result) => {
+                                                      if (err) {
+                                                      }
+                                                      if (result) {
+                                                      }
+                                                    }
+                                                  );
+                                                }
+                                              }
+                                            );
                                           }
                                         }
                                       );
@@ -277,41 +389,46 @@ const getOrders = async () => {
                                   }
                                 );
                               } else {
-                                var parts = bwaf.split("=");
-
-                                // Lấy chuỗi chứa "78-100"
-                                var numberStr = parts[1];
-
-                                // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-                                var numbers = numberStr.split("-");
-
-                                // Gán kết quả vào các biến
-                                var firstNumber = numbers[0];
-                                var secondNumber = numbers[1];
-                                const orderValue = data[0].total_price;
+                                const bwafValue = bwaf.split("=")[1];
+                                const orderValue = order.total_price;
                                 let precent_tax = WebhookModal.handleCommission(
                                   orderValue,
                                   10,
                                   1
                                 );
+                                console.log(precent_tax);
                                 pool.query(
                                   WebhookModal.ServiceWebhook.checkPayment,
-                                  [firstNumber],
+                                  [bwafValue],
                                   (err, data) => {
                                     if (err) {
-                                      throw err;
+                                      console.log("fails");
                                     }
                                     if (data.length > 0) {
-                                      let new_commission =
-                                        data[0].total_withdrawn + precent_tax;
+                                      const sum = (a, b) => {
+                                        return parseInt(a + b);
+                                      };
+                                      let new_commission = sum(
+                                        parseInt(
+                                          data[0].total_withdrawn
+                                            ? data[0].total_withdrawn
+                                            : 0
+                                        ),
+                                        parseInt(precent_tax)
+                                      );
+                                      console.log(data[0].total_withdrawn);
+                                      console.log(precent_tax);
+                                      console.log(new_commission);
                                       pool.query(
                                         WebhookModal.ServiceWebhook
                                           .updatePayment,
-                                        [new_commission, firstNumber],
+                                        [new_commission, bwafValue],
                                         (err, result) => {
                                           if (err) {
+                                            console.log("fails");
                                           }
                                           if (result) {
+                                            console.log("success");
                                           }
                                         }
                                       );
@@ -328,6 +445,8 @@ const getOrders = async () => {
                 }
               }
             );
+          } else {
+            return;
           }
         });
       });
@@ -336,9 +455,8 @@ const getOrders = async () => {
     console.error("Error fetching orders:", error);
   }
 };
-setInterval(() => {
-  getOrders();
-}, 10000);
+
+getOrders();
 server.listen(port, (err) => {
   if (err) {
     throw err;

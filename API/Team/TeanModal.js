@@ -18,7 +18,7 @@ class TeamModal {
   static getByPhone =
     "SELECT collaborator.name_collaborator, collaborator.avatar, collaborator.id_collaborator FROM collaborator WHERE phone=?";
   static getByTeamNull =
-    "SELECT collaborator.name_collaborator, collaborator.avatar FROM `Team` JOIN team_collaborator on Team.id_team = team_collaborator.id_team JOIN collaborator on team_collaborator.id_collaborator = collaborator.id_collaborator WHERE Team.id_team=5 && collaborator.presenter_phone IS NULL";
+    "SELECT collaborator.name_collaborator, collaborator.avatar FROM `Team` JOIN team_collaborator on Team.id_team = team_collaborator.id_team JOIN collaborator on team_collaborator.id_collaborator = collaborator.id_collaborator WHERE Team.id_team=? && collaborator.presenter_phone IS NULL";
 }
 
 module.exports = { TeamModal };

@@ -81,7 +81,7 @@ const getAlDepartment = (req, res) => {
 };
 
 const checkPermission = (req, res) => {
-  const { ids_department, ids_rule } = req.body;
+  const { ids_department, ids_rule } = req.body.data;
   console.log(ids_department + " " + ids_rule);
 
   if (!ids_department || !Array.isArray(ids_rule)) {

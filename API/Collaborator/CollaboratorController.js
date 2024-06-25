@@ -294,7 +294,10 @@ const presenterPhone = (req, res) => {
                                   } else {
                                     pool.query(
                                       ServiceCollaborator.createTeam,
-                                      [0, `https://ecoop.vn/?bwaf=`],
+                                      [
+                                        0,
+                                        `https://ecoopglobalvn.mysapo.net/?bwaf=`,
+                                      ],
                                       (err, data) => {
                                         if (err) {
                                           throw err;
@@ -540,6 +543,10 @@ const reNewpassword = (req, res) => {
       }
       if (data.length > 0) {
         console.log(data[0]);
+        let payload = { data: data[0] };
+        let token = createJwtApp(payload);
+        const modifiedToken = token.replace(/\./g, "/");
+        console.log(modifiedToken);
         const transport = nodemailer.createTransport({
           host: "smtp.gmail.com",
           port: 587,
@@ -561,7 +568,7 @@ const reNewpassword = (req, res) => {
           from: "ECOOPMART.VN", // Địa chỉ email của người gửi
           to: `${email}`, // Địa chỉ email của người nhận
           subject: "Ecoop send message to renew password", // Tiêu đề email
-          text: `To reset your password, you need to log in to the page https://node-vercel-sigma.vercel.app/views/repassword-page. Please enter your registered email and enter the new password to be reset.`, // Nội dung email
+          text: `To reset your password, you need to log in to the page https://ecoop-react.vercel.app/changePasswordCustomer/${modifiedToken}. Please enter your registered email and enter the new password to be reset.`, // Nội dung email
         };
         transport.sendMail(mailOptions, (error, info) => {
           if (error) {
@@ -770,6 +777,51 @@ const sendEmailVerifyCode = (req, res) => {
   });
 };
 
+const newPass = (req, res) => {
+  let email = req.body.payload.email;
+  let password = req.body.payload.password;
+  console.log(email);
+  console.log(password);
+  try {
+    pool.query(
+      "SELECT * FROM collaborator WHERE email_collaborator=?",
+      [email],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          bcrypt.hash(password, salt, (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              pool.query(
+                "UPDATE collaborator SET password_collaborator=? WHERE email_collaborator=?",
+                [data, email],
+                (err, data) => {
+                  if (err) {
+                    throw err;
+                  }
+                  if (data) {
+                    return res.status(200).json({ message: "success" });
+                  }
+                }
+              );
+            }
+          });
+        } else {
+          return res
+            .status(400)
+            .json({ message: "Email không tồn tại trong hệ thống" });
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "Error" });
+  }
+};
+
 module.exports = {
   registerAccount,
   loginAccount,
@@ -785,4 +837,5 @@ module.exports = {
   deleteCollaborator,
   getById,
   sendEmailVerifyCode,
+  newPass,
 };

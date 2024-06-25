@@ -4,6 +4,10 @@ const handleCommission = (total_price, personal_tax, affiliate_tax) => {
 };
 
 class ServiceWebhook {
+  static checkAffiliateLevel1 =
+    "SELECT * FROM collaborator WHERE id_collaborator=? AND presenter_phone=?";
+  static checkAffiliateLevel2 =
+    "SELECT * FROM collaborator WHERE id_collaborator=?";
   static insertOrder =
     "INSERT INTO orders (id_orders_sapo,financial_status, fulfillment_status, status, total_price, referral_link) VALUES(?,?,?,?,?,?)";
   static getAllOrders =
@@ -17,7 +21,6 @@ class ServiceWebhook {
   static countTotal = "SELECT COUNT(*) as total FROM orders";
   static getLast = "SELECT * FROM orders";
   static checkIdSapo = "SELECT * FROM orders WHERE id_orders_sapo=?";
-  
 }
 
 module.exports = {
