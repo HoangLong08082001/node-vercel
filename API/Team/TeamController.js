@@ -180,4 +180,59 @@ const getAllTeam = (req, res) => {
   }
 };
 
-module.exports = { createTeam, joinTeam, getAllTeam };
+const getAllCollaboratorOfTeam = (req, res) => {
+  let phone = req.params.id;
+  pool.query(
+    "SELECT team_collaborator.id_team FROM team_collaborator join collaborator on team_collaborator.id_collaborator = collaborator.id_collaborator WHERE collaborator.phone=?",
+    [phone],
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        let id_team = data[0].id_team;
+        const sql =
+          "SELECT c1.phone, c1.email_collaborator, c1.id_collaborator, c1.name_collaborator, c1.gender, c1.avatar, COUNT(c2.phone) AS count FROM collaborator c1 LEFT JOIN collaborator c2 ON c1.phone = c2.presenter_phone INNER JOIN team_collaborator tc ON c1.id_collaborator = tc.id_collaborator GROUP BY c1.name_collaborator, c1.phone, c1.email_collaborator, c1.id_collaborator, c1.gender, c1.avatar , tc.id_team HAVING tc.id_team = ?";
+
+        pool.query(sql, [id_team], (err, data) => {
+          if (err) {
+            return res.status(500).json({ error: err.message });
+          }
+          return res.status(200).json(data);
+        });
+      } else {
+        return res.status(200).json([]);
+      }
+    }
+  );
+};
+
+const detailCollaborator = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(
+      "SELECT c1.id_collaborator, c1.name_collaborator, c1.phone, c1.email_collaborator FROM collaborator c1 join collaborator c2 on c1.presenter_phone = c2.phone WHERE c2.id_collaborator = ?",
+      [id],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          return res.status(200).json(data);
+        } else {
+          return res.status(200).json([]);
+        }
+      }
+    );
+  } catch (err) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
+module.exports = {
+  detailCollaborator,
+  createTeam,
+  joinTeam,
+  getAllTeam,
+  getAllCollaboratorOfTeam,
+};

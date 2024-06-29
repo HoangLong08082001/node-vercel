@@ -25,9 +25,7 @@ const getToday = () => {
 };
 //id_department	username	password	phone	status	code_verify	date_create	time_create
 const createEmployee = (req, res, io) => {
-  let passRnadom = "";
   let username = req.body.username;
-  let password = req.body.password;
   let name = req.body.name;
   let phone = req.body.phone;
   let id_department = req.body.id_department;
@@ -38,53 +36,18 @@ const createEmployee = (req, res, io) => {
     if (result.length > 0) {
       return res.status(400).json({ message: "Email đã tồn tại" });
     } else {
-      passRnadom = randomNumberCodeVerfify();
-      bcrypt.hash(passRnadom.toString(), salt, (err, hash) => {
-        if (err) {
-          throw er;
+      pool.query(
+        ServiceEmployee.create,
+        [id_department, name, username, phone, 1, getToday()],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
         }
-        if (hash) {
-          pool.query(
-            ServiceEmployee.create,
-            [id_department, name, username, hash, phone, 1, getToday()],
-            (err, data) => {
-              if (err) {
-                throw err;
-              }
-              if (data) {
-                const transport = nodemailer.createTransport({
-                  host: "smtp.gmail.com",
-                  port: 587,
-                  service: "gmail",
-                  secure: false,
-                  auth: {
-                    user: "ecoopmart.app@gmail.com",
-                    pass: "gfiexhusjpvwkhsi",
-                  },
-                });
-
-                // Thiết lập email options
-                const mailOptions = {
-                  from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
-                  to: `${username}`, // Địa chỉ email của người nhận
-                  subject: `Ecoop sending account to ${username}`, // Tiêu đề email
-                  text: `Send account from Ecoop to login Admin page`, // Nội dung email
-                  html: `<p>username: ${username}</p><br/><p>password:${passRnadom.toString()}</p>`,
-                };
-                transport.sendMail(mailOptions, (error, info) => {
-                  if (error) {
-                    throw error;
-                  }
-                  console.log("Verify code from Ecoop: " + info.response);
-                });
-                const newItem = { id: data.insertId, username };
-                io.emit("item_added", newItem);
-                return res.status(200).json({ message: "success" });
-              }
-            }
-          );
-        }
-      });
+      );
     }
   });
 };
@@ -109,7 +72,8 @@ const loginEmployee = (req, res) => {
               if (err) {
                 throw err;
               }
-              if (response) {
+              if (response.length > 0) {
+                console.log(response[0]);
                 let payload = {
                   data: response,
                 };
@@ -283,22 +247,146 @@ const updateInformation = (req, res) => {
   let oldusername = req.body.oldusername;
   let oldname = req.body.oldname;
   let oldphone = req.body.oldphone;
-  // if (name !== "" || name !== undefined) {
-  //   pool.query(
-  //     "UPDATE employee SET name=? WHERE username=?",
-  //     [name, username],
-  //     (err, data) => {
-  //       if (err) {
-  //         throw err;
-  //       }
-  //       if (data) {
-
-  //       }
-  //     }
-  //   );
-  // } else {
-  // }
-  console.log(username + " " + name + " " + phone);
+  console.log(username);
+  console.log(name);
+  console.log(phone);
+  console.log(oldusername);
+  console.log(oldname);
+  console.log(oldphone);
+  try {
+    if (username === oldusername && name === oldname && phone === oldphone) {
+      return res
+        .status(400)
+        .json({ message: "Không có dữ liệu mới để cập nhật" });
+    }
+    if (username === "" || name === "" || phone === "") {
+      return res
+        .status(400)
+        .json({ message: "Vui lòng không để trống thông tin" });
+    }
+    if (phone !== oldphone && username === oldusername && name === oldname) {
+      pool.query(
+        ServiceEmployee.updatePhone,
+        [phone, oldusername],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
+        }
+      );
+    }
+    if (name !== oldname && phone === oldphone && username === oldusername) {
+      pool.query(
+        ServiceEmployee.updateName,
+        [name, oldusername],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
+        }
+      );
+    }
+    if (name !== oldname && phone !== oldphone && username && oldusername) {
+      pool.query(
+        ServiceEmployee.updateNamePhone,
+        [name, phone, oldusername],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
+        }
+      );
+    }
+    if (username !== oldusername && name === oldname && phone === oldphone) {
+      pool.query(
+        ServiceEmployee.updateEmail,
+        [username, oldusername],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
+        }
+      );
+    }
+    if (username !== oldusername && phone !== oldphone && name === oldname) {
+      pool.query(
+        ServiceEmployee.checkUsernamePhone,
+        [username, phone],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data.length > 0) {
+            pool.query(
+              ServiceEmployee.updateEmailPhone,
+              [username, phone, oldusername],
+              (err, data) => {
+                if (err) {
+                  throw err;
+                }
+                if (data) {
+                  return res.status(200).json({ message: "success" });
+                }
+              }
+            );
+          }
+        }
+      );
+    }
+    if (username !== oldusername && name !== oldname && phone === oldphone) {
+      pool.query(
+        ServiceEmployee.updateEmailName,
+        [username, name, oldusername],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data) {
+            return res.status(200).json({ message: "success" });
+          }
+        }
+      );
+    }
+    if (username !== oldusername && name !== oldname && phone !== oldphone) {
+      pool.query(
+        ServiceEmployee.checkUsernamePhone,
+        [username, phone],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data.length > 0) {
+            pool.query(
+              ServiceEmployee.updateEmailNamePhone,
+              [username, name, phone, oldusername],
+              (err, data) => {
+                if (err) {
+                  throw err;
+                }
+                if (data) {
+                  return res.status(200).json({ message: "success" });
+                }
+              }
+            );
+          }
+        }
+      );
+    }
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
 };
 
 const blockEmployee = (req, res) => {
@@ -348,6 +436,60 @@ const blockEmployee = (req, res) => {
   }
 };
 
+const sendMailToLogin = (req, res) => {
+  let username = req.body.username;
+  let randPass = randomNumberCodeVerfify();
+  try {
+    bcrypt.hash(randPass.toString(), salt, (err, hash) => {
+      if (err) {
+        throw err;
+      }
+      if (hash) {
+        pool.query(
+          ServiceEmployee.updatePassword,
+          [hash, username],
+          (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              const transport = nodemailer.createTransport({
+                host: "smtp.gmail.com",
+                port: 587,
+                service: "gmail",
+                secure: false,
+                auth: {
+                  user: "ecoopmart.app@gmail.com",
+                  pass: "gfiexhusjpvwkhsi",
+                },
+              });
+              // Thiết lập email options
+              const mailOptions = {
+                from: "ecoopmart.app@gmail.com", // Địa chỉ email của người gửi
+                to: `${username}`, // Địa chỉ email của người nhận
+                subject: `Ecoop sending account to ${username}`, // Tiêu đề email
+                text: `Send account from Ecoop to login Admin page`, // Nội dung email
+                html: `<br/><p>username: ${username}</p><p>password:${randPass}</p>`,
+              };
+              transport.sendMail(mailOptions, (error, info) => {
+                if (error) {
+                  throw error;
+                }
+                if (info) {
+                  return res.status(200).json({ message: "success" });
+                }
+                console.log("Verify code from Ecoop: " + info.response);
+              });
+            }
+          }
+        );
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "error system" });
+  }
+};
+
 module.exports = {
   createEmployee,
   loginEmployee,
@@ -356,4 +498,5 @@ module.exports = {
   setNewPassword,
   updateInformation,
   blockEmployee,
+  sendMailToLogin,
 };

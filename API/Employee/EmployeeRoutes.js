@@ -8,6 +8,9 @@ const {
   loginEmployee,
   rePassword,
   setNewPassword,
+  sendMailToLogin,
+  changePasswordEmployee,
+  updateInformation,
 } = require("./EmployeeController");
 
 const express = require("express");
@@ -26,5 +29,7 @@ module.exports = function EmployeeRoutes(app) {
   router.put("/re-password", rePassword);
   router.put("/renew-password", setNewPassword);
   router.post("/block", blockEmployee);
+  router.post("/send-mail-to-login", sendMailToLogin);
+  router.put("/update", updateInformation);
   return app.use("/employee", router);
 };

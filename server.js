@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const useragent = require("useragent");
 const morgan = require("morgan");
 const cors = require("cors");
+const fs = require("fs");
 const http = require("http");
 const WebhookModal = require("./WEBHOOK/WebhookModal.js");
 const jwt = require("jsonwebtoken");
@@ -23,6 +24,8 @@ const WebSocket = require("ws");
 const socketIO = require("socket.io");
 const { createProxyMiddleware } = require("http-proxy-middleware");
 const { default: ProductRoutes } = require("./API/Product/ProductRoutes.js");
+const { default: OrdersRoutes } = require("./API/Orders/OrdersRoutes.js");
+const moment = require("moment/moment.js");
 // const admin = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
 
@@ -46,7 +49,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 //   currentIndex = (currentIndex + 1) % targetServers.length;
 //   return server;
 // };
+const formatDate = (date) => {
+  const dateObject = new Date(date);
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObject.getDate()).padStart(2, "0");
+  const hours = String(dateObject.getHours()).padStart(2, "0");
+  const minutes = String(dateObject.getMinutes()).padStart(2, "0");
+  const seconds = String(dateObject.getSeconds()).padStart(2, "0");
 
+  return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
+};
 app.use(function (req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header(
@@ -74,71 +87,6 @@ app.set("views", path.join(__dirname, "./views"));
 app.use(express.static(path.join(__dirname, "./public")));
 
 app.use(cors(corsOptions));
-// admin.initializeApp({
-//   credential: admin.credential.cert(serviceAccount),
-//   databaseURL:
-//     "https://ecooptest-76244-default-rtdb.asia-southeast1.firebasedatabase.app",
-// });
-const arrayLog = [];
-
-app.use((req, res, next) => {
-  function getVNDateTime(date) {
-    const options = {
-      weekday: "long",
-      year: "numeric",
-      month: "long",
-      day: "numeric",
-    };
-    const ngày = date.toLocaleDateString("vi-VN", options);
-    const giờ = date.toLocaleTimeString("vi-VN");
-    return `${ngày} ${giờ}`;
-  }
-  var options = {
-    weekday: "long",
-    year: "numeric",
-    month: "long",
-    day: "numeric",
-  };
-
-  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
-  const agent = useragent.parse(req.headers["user-agent"]);
-  const os = agent.os.toString();
-
-  const newLogMessages = {
-    name: req.app.get("name"),
-    status: res.statusCode,
-    date: getVNDateTime(new Date()),
-    method: req.method,
-    api: req.url,
-    ip: ip,
-    os: os,
-  };
-  arrayLog.push(newLogMessages);
-  wss.clients.forEach((client) => {
-    if (client.readyState === WebSocket.OPEN) {
-      client.send(JSON.stringify(newLogMessages));
-    }
-  });
-  next();
-});
-
-wss.on("connection", (ws) => {
-  console.log("Client connected");
-  arrayLog.forEach((log) => {
-    ws.send(JSON.stringify({ log }));
-  });
-
-  ws.on("close", () => {
-    console.log("Client disconnected");
-  });
-});
-
-io.on("connection", (socket) => {
-  console.log("A user connected");
-  socket.on("disconnect", () => {
-    console.log("A user disconnected");
-  });
-});
 
 // app.use((req, res, next) => {
 //   const target = getNextServer();
@@ -159,7 +107,7 @@ DepartmentRoutes(app);
 CampaignRoutes(app);
 RuleRoute(app);
 ProductRoutes(app);
-
+OrdersRoutes(app);
 // app.post("/store-token", async (req, res) => {
 //   const { token } = req.body;
 //   if (!token) {
@@ -220,10 +168,10 @@ const getOrders = async () => {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://ecoopglobalvn.mysapo.net/admin/orders.json`, {
+      .get(`https://test-ecoop-mart.mysapo.net/admin/orders.json`, {
         auth: {
-          username: "9d28ed79bc9447dfabe8ab7c94c54ba9", // API Key
-          password: "f9f1006a296940f1ab070c5f4cd2a638", // API Secret
+          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
+          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
         },
       })
       .then((response) => {
@@ -233,22 +181,29 @@ const getOrders = async () => {
             id,
             financial_status,
             fulfillment_status,
+            created_on,
+            phone,
+            email,
             status,
             total_price,
             landing_site,
+            fulfillments,
+            return_status,
           } = order;
+          const delivery_date = moment(fulfillments.delivered_on);
+          const expire_date = delivery_date.add(1, "days");
           if (
             financial_status === "paid" &&
             fulfillment_status === "fulfilled" &&
             status === "open" &&
-            (landing_site !== "" || !landing_site)
+            return_status === "no_return" &&
+            moment().isAfter(expire_date)
           ) {
             pool.query(
               WebhookModal.ServiceWebhook.checkIdSapo,
               [id],
               (err, data) => {
                 if (err) {
-                  return;
                 }
                 if (data.length > 0) {
                   return;
@@ -257,15 +212,18 @@ const getOrders = async () => {
                     WebhookModal.ServiceWebhook.insertOrder,
                     [
                       id,
+                      formatDate(created_on),
                       financial_status,
                       fulfillment_status,
+                      phone,
+                      email,
                       status,
                       total_price,
+                      formatDate(fulfillments[0].delivered_on),
                       landing_site,
                     ],
                     (err, data) => {
                       if (err) {
-                        throw err;
                       }
                       if (data) {
                         pool.query(
@@ -274,6 +232,7 @@ const getOrders = async () => {
                           (err, data) => {
                             if (data.length > 0) {
                               const bwaf = data[0].referral_link; // Giả sử cột chứa dữ liệu là 'bwaf'
+                              const phone = data[0].customer_phone;
                               if (bwaf.includes("-")) {
                                 // Cắt chuỗi để lấy phần sau dấu "="
                                 var parts = bwaf.split("=");
@@ -298,7 +257,6 @@ const getOrders = async () => {
                                   [firstNumber],
                                   (err, data) => {
                                     if (err) {
-                                      console.log("error");
                                     }
                                     if (data.length > 0) {
                                       const sum = (a, b) => {
@@ -306,15 +264,13 @@ const getOrders = async () => {
                                       };
                                       let new_commission = sum(
                                         parseInt(
-                                          data[0].total_withdrawn
-                                            ? data[0].total_withdrawn
+                                          data[0].total_recived
+                                            ? data[0].total_recived
                                             : 0
                                         ),
                                         parseInt(precent_tax)
                                       );
-                                      console.log(data[0].total_withdrawn);
-                                      console.log(precent_tax);
-                                      console.log(new_commission);
+
                                       pool.query(
                                         WebhookModal.ServiceWebhook
                                           .updatePayment,
@@ -335,7 +291,6 @@ const getOrders = async () => {
                                   [secondNumber],
                                   (err, data) => {
                                     if (err) {
-                                      console.log("error");
                                     }
                                     if (data.length > 0) {
                                       pool.query(
@@ -350,7 +305,6 @@ const getOrders = async () => {
                                               [secondNumber],
                                               (err, data) => {
                                                 if (err) {
-                                                  console.log("error");
                                                 }
                                                 if (data.length > 0) {
                                                   const sum = (a, b) => {
@@ -358,9 +312,8 @@ const getOrders = async () => {
                                                   };
                                                   let new_commission = sum(
                                                     parseInt(
-                                                      data[0].total_withdrawn
-                                                        ? data[0]
-                                                            .total_withdrawn
+                                                      data[0].total_recived
+                                                        ? data[0].total_recived
                                                         : 0
                                                     ),
                                                     parseInt(precent_tax)
@@ -396,13 +349,12 @@ const getOrders = async () => {
                                   10,
                                   1
                                 );
-                                console.log(precent_tax);
+
                                 pool.query(
                                   WebhookModal.ServiceWebhook.checkPayment,
                                   [bwafValue],
                                   (err, data) => {
                                     if (err) {
-                                      console.log("fails");
                                     }
                                     if (data.length > 0) {
                                       const sum = (a, b) => {
@@ -416,22 +368,212 @@ const getOrders = async () => {
                                         ),
                                         parseInt(precent_tax)
                                       );
-                                      console.log(data[0].total_withdrawn);
-                                      console.log(precent_tax);
-                                      console.log(new_commission);
+
                                       pool.query(
                                         WebhookModal.ServiceWebhook
                                           .updatePayment,
                                         [new_commission, bwafValue],
                                         (err, result) => {
                                           if (err) {
-                                            console.log("fails");
                                           }
                                           if (result) {
-                                            console.log("success");
                                           }
                                         }
                                       );
+                                    }
+                                  }
+                                );
+                              }
+                              if (
+                                bwaf === "/password" ||
+                                bwaf === "/" ||
+                                bwaf === ""
+                              ) {
+                                pool.query(
+                                  WebhookModal.ServiceWebhook
+                                    .checkPhoneEmailOrder,
+                                  [phone],
+                                  (err, data) => {
+                                    if (err) {
+                                    }
+                                    if (data.length > 0) {
+                                      let bwaf = data[0].referral_link;
+                                      if (bwaf.includes("-")) {
+                                        // Cắt chuỗi để lấy phần sau dấu "="
+                                        var parts = bwaf.split("=");
+
+                                        // Lấy chuỗi chứa "78-100"
+                                        var numberStr = parts[1];
+
+                                        // Cắt chuỗi "78-100" thành hai phần "78" và "100"
+                                        var numbers = numberStr.split("-");
+
+                                        // Gán kết quả vào các biến
+                                        var firstNumber = numbers[0];
+                                        var secondNumber = numbers[1];
+                                        const orderValue = data[0].total_price;
+                                        let precent_tax =
+                                          WebhookModal.handleCommission(
+                                            orderValue,
+                                            10,
+                                            1
+                                          );
+                                        pool.query(
+                                          WebhookModal.ServiceWebhook
+                                            .checkPayment,
+                                          [firstNumber],
+                                          (err, data) => {
+                                            if (err) {
+                                            }
+                                            if (data.length > 0) {
+                                              const sum = (a, b) => {
+                                                return parseInt(a + b);
+                                              };
+                                              let new_commission = sum(
+                                                parseInt(
+                                                  data[0].total_withdrawn
+                                                    ? data[0].total_withdrawn
+                                                    : 0
+                                                ),
+                                                parseInt(precent_tax)
+                                              );
+
+                                              pool.query(
+                                                WebhookModal.ServiceWebhook
+                                                  .updatePayment,
+                                                [new_commission, firstNumber],
+                                                (err, result) => {
+                                                  if (err) {
+                                                    console.log("error");
+                                                  }
+                                                  if (result) {
+                                                  }
+                                                }
+                                              );
+                                            }
+                                          }
+                                        );
+                                        pool.query(
+                                          WebhookModal.ServiceWebhook
+                                            .checkAffiliateLevel2,
+                                          [secondNumber],
+                                          (err, data) => {
+                                            if (err) {
+                                            }
+                                            if (data.length > 0) {
+                                              pool.query(
+                                                WebhookModal.ServiceWebhook
+                                                  .checkAffiliateLevel1,
+                                                [firstNumber, data[0].phone],
+                                                (err, data) => {
+                                                  if (data.length > 0) {
+                                                    pool.query(
+                                                      WebhookModal
+                                                        .ServiceWebhook
+                                                        .checkPayment,
+                                                      [secondNumber],
+                                                      (err, data) => {
+                                                        if (err) {
+                                                        }
+                                                        if (data.length > 0) {
+                                                          const sum = (
+                                                            a,
+                                                            b
+                                                          ) => {
+                                                            return parseInt(
+                                                              a + b
+                                                            );
+                                                          };
+                                                          let new_commission =
+                                                            sum(
+                                                              parseInt(
+                                                                data[0]
+                                                                  .total_withdrawn
+                                                                  ? data[0]
+                                                                      .total_withdrawn
+                                                                  : 0
+                                                              ),
+                                                              parseInt(
+                                                                precent_tax
+                                                              )
+                                                            );
+                                                          pool.query(
+                                                            WebhookModal
+                                                              .ServiceWebhook
+                                                              .updatePayment,
+                                                            [
+                                                              new_commission,
+                                                              secondNumber,
+                                                            ],
+                                                            (err, result) => {
+                                                              if (err) {
+                                                              }
+                                                              if (result) {
+                                                              }
+                                                            }
+                                                          );
+                                                        }
+                                                      }
+                                                    );
+                                                  }
+                                                }
+                                              );
+                                            }
+                                          }
+                                        );
+                                      }
+                                      if (!bwaf.includes("-")) {
+                                        const bwafValue = bwaf.split("=")[1];
+                                        const orderValue = order.total_price;
+                                        let precent_tax =
+                                          WebhookModal.handleCommission(
+                                            orderValue,
+                                            10,
+                                            1
+                                          );
+                                        console.log(precent_tax);
+                                        pool.query(
+                                          WebhookModal.ServiceWebhook
+                                            .checkPayment,
+                                          [bwafValue],
+                                          (err, data) => {
+                                            if (err) {
+                                              console.log("fails");
+                                            }
+                                            if (data.length > 0) {
+                                              const sum = (a, b) => {
+                                                return parseInt(a + b);
+                                              };
+                                              let new_commission = sum(
+                                                parseInt(
+                                                  data[0].total_withdrawn
+                                                    ? data[0].total_withdrawn
+                                                    : 0
+                                                ),
+                                                parseInt(precent_tax)
+                                              );
+                                              console.log(
+                                                data[0].total_withdrawn
+                                              );
+                                              console.log(precent_tax);
+                                              console.log(new_commission);
+                                              pool.query(
+                                                WebhookModal.ServiceWebhook
+                                                  .updatePayment,
+                                                [new_commission, bwafValue],
+                                                (err, result) => {
+                                                  if (err) {
+                                                    console.log("fails");
+                                                  }
+                                                  if (result) {
+                                                    console.log("success");
+                                                  }
+                                                }
+                                              );
+                                            }
+                                          }
+                                        );
+                                      }
                                     }
                                   }
                                 );
@@ -456,7 +598,57 @@ const getOrders = async () => {
   }
 };
 
-getOrders();
+app.get("/logs", (req, res) => {
+  const logFilePath = path.join(__dirname, "combined.log");
+  fs.readFile(logFilePath, "utf8", (err, data) => {
+    if (err) {
+      throw err;
+    }
+    if (data) {
+      try {
+        const logsLine = data.split("\n").filter((line) => line.trim() !== "");
+        const logObject = logsLine.map((item) => JSON.parse(item));
+        console.log(logObject);
+        return res.status(200).json(logObject);
+      } catch (error) {
+        return res.status(500).json({ message: "fails" });
+      }
+    }
+  });
+});
+app.use((req, res, next) => {
+  function getVNDateTime(date) {
+    const options = {
+      weekday: "long",
+      year: "numeric",
+      month: "long",
+      day: "numeric",
+    };
+    const ngày = date.toLocaleDateString("vi-VN", options);
+    const giờ = date.toLocaleTimeString("vi-VN");
+    return `${ngày} ${giờ}`;
+  }
+
+  const ip = req.headers["x-forwarded-for"] || req.connection.remoteAddress;
+  const agent = useragent.parse(req.headers["user-agent"]);
+  const os = agent.os.toString();
+
+  const newLogMessages = {
+    name: req.app.get("name"),
+    status: res.statusCode,
+    date: getVNDateTime(new Date()),
+    method: req.method,
+    api: req.url,
+    ip: ip,
+    os: os,
+  };
+  logger.info(newLogMessages);
+  next();
+});
+
+setInterval(() => {
+  getOrders();
+}, 10000);
 server.listen(port, (err) => {
   if (err) {
     throw err;

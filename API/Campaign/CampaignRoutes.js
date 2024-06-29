@@ -3,7 +3,7 @@ const {
   deleteCampaign,
   getAllCampaign,
   addProductToCampaign,
-} = require("./CampaignController");
+} = require ("./CampaignController");
 
 const express = require("express");
 const router = express.Router();
@@ -16,6 +16,6 @@ module.exports = function CampaignRoutes(app) {
     app.set("name", "Lấy danh sách chiến dịch"),
     getAllCampaign
   );
-  router.post('/add-product-campaign', addProductToCampaign);
+  router.post("/add-product-campaign", addProductToCampaign);
   return app.use("/campaign", router);
 };

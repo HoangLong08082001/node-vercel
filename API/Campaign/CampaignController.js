@@ -66,7 +66,7 @@ const deleteCampaign = (req, res) => {
 
 const getAllCampaign = (req, res) => {
   pool.query(
-    "SELECT campaign.id_campaign, campaign.name_campaign, products.id_products, products.id_products_sapo, campaign.link_product, products.alias, campaign.description, campaign.date_start, campaign.date_end, campaign.commission, campaign.image FROM campaign LEFT JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign LEFT JOIN products ON campaign_products.id_products = products.id_products",
+    "SELECT campaign.id_campaign, campaign.name_campaign, products.id_products, products.id_products_sapo, campaign.link_product, products.alias, campaign.description, campaign.date_start, campaign.date_end, campaign.commission, campaign.image, products.image_product, products.name_product FROM campaign LEFT JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign LEFT JOIN products ON campaign_products.id_products = products.id_products",
     [],
     (err, data) => {
       if (err) {
@@ -127,7 +127,9 @@ const getAllCampaign = (req, res) => {
             date_end,
             link_product,
             image,
+            image_product,
             alias,
+            name_product
           } = row;
           if (!acc[id_campaign]) {
             acc[id_campaign] = {
@@ -147,6 +149,8 @@ const getAllCampaign = (req, res) => {
               id: id_products,
               id_sapo: id_products_sapo,
               alias: link_product + alias,
+              image_product: image_product,
+              name_product: name_product,
             });
           }
           return acc;
