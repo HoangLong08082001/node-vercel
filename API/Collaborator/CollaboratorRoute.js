@@ -26,9 +26,9 @@ module.exports = function CollaboratorRoute(app) {
   );
   router.post("/login", app.set("name", "Đăng nhập"), loginAccount);
   router.post("/logout", app.set("name", "Đăng xuất"), signOutAccount);
-  router.post("/verify", app.set("name", "Xác minh tài khoản"), codeVerify);
+  router.post("/verify", authenticationToken, app.set("name", "Xác minh tài khoản"), codeVerify);
   router.post(
-    "/presenter-phone",
+    "/presenter-phone", authenticationToken,
     app.set("name", "Nhập số điện thoại người dùng"),
     presenterPhone
   );

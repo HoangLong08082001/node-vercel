@@ -190,14 +190,12 @@ const getOrders = async () => {
             fulfillments,
             return_status,
           } = order;
-          const delivery_date = moment(fulfillments.delivered_on);
-          const expire_date = delivery_date.add(1, "days");
+          
           if (
             financial_status === "paid" &&
             fulfillment_status === "fulfilled" &&
             status === "open" &&
-            return_status === "no_return" &&
-            moment().isAfter(expire_date)
+            return_status === "no_return" 
           ) {
             pool.query(
               WebhookModal.ServiceWebhook.checkIdSapo,
