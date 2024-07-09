@@ -1,9 +1,9 @@
 const pool = require("../../config/database");
-const { ServiceProduct } = require("./ProductModal");
+const ServiceNotification = require("./NotificationSystemModal");
 
-const getProducts = (req, res) => {
+const getAllNotification = (req, res) => {
   try {
-    pool.query(ServiceProduct.all(), [], (err, data) => {
+    pool.query(ServiceNotification.allNotification(), [], (err, data) => {
       if (err) {
         throw err;
       }
@@ -16,4 +16,4 @@ const getProducts = (req, res) => {
   }
 };
 
-module.exports = { getProducts };
+module.exports = { getAllNotification };

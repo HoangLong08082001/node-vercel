@@ -2,6 +2,7 @@ const pool = require("../../config/database.js");
 const {
   createJwtReNew,
   createJwtWebsite,
+  createJwtApp,
 } = require("../../middleware/JwtAction.js");
 const { ServiceEmployee } = require("./EmployeeModal.js");
 const bcrypt = require("bcrypt");
@@ -29,7 +30,7 @@ const createEmployee = (req, res, io) => {
   let name = req.body.name;
   let phone = req.body.phone;
   let id_department = req.body.id_department;
-  pool.query(ServiceEmployee.checkEmail, [username], (err, result) => {
+  pool.query(ServiceEmployee.checkEmail(), [username], (err, result) => {
     if (err) {
       throw er;
     }
@@ -37,7 +38,7 @@ const createEmployee = (req, res, io) => {
       return res.status(400).json({ message: "Email đã tồn tại" });
     } else {
       pool.query(
-        ServiceEmployee.create,
+        ServiceEmployee.create(),
         [id_department, name, username, phone, 1, getToday()],
         (err, data) => {
           if (err) {
@@ -54,54 +55,58 @@ const createEmployee = (req, res, io) => {
 const loginEmployee = (req, res) => {
   let username = req.body.username;
   let password = req.body.password;
-  pool.query(ServiceEmployee.checkLogin, [username, username], (err, data) => {
-    if (err) {
-      throw err;
-    }
-    if (data.length > 0) {
-      console.log(data[0]);
-      bcrypt.compare(password.toString(), data[0].password, (err, result) => {
-        if (err) {
-          throw err;
-        }
-        if (result) {
-          pool.query(
-            ServiceEmployee.checkPermission,
-            [username],
-            (err, response) => {
-              if (err) {
-                throw err;
-              }
-              if (response.length > 0) {
-                console.log(response[0]);
-                let payload = {
-                  data: response,
-                };
-                let token = createJwtWebsite(payload);
-                if (response && token) {
-                  res.cookie("jwt", token, { httpOnly: true });
+  pool.query(
+    ServiceEmployee.checkLogin(),
+    [username, username],
+    (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        console.log(data[0]);
+        bcrypt.compare(password.toString(), data[0].password, (err, result) => {
+          if (err) {
+            throw err;
+          }
+          if (result) {
+            pool.query(
+              ServiceEmployee.checkPermission(),
+              [username],
+              (err, response) => {
+                if (err) {
+                  throw err;
                 }
-                return res.status(200).json({
-                  message: "success",
-                  response,
-                  access_token: token,
-                });
+                if (response.length > 0) {
+                  console.log(response[0]);
+                  let payload = {
+                    data: response,
+                  };
+                  let token = createJwtApp(payload);
+                  if (response && token) {
+                    res.cookie("jwt", token, { httpOnly: true });
+                  }
+                  return res.status(200).json({
+                    message: "success",
+                    response,
+                    access_token: token,
+                  });
+                }
               }
-            }
-          );
-        }
-      });
-    } else {
-      return res
-        .status(400)
-        .json({ message: "Email hoặc số điện thoại này không tồn tại" });
+            );
+          }
+        });
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Email hoặc số điện thoại này không tồn tại" });
+      }
     }
-  });
+  );
 };
 
 const getAllEmployee = (req, res) => {
   try {
-    pool.query(ServiceEmployee.getAll, [], (err, data) => {
+    pool.query(ServiceEmployee.getAll(), [], (err, data) => {
       if (err) {
         throw err;
       }
@@ -120,7 +125,7 @@ const rePassword = (req, res) => {
   console.log(username);
   try {
     pool.query(
-      ServiceEmployee.checkLogin,
+      ServiceEmployee.checkLogin(),
       [username, username],
       (err, data) => {
         if (err) {
@@ -134,7 +139,7 @@ const rePassword = (req, res) => {
             }
             if (hash) {
               pool.query(
-                ServiceEmployee.rePass,
+                ServiceEmployee.rePass(),
                 [hash, username],
                 (err, result) => {
                   if (err) {
@@ -188,7 +193,7 @@ const setNewPassword = (req, res) => {
   console.log(username + " " + oldPassowrd + " " + newPassword);
   try {
     pool.query(
-      ServiceEmployee.checkUsernamePassword,
+      ServiceEmployee.checkUsernamePassword(),
       [username],
       (err, result) => {
         if (err) {
@@ -210,7 +215,7 @@ const setNewPassword = (req, res) => {
                   }
                   if (hash) {
                     pool.query(
-                      ServiceEmployee.rePassword,
+                      ServiceEmployee.rePassword(),
                       [hash, username],
                       (err, data) => {
                         if (err) {
@@ -266,7 +271,7 @@ const updateInformation = (req, res) => {
     }
     if (phone !== oldphone && username === oldusername && name === oldname) {
       pool.query(
-        ServiceEmployee.updatePhone,
+        ServiceEmployee.updatePhone(),
         [phone, oldusername],
         (err, data) => {
           if (err) {
@@ -280,7 +285,7 @@ const updateInformation = (req, res) => {
     }
     if (name !== oldname && phone === oldphone && username === oldusername) {
       pool.query(
-        ServiceEmployee.updateName,
+        ServiceEmployee.updateName(),
         [name, oldusername],
         (err, data) => {
           if (err) {
@@ -294,7 +299,7 @@ const updateInformation = (req, res) => {
     }
     if (name !== oldname && phone !== oldphone && username && oldusername) {
       pool.query(
-        ServiceEmployee.updateNamePhone,
+        ServiceEmployee.updateNamePhone(),
         [name, phone, oldusername],
         (err, data) => {
           if (err) {
@@ -308,7 +313,7 @@ const updateInformation = (req, res) => {
     }
     if (username !== oldusername && name === oldname && phone === oldphone) {
       pool.query(
-        ServiceEmployee.updateEmail,
+        ServiceEmployee.updateEmail(),
         [username, oldusername],
         (err, data) => {
           if (err) {
@@ -322,7 +327,7 @@ const updateInformation = (req, res) => {
     }
     if (username !== oldusername && phone !== oldphone && name === oldname) {
       pool.query(
-        ServiceEmployee.checkUsernamePhone,
+        ServiceEmployee.checkUsernamePhone(),
         [username, phone],
         (err, data) => {
           if (err) {
@@ -330,7 +335,7 @@ const updateInformation = (req, res) => {
           }
           if (data.length > 0) {
             pool.query(
-              ServiceEmployee.updateEmailPhone,
+              ServiceEmployee.updateEmailPhone(),
               [username, phone, oldusername],
               (err, data) => {
                 if (err) {
@@ -347,7 +352,7 @@ const updateInformation = (req, res) => {
     }
     if (username !== oldusername && name !== oldname && phone === oldphone) {
       pool.query(
-        ServiceEmployee.updateEmailName,
+        ServiceEmployee.updateEmailName(),
         [username, name, oldusername],
         (err, data) => {
           if (err) {
@@ -361,7 +366,7 @@ const updateInformation = (req, res) => {
     }
     if (username !== oldusername && name !== oldname && phone !== oldphone) {
       pool.query(
-        ServiceEmployee.checkUsernamePhone,
+        ServiceEmployee.checkUsernamePhone(),
         [username, phone],
         (err, data) => {
           if (err) {
@@ -369,7 +374,7 @@ const updateInformation = (req, res) => {
           }
           if (data.length > 0) {
             pool.query(
-              ServiceEmployee.updateEmailNamePhone,
+              ServiceEmployee.updateEmailNamePhone(),
               [username, name, phone, oldusername],
               (err, data) => {
                 if (err) {
@@ -396,14 +401,14 @@ const blockEmployee = (req, res) => {
     if (!Array.isArray(id_employee) || id_employee.length === 0) {
       return res.status(400).json({ error: "Invalid input" });
     }
-    pool.query(ServiceEmployee.checkStatus, [id_employee], (err, data) => {
+    pool.query(ServiceEmployee.checkStatus(), [id_employee], (err, data) => {
       if (err) {
         throw err;
       }
       if (data.length > 0) {
         console.log(true);
         pool.query(
-          ServiceEmployee.updateStatusTrue,
+          ServiceEmployee.updateStatusTrue(),
           [id_employee],
           (err, results) => {
             if (err) {
@@ -417,7 +422,7 @@ const blockEmployee = (req, res) => {
       } else {
         console.log(false);
         pool.query(
-          ServiceEmployee.updateStatusFalse,
+          ServiceEmployee.updateStatusFalse(),
           [id_employee],
           (err, results) => {
             if (err) {
@@ -446,7 +451,7 @@ const sendMailToLogin = (req, res) => {
       }
       if (hash) {
         pool.query(
-          ServiceEmployee.updatePassword,
+          ServiceEmployee.updatePassword(),
           [hash, username],
           (err, data) => {
             if (err) {

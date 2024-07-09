@@ -1,13 +1,24 @@
-const { createLogger, format, transports } = require("winston");
-const { combine, timestamp, json } = format;
+const winston = require('winston')
 
-const logger = createLogger({
-  level: "info", // Cấu hình cấp độ log tối thiểu là 'info'
-  format: combine(timestamp(), json()),
-  transports: [
-    new transports.File({ filename: "error.log", level: "error" }),
-    new transports.File({ filename: "combined.log" }),
-  ],
-});
+const logs=[]
+
+const loggers = winston.createLogger({
+  format: winston.format.combine(
+    winston.format.timestamp(),
+    winston.format.json(),
+  ),
+  transports:[
+    new winston.transports.File({
+      level:'info',
+      filename:'info.log',
+      format:winston.format.json()
+    })
+  ]
+})
+
+const logger = (newLog) => {
+  loggers.info(newLog);
+}
+
 
 module.exports = logger;

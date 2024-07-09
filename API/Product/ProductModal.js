@@ -1,5 +1,7 @@
 class ServiceProduct {
-  static all = "SELECT * FROM products";
+  static all() {
+    return "SELECT * FROM products";
+  }
 }
 
 module.exports = { ServiceProduct };

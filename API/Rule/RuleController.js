@@ -3,7 +3,7 @@ const pool = require("../../config/database.js");
 const { RuleService } = require("./RuleModel.js");
 const GetRule = (req, res) => {
   try {
-    pool.query(RuleService.GetRule, [], (err, data) => {
+    pool.query(RuleService.GetRule(), [], (err, data) => {
       if (err) {
         console.log(err);
         throw err;
@@ -21,7 +21,7 @@ const GetRule = (req, res) => {
 const CraeteRule = (req, res, io) => {
   let rule = req.body.rule;
   try {
-    pool.query(RuleService.CreateRule, [rule], (err, result) => {
+    pool.query(RuleService.CreateRule(), [rule], (err, result) => {
       if (err) {
         console.log(err);
         throw err;
@@ -42,7 +42,7 @@ const UpdateRule = (req, res) => {
   console.log(id_rule + " " + rule);
   try {
     // Thực hiện truy vấn cập nhật
-    pool.query(RuleService.updateRule, [rule, id_rule], (err, result) => {
+    pool.query(RuleService.updateRule(), [rule, id_rule], (err, result) => {
       if (err) {
         console.log(err);
         throw err;

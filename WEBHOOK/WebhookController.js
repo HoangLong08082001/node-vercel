@@ -9,14 +9,14 @@ const dotenv = require("dotenv");
 dotenv.config();
 
 //Orders
-const getOrders = async (req, res) => {
+async function getOrders(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/orders.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/orders.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -121,16 +121,16 @@ const getOrders = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getOrderById = async (req, res) => {
+}
+async function getOrderById(req, res) {
   let id = req.params.orders_id;
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/orders/${id}.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/orders/${id}.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -175,15 +175,15 @@ const getOrderById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getOrderTotal = async (req, res) => {
+}
+async function getOrderTotal(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/orders/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/orders/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -202,17 +202,17 @@ const getOrderTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Customers
-const getCustomers = async (req, res) => {
+async function getCustomers(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/customers.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/customers.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -231,16 +231,16 @@ const getCustomers = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomerById = async (req, res) => {
+}
+async function getCustomerById(req, res) {
   let id = req.params.customers_id;
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/customers/${id}.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/customers/${id}.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -258,15 +258,15 @@ const getCustomerById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getTotalCustomers = async (req, res) => {
+}
+async function getTotalCustomers(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/customers/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/customers/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -284,19 +284,19 @@ const getTotalCustomers = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Customers address
-const getCustomersAddress = async (req, res) => {
+async function getCustomersAddress(req, res) {
   let idCustommer = req.params.customers_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/customers/${idCustommer}/addresses.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/customers/${idCustommer}/addresses.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-            password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+            username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
           },
         }
       )
@@ -308,18 +308,18 @@ const getCustomersAddress = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomersIdAddressId = async (req, res) => {
+}
+async function getCustomersIdAddressId(req, res) {
   let idCustommer = req.params.customers_id;
   let idAddress = req.params.address_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/customers/${idCustommer}/addresses/${idAddress}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/customers/${idCustommer}/addresses/${idAddress}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-            password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+            username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
           },
         }
       )
@@ -331,17 +331,17 @@ const getCustomersIdAddressId = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Stores
-const getStores = async (req, res) => {
+async function getStores(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/store.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/store.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -360,17 +360,17 @@ const getStores = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Products
-const getProducts = async (req, res) => {
+async function getProducts(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/products.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/products.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -409,16 +409,16 @@ const getProducts = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getProductById = async (req, res) => {
+}
+async function getProductById(req, res) {
   let id = req.params.products_id;
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/products/${id}.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/products/${id}.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -436,15 +436,15 @@ const getProductById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getProductTotal = async (req, res) => {
+}
+async function getProductTotal(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/products/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/products/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -462,17 +462,17 @@ const getProductTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //collect
-const getCollects = async (req, res) => {
+async function getCollects(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/collects.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/collects.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -491,18 +491,18 @@ const getCollects = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCollectById = async (req, res) => {
+}
+async function getCollectById(req, res) {
   let id = req.params.collects_id;
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/collects.json?product_id=${id}`,
+        `https://apec-ecoop-test.mysapo.net/admin/collects.json?product_id=${id}`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-            password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+            username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
           },
         }
       )
@@ -521,14 +521,14 @@ const getCollectById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCollectsTotal = async (req, res) => {
+}
+async function getCollectsTotal(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/collects/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/collects/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -538,16 +538,16 @@ const getCollectsTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Custom collect
-const getCustomCollects = async (req, res) => {
+async function getCustomCollects(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/custom_collections.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/custom_collections.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
         },
       })
       .then((response) => {
@@ -558,17 +558,17 @@ const getCustomCollects = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomCollectsId = async (req, res) => {
+}
+async function getCustomCollectsId(req, res) {
   let idCustomCollect = req.params.custom_collect_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/custom_collections/${idCustomCollect}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/custom_collections/${idCustomCollect}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-            password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+            username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
           },
         }
       )
@@ -579,18 +579,18 @@ const getCustomCollectsId = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomCollectsTotal = async (req, res) => {
+}
+async function getCustomCollectsTotal(req, res) {
   let product_id = req.params.products_id;
   try {
     if (product_id) {
       await axios
         .get(
-          `https://test-ecoop-mart.mysapo.net/admin/custom_collections/count.json?product_id=${product_id}`,
+          `https://apec-ecoop-test.mysapo.net/admin/custom_collections/count.json?product_id=${product_id}`,
           {
             auth: {
-              username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-              password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+              username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+              password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
             },
           }
         )
@@ -601,11 +601,11 @@ const getCustomCollectsTotal = async (req, res) => {
     if (!product_id) {
       await axios
         .get(
-          `https://test-ecoop-mart.mysapo.net/admin/custom_collections/count.json`,
+          `https://apec-ecoop-test.mysapo.net/admin/custom_collections/count.json`,
           {
             auth: {
-              username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-              password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
+              username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+              password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
             },
           }
         )
@@ -618,37 +618,39 @@ const getCustomCollectsTotal = async (req, res) => {
     res.status(500).json({ error: "Error fetching orders" });
   }
   return res.send("collect custom total");
-};
+}
 
 //Events
-const getEvents = async (req, res) => {
+async function getEvents(req, res) {
   try {
     await axios
-      .get("https://test-ecoop-mart.mysapo.net/admin/events.json", {
-        auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2", // API Key
-          password: "016829a5f06f4707b0757c3aec095f4a", // API Secret
-        },
-      })
+      .get(
+        "https://apec-ecoop-test.mysapo.net/admin/events.json?filter=Product,Order",
+        {
+          auth: {
+            username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
+          },
+        }
+      )
       .then((response) => {
-        console.log(response);
         return res.status(200).json(response.data);
       });
   } catch (error) {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomCollectsEvents = async (req, res) => {
+}
+async function getCustomCollectsEvents(req, res) {
   let custom_collections_id = req.params.custom_collect_events_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/custom_collections/${custom_collections_id}/events.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/custom_collections/${custom_collections_id}/events.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -659,17 +661,17 @@ const getCustomCollectsEvents = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getOrdersEvents = async (req, res) => {
+}
+async function getOrdersEvents(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/events.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/events.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -680,17 +682,17 @@ const getOrdersEvents = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getProductsEvents = async (req, res) => {
+}
+async function getProductsEvents(req, res) {
   let products_id = req.params.products_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/products/${products_id}/events.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/products/${products_id}/events.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -701,14 +703,14 @@ const getProductsEvents = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getEventsTotal = async (req, res) => {
+}
+async function getEventsTotal(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/events/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/events/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -718,19 +720,19 @@ const getEventsTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Fulfillment
-const getFulfillment = async (req, res) => {
+async function getFulfillment(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/fulfillments.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/fulfillments.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -741,18 +743,18 @@ const getFulfillment = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getFulfillmentById = async (req, res) => {
+}
+async function getFulfillmentById(req, res) {
   let orders_id = req.params.orders_id;
   let fulfillment_id = req.params.fulfillment_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/fulfillments/${fulfillment_id}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/fulfillments/${fulfillment_id}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -763,17 +765,17 @@ const getFulfillmentById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getFulfillmentTotal = async (req, res) => {
+}
+async function getFulfillmentTotal(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/fulfillments/count.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/fulfillments/count.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -784,16 +786,16 @@ const getFulfillmentTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Metafields
-const getMetafields = async (req, res) => {
+async function getMetafields(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/metafields.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/metafields.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -804,17 +806,17 @@ const getMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomCollectMetafields = async (req, res) => {
+}
+async function getCustomCollectMetafields(req, res) {
   let custom_collection_id = req.params.custom_collection_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/custom_collections/${custom_collection_id}/metafields.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/custom_collections/${custom_collection_id}/metafields.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -825,17 +827,17 @@ const getCustomCollectMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCustomersMetafields = async (req, res) => {
+}
+async function getCustomersMetafields(req, res) {
   let customers_id = req.params.customers_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/customers/${customers_id}/metafields.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/customers/${customers_id}/metafields.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -846,17 +848,17 @@ const getCustomersMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getOrdersMetafields = async (req, res) => {
+}
+async function getOrdersMetafields(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/metafields.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/metafields.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -867,17 +869,17 @@ const getOrdersMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getProductsMetafields = async (req, res) => {
+}
+async function getProductsMetafields(req, res) {
   let products_id = req.params.products_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/products/${products_id}/metafields.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/products/${products_id}/metafields.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -888,14 +890,14 @@ const getProductsMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getMetafieldTotal = async (req, res) => {
+}
+async function getMetafieldTotal(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/metafields/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/metafields/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -905,14 +907,14 @@ const getMetafieldTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getProductsByIdMetafields = async (req, res) => {
+}
+async function getProductsByIdMetafields(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/metafields/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/metafields/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -922,16 +924,16 @@ const getProductsByIdMetafields = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Price rule
-const getPriceRule = async (req, res) => {
+async function getPriceRule(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/price_rules.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/price_rules.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -942,17 +944,17 @@ const getPriceRule = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getPriceRuleById = async (req, res) => {
+}
+async function getPriceRuleById(req, res) {
   let priceRule_id = req.params.priceRule_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/price_rules/${priceRule_id}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/price_rules/${priceRule_id}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -963,19 +965,19 @@ const getPriceRuleById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Refund
-const getRefund = async (req, res) => {
+async function getRefund(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/refunds.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/refunds.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -986,19 +988,19 @@ const getRefund = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Transaction
-const getTransaction = async (req, res) => {
+async function getTransaction(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/transactions.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/transactions.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -1010,18 +1012,18 @@ const getTransaction = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getTransactionById = async (req, res) => {
+}
+async function getTransactionById(req, res) {
   let orders_id = req.params.orders_id;
   let transaction_id = req.params.transaction_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/transactions/${transaction_id}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/transactions/${transaction_id}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -1033,17 +1035,17 @@ const getTransactionById = async (req, res) => {
     res.status(500).json({ error: "Error fetching orders" });
   }
   return res.send("transactions by id");
-};
-const getTransactionTotal = async (req, res) => {
+}
+async function getTransactionTotal(req, res) {
   let orders_id = req.params.orders_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/orders/${orders_id}/transactions/count.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/orders/${orders_id}/transactions/count.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -1054,16 +1056,16 @@ const getTransactionTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Carrie Services
-const getCarrierServices = async (req, res) => {
+async function getCarrierServices(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/carrier_services.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/carrier_services.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -1073,17 +1075,17 @@ const getCarrierServices = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getCarrierServicesById = async (req, res) => {
+}
+async function getCarrierServicesById(req, res) {
   let carrier_services_id = req.params.carrier_services_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/carrier_services/${carrier_services_id}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/carrier_services/${carrier_services_id}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -1095,16 +1097,16 @@ const getCarrierServicesById = async (req, res) => {
     res.status(500).json({ error: "Error fetching orders" });
   }
   return res.send("carrier service");
-};
+}
 
 //Redirect
-const getRedirect = async (req, res) => {
+async function getRedirect(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/redirects.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/redirects.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -1115,17 +1117,17 @@ const getRedirect = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getRedirectById = async (req, res) => {
+}
+async function getRedirectById(req, res) {
   let redirect_id = req.params.redirect_id;
   try {
     await axios
       .get(
-        `https://test-ecoop-mart.mysapo.net/admin/redirects/${redirect_id}.json`,
+        `https://apec-ecoop-test.mysapo.net/admin/redirects/${redirect_id}.json`,
         {
           auth: {
-            username: "ba1e1f2a92624397a5aea698196afef2",
-            password: "016829a5f06f4707b0757c3aec095f4a",
+            username: "7a98656a3d14471381c3e26e217c9bc4",
+            password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
           },
         }
       )
@@ -1137,14 +1139,14 @@ const getRedirectById = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
-const getRedirectTotal = async (req, res) => {
+}
+async function getRedirectTotal(req, res) {
   try {
     await axios
-      .get(`https://test-ecoop-mart.mysapo.net/admin/redirects/count.json`, {
+      .get(`https://apec-ecoop-test.mysapo.net/admin/redirects/count.json`, {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -1155,16 +1157,16 @@ const getRedirectTotal = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 
 //Variants
-const getVariants = async (req, res) => {
+async function getVariants(req, res) {
   try {
     await axios
-      .get("https://test-ecoop-mart.mysapo.net/admin/variants.json", {
+      .get("https://apec-ecoop-test.mysapo.net/admin/variants.json", {
         auth: {
-          username: "ba1e1f2a92624397a5aea698196afef2",
-          password: "016829a5f06f4707b0757c3aec095f4a",
+          username: "7a98656a3d14471381c3e26e217c9bc4",
+          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c",
         },
       })
       .then((response) => {
@@ -1192,7 +1194,7 @@ const getVariants = async (req, res) => {
     console.error("Error fetching orders:", error);
     res.status(500).json({ error: "Error fetching orders" });
   }
-};
+}
 module.exports = {
   getOrders,
   getOrderById,

@@ -36,10 +36,10 @@ const createCampaign = (req, res) => {
       return res.status(400).json({ message: "Vui lòng không để trống" });
     } else {
       pool.query(
-        ServiceCampaign.create,
+        ServiceCampaign.create(),
         [
           image,
-          "https://ecoopglobalvn.mysapo.net/",
+          "https://apec-ecoop-test.mysapo.net/",
           name,
           commission,
           description,
@@ -61,107 +61,141 @@ const createCampaign = (req, res) => {
   }
 };
 const deleteCampaign = (req, res) => {
-  return res.send("Delete");
-};
-
-const getAllCampaign = (req, res) => {
-  pool.query(
-    "SELECT campaign.id_campaign, campaign.name_campaign, products.id_products, products.id_products_sapo, campaign.link_product, products.alias, campaign.description, campaign.date_start, campaign.date_end, campaign.commission, campaign.image, products.image_product, products.name_product FROM campaign LEFT JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign LEFT JOIN products ON campaign_products.id_products = products.id_products",
-    [],
-    (err, data) => {
+  let id = req.params.id;
+  try {
+    pool.query(ServiceCampaign.checkCampaign(), [id], (err, data) => {
       if (err) {
         throw err;
       }
-      if (data) {
-        // const campaigns = [];
-
-        // data.forEach((row) => {
-        //   const {
-        //     id_campaign,
-        //     name_campaign,
-        //     id_products_sapo,
-        //     link_product,
-        //     alias,
-        //     description,
-        //     date_start,
-        //     date_end,
-        //     commission,
-        //   } = row;
-
-        //   // Tìm chiến dịch hiện tại trong mảng
-        //   let campaign = campaigns.find((c) => c.id === id_campaign);
-
-        //   // Nếu chiến dịch chưa tồn tại trong mảng, thêm vào
-        //   if (!campaign) {
-        //     campaign = {
-        //       id: id_campaign,
-        //       name: name_campaign,
-        //       tax: commission,
-        //       description: description,
-        //       start: date_start,
-        //       end: date_end,
-        //       url: link_product,
-        //       products: [],
-        //     };
-        //     campaigns.push(campaign);
-        //   }
-
-        //   // Thêm sản phẩm vào danh sách sản phẩm của chiến dịch
-        //   if (id_products_sapo) {
-        //     campaign.products.push({
-        //       id: id_products_sapo,
-        //       alias: link_product + alias,
-        //     });
-        //   } else {
-        //   }
-        // });
-        const campaigns = data.reduce((acc, row) => {
-          const {
-            id_campaign,
-            id_products,
-            id_products_sapo,
-            name_campaign,
-            commission,
-            description,
-            date_start,
-            date_end,
-            link_product,
-            image,
-            image_product,
-            alias,
-            name_product
-          } = row;
-          if (!acc[id_campaign]) {
-            acc[id_campaign] = {
-              id: id_campaign,
-              name: name_campaign,
-              tax: commission,
-              image: image,
-              description: description,
-              start: date_start,
-              end: date_end,
-              url: link_product,
-              products: [],
-            };
+      if (data.length > 0) {
+        pool.query(
+          ServiceCampaign.checkDeleteCampaign(),
+          [id, id, id],
+          (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data.length > 0) {
+              return res.status(400).json({ message: "fails" });
+            } else {
+              pool.query(
+                ServiceCampaign.deleteCampaign(),
+                [id],
+                (err, data) => {
+                  if (err) {
+                    throw err;
+                  }
+                  if (data) {
+                    return res.status(200).json({ message: "success" });
+                  }
+                }
+              );
+            }
           }
-          if (id_products) {
-            acc[id_campaign].products.push({
-              id: id_products,
-              id_sapo: id_products_sapo,
-              alias: link_product + alias,
-              image_product: image_product,
-              name_product: name_product,
-            });
-          }
-          return acc;
-        }, {});
-
-        return res.status(200).json(Object.values(campaigns));
-        // return res.status(200).json(data);
-        //return res.status(200).json({ message: "success", data: campaigns });
+        );
+      } else {
+        return res.status(400).json({ message: "fails" });
       }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
+const getAllCampaign = (req, res) => {
+  pool.query(ServiceCampaign.getCampaignWithProduct(), [], (err, data) => {
+    if (err) {
+      throw err;
     }
-  );
+    if (data) {
+      // const campaigns = [];
+
+      // data.forEach((row) => {
+      //   const {
+      //     id_campaign,
+      //     name_campaign,
+      //     id_products_sapo,
+      //     link_product,
+      //     alias,
+      //     description,
+      //     date_start,
+      //     date_end,
+      //     commission,
+      //   } = row;
+
+      //   // Tìm chiến dịch hiện tại trong mảng
+      //   let campaign = campaigns.find((c) => c.id === id_campaign);
+
+      //   // Nếu chiến dịch chưa tồn tại trong mảng, thêm vào
+      //   if (!campaign) {
+      //     campaign = {
+      //       id: id_campaign,
+      //       name: name_campaign,
+      //       tax: commission,
+      //       description: description,
+      //       start: date_start,
+      //       end: date_end,
+      //       url: link_product,
+      //       products: [],
+      //     };
+      //     campaigns.push(campaign);
+      //   }
+
+      //   // Thêm sản phẩm vào danh sách sản phẩm của chiến dịch
+      //   if (id_products_sapo) {
+      //     campaign.products.push({
+      //       id: id_products_sapo,
+      //       alias: link_product + alias,
+      //     });
+      //   } else {
+      //   }
+      // });
+      const campaigns = data.reduce((acc, row) => {
+        const {
+          id_campaign,
+          id_products,
+          id_products_sapo,
+          name_campaign,
+          commission,
+          description,
+          date_start,
+          date_end,
+          link_product,
+          image,
+          image_product,
+          alias,
+          name_product,
+        } = row;
+        if (!acc[id_campaign]) {
+          acc[id_campaign] = {
+            id: id_campaign,
+            name: name_campaign,
+            tax: commission,
+            image: image,
+            description: description,
+            start: date_start,
+            end: date_end,
+            url: link_product,
+            products: [],
+          };
+        }
+        if (id_products) {
+          acc[id_campaign].products.push({
+            id: id_products,
+            id_sapo: id_products_sapo,
+            alias: link_product + alias,
+            image_product: image_product,
+            name_product: name_product,
+          });
+        }
+        return acc;
+      }, {});
+
+      return res.status(200).json(Object.values(campaigns));
+      // return res.status(200).json(data);
+      //return res.status(200).json({ message: "success", data: campaigns });
+    }
+  });
 };
 
 const addProductToCampaign = (req, res, next) => {
@@ -172,9 +206,7 @@ const addProductToCampaign = (req, res, next) => {
     return res.status(400).json({ error: "Invalid input" });
   }
   const productIds = ids_product.map((product) => product);
-  const getCurrentCampaignProductQuery =
-    "SELECT id_products FROM campaign_products WHERE id_campaign = ?";
-  pool.query(getCurrentCampaignProductQuery, [ids_campaign], (err, data) => {
+  pool.query(ServiceCampaign.getCampaignById(), [ids_campaign], (err, data) => {
     if (err) {
       throw err;
     }
@@ -187,23 +219,25 @@ const addProductToCampaign = (req, res, next) => {
         (id) => !productIds.includes(id)
       );
       if (AdProductsToCampaign.length > 0) {
-        const addProductsQuery =
-          "INSERT INTO campaign_products (id_campaign, id_products) VALUES ?";
         const valuesToAdd = AdProductsToCampaign.map((id) => [
           ids_campaign,
           id,
         ]);
-        pool.query(addProductsQuery, [valuesToAdd], (err, result) => {
-          if (err) {
-            throw err;
+        pool.query(
+          ServiceCampaign.addProductIntoCampaign(),
+          [valuesToAdd],
+          (err, result) => {
+            if (err) {
+              throw err;
+            }
           }
-        });
+        );
       }
       if (productsToRemove.length > 0) {
         const removeProductsQuery =
           "DELETE FROM campaign_products WHERE id_campaign = ? AND id_products IN (?)";
         pool.query(
-          removeProductsQuery,
+          ServiceCampaign.deleteCampaignByIdCamAndProduct,
           [ids_campaign, productsToRemove],
           (err, result) => {
             if (err) {

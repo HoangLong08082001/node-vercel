@@ -4,24 +4,39 @@ const handleCommission = (total_price, personal_tax, affiliate_tax) => {
 };
 
 class ServiceWebhook {
-  static checkAffiliateLevel1 =
-    "SELECT * FROM collaborator WHERE id_collaborator=? AND presenter_phone=?";
-  static checkAffiliateLevel2 =
-    "SELECT * FROM collaborator WHERE id_collaborator=?";
-  static insertOrder =
-    "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, email, status, total_price, date_delivered, referral_link) VALUES(?,?,?,?,?,?,?,?,?,?)";
-  static getAllOrders =
-    "SELECT * FROM orders ORDER BY orders.id_orders DESC LIMIT 1";
-  static checkCollaborator =
-    "SELECT * FROM collaborator WHERE id_collaborator=?";
-  static updatePayment =
-    "UPDATE payment SET total_recived=? WHERE id_collaborator=? ";
-  static checkPayment =
-    "SELECT payment.total_recived FROM payment WHERE id_collaborator=? ";
-  static countTotal = "SELECT COUNT(*) as total FROM orders";
-  static getLast = "SELECT * FROM orders";
-  static checkIdSapo = "SELECT * FROM orders WHERE id_orders_sapo=?";
-  static checkPhoneEmailOrder = "SELECT * FROM orders WHERE customer_phone = ?";
+  static checkAffiliateLevel1() {
+    return "SELECT * FROM collaborator WHERE id_collaborator=? AND presenter_phone=?";
+  }
+  static checkAffiliateLevel2() {
+    return "SELECT * FROM collaborator WHERE id_collaborator=?";
+  }
+  static insertOrder() {
+    return "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, email, status, total_price, date_delivered, referral_link) VALUES(?,?,?,?,?,?,?,?,?,?)";
+  }
+  static getAllOrders() {
+    return "SELECT * FROM orders ORDER BY orders.id_orders DESC LIMIT 1";
+  }
+  static checkCollaborator() {
+    return "SELECT * FROM collaborator WHERE id_collaborator=?";
+  }
+  static updatePayment() {
+    return "UPDATE payment SET total_recived=? WHERE id_collaborator=? ";
+  }
+  static checkPayment() {
+    return "SELECT payment.total_recived, payment.id_collaborator FROM payment WHERE id_collaborator=? ";
+  }
+  static countTotal() {
+    return "SELECT COUNT(*) as total FROM orders";
+  }
+  static getLast() {
+    return "SELECT * FROM orders";
+  }
+  static checkIdSapo() {
+    return "SELECT * FROM orders WHERE id_orders_sapo=?";
+  }
+  static checkPhoneEmailOrder() {
+    return "SELECT * FROM orders WHERE customer_phone = ?";
+  }
 }
 
 module.exports = {

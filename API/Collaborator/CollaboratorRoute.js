@@ -17,50 +17,118 @@ const {
   newPass,
 } = require("./CollaboratorController");
 const { authenticationToken } = require("../../middleware/JwtAction");
+const readLog = require("../logs/Logs");
 const router = express.Router();
 module.exports = function CollaboratorRoute(app) {
+  router.use(readLog);
   router.post(
     "/register",
-    app.set("name", "Đăng ký tài khoản mới"),
+    (req, res, next) => {
+      req.app.set("name", "Đăng ký tài khoản mới");
+      next();
+    },
     registerAccount
   );
-  router.post("/login", app.set("name", "Đăng nhập"), loginAccount);
-  router.post("/logout", app.set("name", "Đăng xuất"), signOutAccount);
-  router.post("/verify", authenticationToken, app.set("name", "Xác minh tài khoản"), codeVerify);
   router.post(
-    "/presenter-phone", authenticationToken,
-    app.set("name", "Nhập số điện thoại người dùng"),
+    "/login",
+    (req, res, next) => {
+      req.app.set("name", "Đăng nhập");
+      next();
+    },
+    loginAccount
+  );
+  router.post(
+    "/logout",
+    (req, res, next) => {
+      req.app.set("name", "Đăng xuất");
+      next();
+    },
+    signOutAccount
+  );
+  router.post(
+    "/verify",
+    (req, res, next) => {
+      req.app.set("name", "Xác minh tài khoản");
+      next();
+    },
+    codeVerify
+  );
+  router.post(
+    "/presenter-phone",
+    (req, res, next) => {
+      req.app.set("name", "Nhập số điện thoại người giới thiệu");
+      next();
+    },
     presenterPhone
   );
-  router.get("/account", app.set("name", "Đăng xuất"), getAccount);
+  router.get(
+    "/account",
+    (req, res, next) => {
+      req.app.set("name", "Đăng xuất");
+      next();
+    },
+    getAccount
+  );
   router.put(
     "/update-collaborator",
-    app.set("name", "Cập nhật thông tin"),
+    authenticationToken,
+    (req, res, next) => {
+      req.app.set("name", "Cập nhật thông tin");
+      next();
+    },
     updateInformation
   );
   router.post(
     "/renew-password",
-    app.set("name", "Làm mới mật khẩu"),
+    (req, res, next) => {
+      req.app.set("name", "Làm mới mật khẩu");
+      next();
+    },
     reNewpassword
   );
   router.post(
     "/resend",
-    app.set("name", "Nhấn nút gửi lại mã xác minh"),
+    authenticationToken,
+    (req, res, next) => {
+      req.app.set("name", "Nhấn nút gửi lại mã xác minh");
+    },
     resendCodeVerify
   );
   router.get(
     "/get-all",
-    app.set("name", "Lấy danh sách cộng tác viên"),
+    authenticationToken,
+    (req, res, next) => {
+      req.app.set("name", "Lấy danh sách cộng tác viên");
+      next();
+    },
     getAllCollaborator
   );
   router.delete(
     "/delete",
-    app.set("name", "Xoá cộng tác viên"),
+    (req, res, next) => {
+      req.app.set("name", "Xoá cộng tác viên");
+      next();
+    },
     deleteCollaborator
   );
-  router.post("/block", app.set("name", "Khoá người dùng"), setStatus);
-  router.get("/get-by-id/:id", getById);
+  router.post(
+    "/block",
+    authenticationToken,
+    (req, res, next) => {
+      req.app.set("name", "Khoá người dùng");
+      next();
+    },
+    setStatus
+  );
+  router.get("/get-by-id/:id", authenticationToken, getById);
   router.post("/send-email", sendEmailVerifyCode);
-  router.put("/renew-password", newPass);
+  router.put(
+    "/renew-password",
+    (req, res, next) => {
+      req.app.set("name", "Tạo lại mật khẩu mới");
+      next();
+    },
+    newPass
+  );
   return app.use("/collaborator", router);
 };

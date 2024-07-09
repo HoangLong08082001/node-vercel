@@ -1,15 +1,11 @@
 const pool = require("../../config/database");
+const { ServiceOrder } = require("./OrdersModals");
 
-const getOrdersByReferralLink = (req, res) => {
+async function getOrdersByReferralLink(req, res) {
   const id = req.params.id;
 
   try {
-    const query1 = `
-    SELECT * FROM orders
-    WHERE referral_link LIKE '%/?bwaf=%'
-  `;
-
-    pool.query(query1, (error, results1) => {
+    pool.query(ServiceOrder.getOrdersHaveReferralLink(), (error, results1) => {
       if (error) {
         return res.status(500).send(error);
       }
@@ -25,12 +21,8 @@ const getOrdersByReferralLink = (req, res) => {
       });
 
       // Truy vấn 2: Lấy các đơn hàng có referral_link là '/', '/password' hoặc rỗng
-      const query2 = `
-      SELECT * FROM orders
-      WHERE referral_link IN ('/', '/password', '')
-    `;
 
-      pool.query(query2, (error, results2) => {
+      pool.query(ServiceOrder.checkRefferalHave(), (error, results2) => {
         if (error) {
           return res.status(500).send(error);
         }
@@ -49,8 +41,24 @@ const getOrdersByReferralLink = (req, res) => {
   } catch (error) {
     return res.status(500).json({ message: "fails" });
   }
+}
+
+const getAll = (req, res) => {
+  try {
+    pool.query(ServiceOrder.getAllOrders(), [], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json(data);
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
 };
 
 module.exports = {
   getOrdersByReferralLink,
+  getAll,
 };
