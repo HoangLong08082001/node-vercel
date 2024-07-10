@@ -71,11 +71,11 @@ module.exports = function CollaboratorRoute(app) {
   );
   router.put(
     "/update-collaborator",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Cập nhật thông tin");
       next();
     },
+    authenticationToken,
     updateInformation
   );
   router.post(
@@ -88,36 +88,37 @@ module.exports = function CollaboratorRoute(app) {
   );
   router.post(
     "/resend",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Nhấn nút gửi lại mã xác minh");
     },
+    authenticationToken,
     resendCodeVerify
   );
   router.get(
     "/get-all",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Lấy danh sách cộng tác viên");
       next();
     },
+    authenticationToken,
     getAllCollaborator
   );
   router.delete(
-    "/delete",
+    "/delete/:id",
     (req, res, next) => {
       req.app.set("name", "Xoá cộng tác viên");
       next();
     },
+    authenticationToken,
     deleteCollaborator
   );
   router.post(
     "/block",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Khoá người dùng");
       next();
     },
+    authenticationToken,
     setStatus
   );
   router.get("/get-by-id/:id", authenticationToken, getById);

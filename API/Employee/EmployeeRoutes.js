@@ -20,58 +20,58 @@ module.exports = function EmployeeRoutes(app) {
   router.use(readLog);
   router.post(
     "/create",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Tạo tài khoản mới nhân viên truy cập hệ thống");
       next();
     },
+    authenticationToken,
     (req, res) => createEmployee(req, res, req.app.get("io"))
   );
   router.get(
     "/get-all",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Lấy danh sách nhân viên hệ thống");
       next();
     },
+    authenticationToken,
     getAllEmployee
   );
   router.post("/login", loginEmployee);
   router.put(
     "/re-password",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Tạo mật khẩu mới");
       next();
     },
+    authenticationToken,
     rePassword
   );
   router.put(
     "/renew-password",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Tạo mật khẩu mới");
       next();
     },
+    authenticationToken,
     setNewPassword
   );
   router.post(
     "/block",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Khoá tài khoản nhân viên hệ thống");
       next();
     },
+    authenticationToken,
     blockEmployee
   );
   router.post("/send-mail-to-login", authenticationToken, sendMailToLogin);
   router.put(
     "/update",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Cập nhật mới thông tin cá nhân");
       next();
     },
+    authenticationToken,
     updateInformation
   );
   return app.use("/employee", router);

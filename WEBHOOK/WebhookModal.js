@@ -23,7 +23,7 @@ class ServiceWebhook {
     return "UPDATE payment SET total_recived=? WHERE id_collaborator=? ";
   }
   static checkPayment() {
-    return "SELECT payment.total_recived, payment.id_collaborator FROM payment WHERE id_collaborator=? ";
+    return "SELECT payment.total_recived, payment.id_collaborator, collaborator.status_account FROM payment join collaborator on collaborator.id_collaborator = payment.id_collaborator WHERE payment.id_collaborator=? ";
   }
   static countTotal() {
     return "SELECT COUNT(*) as total FROM orders";
@@ -36,6 +36,9 @@ class ServiceWebhook {
   }
   static checkPhoneEmailOrder() {
     return "SELECT * FROM orders WHERE customer_phone = ?";
+  }
+  static addCommission(){
+    return "INSERT INTO commission (personal_tax, affiliate_commission, total_price, commission_net, id_collaborator, create_at, id_orders) VALUES(?,?,?,?,?,?,?)";
   }
 }
 

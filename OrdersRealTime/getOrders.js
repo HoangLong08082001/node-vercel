@@ -12,6 +12,13 @@ const formatDate = (date) => {
 
   return `${year}-${month}-${day} ${hours}:${minutes}:${seconds}`;
 };
+const formatDateYYYYMMDD = (date) => {
+  const dateObject = new Date(date);
+  const year = dateObject.getFullYear();
+  const month = String(dateObject.getMonth() + 1).padStart(2, "0");
+  const day = String(dateObject.getDate()).padStart(2, "0");
+  return `${year}-${month}-${day}`;
+};
 async function getOrders() {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
@@ -107,43 +114,52 @@ async function getOrders() {
                                   if (err) {
                                   }
                                   if (data.length > 0) {
-                                    const sum = (a, b) => {
-                                      return parseInt(a + b);
-                                    };
-                                    let new_commission = sum(
-                                      parseInt(
-                                        data[0].total_recived
-                                          ? data[0].total_recived
-                                          : 0
-                                      ),
-                                      parseInt(precent_tax)
-                                    );
-                                    pool.query(
-                                      "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                      [
-                                        orderValue,
-                                        precent_tax,
-                                        data[0].id_collaborator,
-                                        id_ordrer,
-                                      ],
-                                      (err, data) => {
-                                        if (err) {
-                                          console.log(err);
-                                        }
-                                        if (data) {
-                                          pool.query(
-                                            ServiceWebhook.updatePayment(),
-                                            [new_commission, firstNumber],
-                                            (err, result) => {
-                                              if (err) {
+                                    if (data[0].status_account === 1) {
+                                      const sum = (a, b) => {
+                                        return parseInt(a + b);
+                                      };
+                                      let new_commission = sum(
+                                        parseInt(
+                                          data[0].total_recived
+                                            ? data[0].total_recived
+                                            : 0
+                                        ),
+                                        parseInt(precent_tax)
+                                      );
+                                      pool.query(
+                                        ServiceWebhook.addCommission(),
+                                        [
+                                          10,
+                                          1,
+                                          orderValue,
+                                          precent_tax,
+                                          data[0].id_collaborator,
+                                          formatDateYYYYMMDD(
+                                            fulfillments[0]?.delivered_on
+                                          ),
+                                          id_ordrer,
+                                        ],
+                                        (err, data) => {
+                                          if (err) {
+                                            console.log(err);
+                                          }
+                                          if (data) {
+                                            pool.query(
+                                              ServiceWebhook.updatePayment(),
+                                              [new_commission, firstNumber],
+                                              (err, result) => {
+                                                if (err) {
+                                                }
+                                                if (result) {
+                                                }
                                               }
-                                              if (result) {
-                                              }
-                                            }
-                                          );
+                                            );
+                                          }
                                         }
-                                      }
-                                    );
+                                      );
+                                    } else {
+                                      return;
+                                    }
                                   }
                                 }
                               );
@@ -166,46 +182,54 @@ async function getOrders() {
                                               if (err) {
                                               }
                                               if (data.length > 0) {
-                                                const sum = (a, b) => {
-                                                  return parseInt(a + b);
-                                                };
-                                                let new_commission = sum(
-                                                  parseInt(
-                                                    data[0].total_recived
-                                                      ? data[0].total_recived
-                                                      : 0
-                                                  ),
-                                                  parseInt(precent_tax)
-                                                );
-                                                pool.query(
-                                                  "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                                  [
-                                                    orderValue,
-                                                    precent_tax,
-                                                    data[0].id_collaborator,
-                                                    id_ordrer,
-                                                  ],
-                                                  (err, data) => {
-                                                    if (err) {
-                                                      console.log(err);
-                                                    }
-                                                    if (data) {
-                                                      pool.query(
-                                                        ServiceWebhook.updatePayment(),
-                                                        [
-                                                          new_commission,
-                                                          secondNumber,
-                                                        ],
-                                                        (err, result) => {
-                                                          if (err) {
+                                                if (
+                                                  data[0].status_account === 1
+                                                ) {
+                                                  const sum = (a, b) => {
+                                                    return parseInt(a + b);
+                                                  };
+                                                  let new_commission = sum(
+                                                    parseInt(
+                                                      data[0].total_recived
+                                                        ? data[0].total_recived
+                                                        : 0
+                                                    ),
+                                                    parseInt(precent_tax)
+                                                  );
+                                                  pool.query(
+                                                    ServiceWebhook.addCommission(),
+                                                    [
+                                                      10,
+                                                      1,
+                                                      orderValue,
+                                                      precent_tax,
+                                                      data[0].id_collaborator,
+                                                      id_ordrer,
+                                                    ],
+                                                    (err, data) => {
+                                                      if (err) {
+                                                        console.log(err);
+                                                      }
+                                                      if (data) {
+                                                        pool.query(
+                                                          ServiceWebhook.updatePayment(),
+                                                          [
+                                                            new_commission,
+                                                            secondNumber,
+                                                          ],
+                                                          (err, result) => {
+                                                            if (err) {
+                                                            }
+                                                            if (result) {
+                                                            }
                                                           }
-                                                          if (result) {
-                                                          }
-                                                        }
-                                                      );
+                                                        );
+                                                      }
                                                     }
-                                                  }
-                                                );
+                                                  );
+                                                } else {
+                                                  return;
+                                                }
                                               }
                                             }
                                           );
@@ -231,43 +255,52 @@ async function getOrders() {
                                   if (err) {
                                   }
                                   if (data.length > 0) {
-                                    const sum = (a, b) => {
-                                      return parseInt(a + b);
-                                    };
-                                    let new_commission = sum(
-                                      parseInt(
-                                        data[0].total_recived
-                                          ? data[0].total_recived
-                                          : 0
-                                      ),
-                                      parseInt(precent_tax)
-                                    );
-                                    pool.query(
-                                      "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                      [
-                                        orderValue,
-                                        precent_tax,
-                                        data[0].id_collaborator,
-                                        id_ordrer,
-                                      ],
-                                      (err, data) => {
-                                        if (err) {
-                                          console.log(err);
-                                        }
-                                        if (data) {
-                                          pool.query(
-                                            ServiceWebhook.updatePayment(),
-                                            [new_commission, bwafValue],
-                                            (err, result) => {
-                                              if (err) {
+                                    if (data[0].status_account === 1) {
+                                      const sum = (a, b) => {
+                                        return parseInt(a + b);
+                                      };
+                                      let new_commission = sum(
+                                        parseInt(
+                                          data[0].total_recived
+                                            ? data[0].total_recived
+                                            : 0
+                                        ),
+                                        parseInt(precent_tax)
+                                      );
+                                      pool.query(
+                                        ServiceWebhook.addCommission(),
+                                        [
+                                          10,
+                                          1,
+                                          orderValue,
+                                          precent_tax,
+                                          data[0].id_collaborator,
+                                          formatDateYYYYMMDD(
+                                            fulfillments[0]?.delivered_on
+                                          ),
+                                          id_ordrer,
+                                        ],
+                                        (err, data) => {
+                                          if (err) {
+                                            console.log(err);
+                                          }
+                                          if (data) {
+                                            pool.query(
+                                              ServiceWebhook.updatePayment(),
+                                              [new_commission, bwafValue],
+                                              (err, result) => {
+                                                if (err) {
+                                                }
+                                                if (result) {
+                                                }
                                               }
-                                              if (result) {
-                                              }
-                                            }
-                                          );
+                                            );
+                                          }
                                         }
-                                      }
-                                    );
+                                      );
+                                    } else {
+                                      returnl;
+                                    }
                                   }
                                 }
                               );
@@ -311,47 +344,57 @@ async function getOrders() {
                                           if (err) {
                                           }
                                           if (data.length > 0) {
-                                            const sum = (a, b) => {
-                                              return parseInt(a + b);
-                                            };
-                                            let new_commission = sum(
-                                              parseInt(
-                                                data[0].total_recived
-                                                  ? data[0].total_recived
-                                                  : 0
-                                              ),
-                                              parseInt(precent_tax)
-                                            );
-                                            pool.query(
-                                              "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                              [
-                                                orderValue,
-                                                precent_tax,
-                                                data[0].id_collaborator,
-                                                id_ordrer,
-                                              ],
-                                              (err, data) => {
-                                                if (err) {
-                                                  console.log(err);
-                                                }
-                                                if (data) {
-                                                  pool.query(
-                                                    ServiceWebhook.updatePayment(),
-                                                    [
-                                                      new_commission,
-                                                      firstNumber,
-                                                    ],
-                                                    (err, result) => {
-                                                      if (err) {
-                                                        console.log("error");
+                                            if (data[0].status_account === 1) {
+                                              const sum = (a, b) => {
+                                                return parseInt(a + b);
+                                              };
+                                              let new_commission = sum(
+                                                parseInt(
+                                                  data[0].total_recived
+                                                    ? data[0].total_recived
+                                                    : 0
+                                                ),
+                                                parseInt(precent_tax)
+                                              );
+                                              pool.query(
+                                                ServiceWebhook.addCommission(),
+                                                [
+                                                  10,
+                                                  1,
+                                                  orderValue,
+                                                  precent_tax,
+                                                  data[0].id_collaborator,
+                                                  formatDateYYYYMMDD(
+                                                    fulfillments[0]
+                                                      ?.delivered_on
+                                                  ),
+                                                  id_ordrer,
+                                                ],
+                                                (err, data) => {
+                                                  if (err) {
+                                                    console.log(err);
+                                                  }
+                                                  if (data) {
+                                                    pool.query(
+                                                      ServiceWebhook.updatePayment(),
+                                                      [
+                                                        new_commission,
+                                                        firstNumber,
+                                                      ],
+                                                      (err, result) => {
+                                                        if (err) {
+                                                          console.log("error");
+                                                        }
+                                                        if (result) {
+                                                        }
                                                       }
-                                                      if (result) {
-                                                      }
-                                                    }
-                                                  );
+                                                    );
+                                                  }
                                                 }
-                                              }
-                                            );
+                                              );
+                                            } else {
+                                              return;
+                                            }
                                           }
                                         }
                                       );
@@ -374,57 +417,78 @@ async function getOrders() {
                                                       if (err) {
                                                       }
                                                       if (data.length > 0) {
-                                                        const sum = (a, b) => {
-                                                          return parseInt(
-                                                            a + b
-                                                          );
-                                                        };
-                                                        let new_commission =
-                                                          sum(
-                                                            parseInt(
+                                                        if (
+                                                          data[0]
+                                                            .status_account ===
+                                                          1
+                                                        ) {
+                                                          const sum = (
+                                                            a,
+                                                            b
+                                                          ) => {
+                                                            return parseInt(
+                                                              a + b
+                                                            );
+                                                          };
+                                                          let new_commission =
+                                                            sum(
+                                                              parseInt(
+                                                                data[0]
+                                                                  .total_recived
+                                                                  ? data[0]
+                                                                      .total_recived
+                                                                  : 0
+                                                              ),
+                                                              parseInt(
+                                                                precent_tax
+                                                              )
+                                                            );
+                                                          pool.query(
+                                                            ServiceWebhook.addCommission(),
+                                                            [
+                                                              10,
+                                                              1,
+                                                              orderValue,
+                                                              precent_tax,
                                                               data[0]
-                                                                .total_recived
-                                                                ? data[0]
-                                                                    .total_recived
-                                                                : 0
-                                                            ),
-                                                            parseInt(
-                                                              precent_tax
-                                                            )
+                                                                .id_collaborator,
+                                                              formatDateYYYYMMDD(
+                                                                fulfillments[0]
+                                                                  ?.delivered_on
+                                                              ),
+                                                              id_ordrer,
+                                                            ],
+                                                            (err, data) => {
+                                                              if (err) {
+                                                                console.log(
+                                                                  err
+                                                                );
+                                                              }
+                                                              if (data) {
+                                                                pool.query(
+                                                                  ServiceWebhook.updatePayment(),
+                                                                  [
+                                                                    new_commission,
+                                                                    secondNumber,
+                                                                  ],
+                                                                  (
+                                                                    err,
+                                                                    result
+                                                                  ) => {
+                                                                    if (err) {
+                                                                    }
+                                                                    if (
+                                                                      result
+                                                                    ) {
+                                                                    }
+                                                                  }
+                                                                );
+                                                              }
+                                                            }
                                                           );
-                                                        pool.query(
-                                                          "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                                          [
-                                                            orderValue,
-                                                            precent_tax,
-                                                            data[0]
-                                                              .id_collaborator,
-                                                            id_ordrer,
-                                                          ],
-                                                          (err, data) => {
-                                                            if (err) {
-                                                              console.log(err);
-                                                            }
-                                                            if (data) {
-                                                              pool.query(
-                                                                ServiceWebhook.updatePayment(),
-                                                                [
-                                                                  new_commission,
-                                                                  secondNumber,
-                                                                ],
-                                                                (
-                                                                  err,
-                                                                  result
-                                                                ) => {
-                                                                  if (err) {
-                                                                  }
-                                                                  if (result) {
-                                                                  }
-                                                                }
-                                                              );
-                                                            }
-                                                          }
-                                                        );
+                                                        } else {
+                                                          return;
+                                                        }
                                                       }
                                                     }
                                                   );
@@ -452,48 +516,65 @@ async function getOrders() {
                                             console.log("fails");
                                           }
                                           if (data.length > 0) {
-                                            const sum = (a, b) => {
-                                              return parseInt(a + b);
-                                            };
-                                            let new_commission = sum(
-                                              parseInt(
+                                            if (data[0].status_account === 1) {
+                                              const sum = (a, b) => {
+                                                return parseInt(a + b);
+                                              };
+                                              let new_commission = sum(
+                                                parseInt(
+                                                  data[0].total_recived
+                                                    ? data[0].total_recived
+                                                    : 0
+                                                ),
+                                                parseInt(precent_tax)
+                                              );
+                                              console.log(
                                                 data[0].total_recived
-                                                  ? data[0].total_recived
-                                                  : 0
-                                              ),
-                                              parseInt(precent_tax)
-                                            );
-                                            console.log(data[0].total_recived);
-                                            console.log(precent_tax);
-                                            console.log(new_commission);
-                                            pool.query(
-                                              "INSERT INTO commission (total_price, commission_net, id_collaborator, id_orders) VALUES(?,?,?,?)",
-                                              [
-                                                orderValue,
-                                                precent_tax,
-                                                data[0].id_collaborator,
-                                                id_ordrer,
-                                              ],
-                                              (err, data) => {
-                                                if (err) {
-                                                  console.log(err);
-                                                }
-                                                if (data) {
-                                                  pool.query(
-                                                    ServiceWebhook.updatePayment(),
-                                                    [new_commission, bwafValue],
-                                                    (err, result) => {
-                                                      if (err) {
-                                                        console.log("fails");
+                                              );
+                                              console.log(precent_tax);
+                                              console.log(new_commission);
+                                              pool.query(
+                                                ServiceWebhook.addCommission(),
+                                                [
+                                                  10,
+                                                  1,
+                                                  orderValue,
+                                                  precent_tax,
+                                                  data[0].id_collaborator,
+                                                  formatDateYYYYMMDD(
+                                                    fulfillments[0]
+                                                      ?.delivered_on
+                                                  ),
+                                                  id_ordrer,
+                                                ],
+                                                (err, data) => {
+                                                  if (err) {
+                                                    console.log(err);
+                                                  }
+                                                  if (data) {
+                                                    pool.query(
+                                                      ServiceWebhook.updatePayment(),
+                                                      [
+                                                        new_commission,
+                                                        bwafValue,
+                                                      ],
+                                                      (err, result) => {
+                                                        if (err) {
+                                                          console.log("fails");
+                                                        }
+                                                        if (result) {
+                                                          console.log(
+                                                            "success"
+                                                          );
+                                                        }
                                                       }
-                                                      if (result) {
-                                                        console.log("success");
-                                                      }
-                                                    }
-                                                  );
+                                                    );
+                                                  }
                                                 }
-                                              }
-                                            );
+                                              );
+                                            } else {
+                                              return;
+                                            }
                                           }
                                         }
                                       );

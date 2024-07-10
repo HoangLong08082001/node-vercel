@@ -42,7 +42,18 @@ async function getOrdersByReferralLink(req, res) {
     return res.status(500).json({ message: "fails" });
   }
 }
-
+const formatDate = (date) => {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
+const formatDate1 = (date) => {
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
+  const year = date.getFullYear();
+  return `${day}-${month}-${year}`;
+};
 const getAll = (req, res) => {
   try {
     pool.query(ServiceOrder.getAllOrders(), [], (err, data) => {
@@ -50,7 +61,13 @@ const getAll = (req, res) => {
         throw err;
       }
       if (data) {
-        return res.status(200).json(data);
+        let maxdate = data[0].max_date;
+        let mindate = data[0].min_date;
+        return res.status(200).json({
+          max_date: formatDate(maxdate),
+          min_date: formatDate(mindate),
+          data,
+        });
       }
     });
   } catch (error) {
@@ -58,7 +75,18 @@ const getAll = (req, res) => {
   }
 };
 
+const filterDate = (req, res) => {
+  let dateOne = req.params.date1;
+  let dateTwo = req.params.date2;
+  try {
+    pool
+  } catch (error) {
+    
+  }
+};
+
 module.exports = {
   getOrdersByReferralLink,
   getAll,
+  filterDate,
 };

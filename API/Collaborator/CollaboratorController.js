@@ -710,12 +710,40 @@ const setStatus = (req, res) => {
 const deleteCollaborator = (req, res) => {
   let id = req.body.idCollaborator;
   try {
-    pool.query(ServiceCollaborator.delete(), [id], (err, data) => {
+    pool.query(ServiceCollaborator.checkCollaboratorId(), [id], (err, data) => {
       if (err) {
         throw err;
       }
-      if (data) {
-        return res.status(200).json(data);
+      if (data.length > 0) {
+        pool.query(
+          ServiceCollaborator.checkExistsCollaborator(),
+          [id, id, id, id],
+          (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data.length > 0) {
+              return res.status(400).json({ message: "fails" });
+            } else {
+              pool.query(ServiceCollaborator.delete(), [id], (err, data) => {
+                if (err) {
+                  return res
+                    .status(400)
+                    .json({ message: "Không thể xoá cộng tác viên này" });
+                }
+                if (data) {
+                  return res.status(200).json({ message: "success" });
+                } else {
+                  return res.status(400).json({ message: "fails" });
+                }
+              });
+            }
+          }
+        );
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Không thể xoá cộng tác viên này" });
       }
     });
   } catch (error) {

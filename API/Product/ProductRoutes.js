@@ -9,11 +9,11 @@ function ProductRoutes(app) {
   router.use(readLog)
   router.get(
     "/get-all",
-    authenticationToken,
     (req, res, next) => {
       req.app.set("name", "Lấy danh sách sản phẩm");
       next();
     },
+    authenticationToken,
     getProducts
   );
   return app.use("/product", router);

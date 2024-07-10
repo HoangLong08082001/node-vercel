@@ -12,7 +12,7 @@ const createDepartment = (req, res) => {
         .status(400)
         .json({ message: "Bộ phận này đã tồn tại trong hệ thống" });
     } else {
-      pool.query(ServiceDepartment.create(), [name], (err, data) => {
+      pool.query(ServiceDepartment.create(), [name, 1], (err, data) => {
         if (err) {
           throw err;
         }
@@ -137,10 +137,44 @@ const checkPermission = (req, res) => {
     }
   );
 };
-
+const handleBlock = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(ServiceDepartment.checkStatusDepartment(), [id], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        if (data[0].status === 1) {
+          pool.query(ServiceDepartment.handleLock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+        if (data[0].status === 0) {
+          pool.query(ServiceDepartment.handleUnlock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
   createDepartment,
   getAlDepartment,
   getDepartmentWithRule,
   checkPermission,
+  handleBlock,
 };

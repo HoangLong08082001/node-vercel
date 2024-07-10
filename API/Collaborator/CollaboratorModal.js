@@ -104,11 +104,35 @@ class ServiceCollaborator {
   static checkStatusVerify() {
     return "SELECT collaborator.email_collaborator, collaborator.status_verify, collaborator.code_verify FROM collaborator WHERE email_collaborator=?";
   }
-  static getCollaboratorByEmail(){
+  static getCollaboratorByEmail() {
     return "SELECT * FROM collaborator WHERE email_collaborator=?";
   }
-  static updatePassByEmail(){
+  static updatePassByEmail() {
     return "UPDATE collaborator SET password_collaborator=? WHERE email_collaborator=?";
+  }
+  static checkCollaboratorId() {
+    return "SELECT * FROM collaborator WHERE id_collaborator=?";
+  }
+  static checkPaymentIdCollaborator() {
+    return "SELECT * FROM payment WHERE payment.id_collaborator=?";
+  }
+  static deletePaymentIdCollaborator() {
+    return "DELETE FROM payment WHERE payment.id_collaborator=?";
+  }
+  static checkCollaboratorCampaignIdColla() {
+    return "SELECT * FROM collaborator_campaign WHERE collaborator_campaign.id_collaborator=?";
+  }
+  static deleteCollaborator_campaign() {
+    return "DELETE FROM collaborator_campaign WHERE collaborator_campaign.id_collaborator=?";
+  }
+  static checkTeamCollaborator() {
+    return "SELECT * FROM team_collaborator WHERE team_collaborator.id_collaborator=?";
+  }
+  static deleteTeamCollaborator() {
+    return "DELETE FROM team_collaborator WHERE team_collaborator.id_collaborator=?";
+  }
+  static checkExistsCollaborator() {
+    return "SELECT * FROM collaborator join collaborator_campaign on collaborator.id_collaborator = collaborator_campaign.id_collaborator join commission on collaborator.id_collaborator = commission.id_collaborator join payment on collaborator.id_collaborator = payment.id_collaborator join team_collaborator on collaborator.id_collaborator = team_collaborator.id_collaborator WHERE collaborator_campaign.id_collaborator=? OR commission.id_collaborator = ? OR payment.id_collaborator=? OR team_collaborator.id_collaborator=?";
   }
 }
 

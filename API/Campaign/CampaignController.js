@@ -45,6 +45,7 @@ const createCampaign = (req, res) => {
           description,
           date_start,
           date_end,
+          0,
         ],
         (err, data) => {
           if (err) {
@@ -83,10 +84,12 @@ const deleteCampaign = (req, res) => {
                 [id],
                 (err, data) => {
                   if (err) {
-                    throw err;
+                    return res.status(400).json({ message: "fails" });
                   }
                   if (data) {
                     return res.status(200).json({ message: "success" });
+                  } else {
+                    return res.status(400).json({ message: "fails" });
                   }
                 }
               );
@@ -250,8 +253,42 @@ const addProductToCampaign = (req, res, next) => {
     }
   });
 };
-
+const blockCampaign = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(ServiceCampaign.checkStatus(), [id], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        if (data[0].status === 1) {
+          pool.query(ServiceCampaign.handleLock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+        if (data[0].status === 0) {
+          pool.query(ServiceCampaign.handleUnlock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
+  blockCampaign,
   createCampaign,
   deleteCampaign,
   getAllCampaign,

@@ -18,10 +18,10 @@ class ServicePayment {
     return "SELECT * FROM withdraw WHERE id_collaborator=? ORDER BY id_withdraw ASC LIMIT 1";
   }
   static getAllDraw() {
-    return "SELECT * FROM withdraw JOIN collaborator on withdraw.id_collaborator = collaborator.id_collaborator WHERE withdraw.date_request >= DATE_SUB(NOW(), INTERVAL 5 MINUTE)";
+    return "SELECT * FROM withdraw join collaborator on withdraw.id_collaborator = collaborator.id_collaborator join ";
   }
   static getAllPayment(){
-    return ""
+    return "SELECT * FROM payment join collaborator on collaborator.id_collaborator = payment.id_collaborator";
   }
 }
 

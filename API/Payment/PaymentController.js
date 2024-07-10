@@ -113,4 +113,18 @@ const getDraws = (req, res) => {
     return res.status(500).json({ message: "fails" });
   }
 };
-module.exports = { getDraws, drawCommission, confirmTransfer };
+const getAllPayment = (req, res) => {
+  try {
+    pool.query(ServicePayment.getAllPayment(), [], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data) {
+        return res.status(200).json(data);
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+module.exports = { getDraws, drawCommission, confirmTransfer, getAllPayment };

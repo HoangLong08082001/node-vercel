@@ -75,10 +75,48 @@ const DeleteRule = (req, res) => {
   //   return res.status(500).json({ message: "fails" });
   // }
 };
-
+const handleBlock = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(RuleService.checkStatus(), [id], (err, data) => {
+      if (err) {
+        throw err;
+      }
+      if (data.length > 0) {
+        if (data[0].status === 0) {
+          pool.query(RuleService.handleUnlock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+        if (data[0].status === 1) {
+          pool.query(RuleService.handleLock(), [id], (err, data) => {
+            if (err) {
+              throw err;
+            }
+            if (data) {
+              return res.status(200).json({ message: "success" });
+            }
+          });
+        }
+      } else {
+        return res
+          .status(400)
+          .json({ message: "Không thể thay đổi trạng thái" });
+      }
+    });
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
   GetRule,
   CraeteRule,
   UpdateRule,
   DeleteRule,
+  handleBlock,
 };

@@ -2,8 +2,10 @@ const express = require("express");
 const {
   getAllCommission,
   getByIdCommission,
+  compareCommission,
 } = require("./CommissionController");
 const readLog = require("../logs/Logs");
+const { authenticationToken } = require("../../middleware/JwtAction");
 const router = express.Router();
 module.exports = function CommissionRoutes(app) {
   router.use(readLog);
@@ -23,5 +25,6 @@ module.exports = function CommissionRoutes(app) {
     },
     getByIdCommission
   );
-  app.use("/commission", router);
+  router.get("/get-percent", authenticationToken, compareCommission);
+  app.use("/payment", router);
 };

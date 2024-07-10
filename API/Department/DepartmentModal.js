@@ -3,7 +3,7 @@ class ServiceDepartment {
     return "SELECT * FROM department WHERE name_department=?";
   }
   static create() {
-    return "INSERT INTO department (name_department) VALUES (?)";
+    return "INSERT INTO department (name_department, status) VALUES (?,?)";
   }
   static all() {
     return "SELECT * FROM department";
@@ -28,8 +28,18 @@ class ServiceDepartment {
   }
   static addPermissionsQuery() {
     return "INSERT INTO department_rule (id_department, id_rule) VALUES ?";
-  }static removePermissionQuery(){
+  }
+  static removePermissionQuery() {
     return "DELETE FROM department_rule WHERE id_department = ? AND id_rule IN (?)";
+  }
+  static handleLock() {
+    return "UPDATE department SET status = 0 WHERE id_department = ?";
+  }
+  static handleUnlock() {
+    return "UPDATE department SET status = 1 WHERE id_department = ?";
+  }
+  static checkStatusDepartment(){
+    return "SELECT * FROM department WHERE id_department = ?";
   }
 }
 
