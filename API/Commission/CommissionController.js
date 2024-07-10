@@ -50,14 +50,15 @@ const getByIdCommission = (req, res) => {
   }
 };
 const compareCommission = (req, res) => {
+  let id = req.params.id;
   try {
-    pool.query(ServiceCommission.commissionYesterday(), [], (err, data) => {
+    pool.query(ServiceCommission.commissionYesterday(), [id], (err, data) => {
       if (err) {
         throw err;
       }
       if (data) {
         let totalYesterDay = data[0].total_yesterday;
-        pool.query(ServiceCommission.commissionToday(), [], (err, data) => {
+        pool.query(ServiceCommission.commissionToday(), [id], (err, data) => {
           if (err) {
             throw err;
           }
@@ -67,12 +68,16 @@ const compareCommission = (req, res) => {
               totalYesterDay,
               totalToday
             );
-            return res.status(200).json(percentageChange);
+            return res
+              .status(200)
+              .json(percentageChange > 100 ? 100 : percentageChange);
           }
         });
       }
     });
-  } catch (error) {}
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
 };
 module.exports = {
   getAllCommission,

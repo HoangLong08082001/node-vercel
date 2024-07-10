@@ -25,6 +25,6 @@ module.exports = function CommissionRoutes(app) {
     },
     getByIdCommission
   );
-  router.get("/get-percent", authenticationToken, compareCommission);
+  router.get("/get-percent/:id", compareCommission);
   app.use("/payment", router);
 };

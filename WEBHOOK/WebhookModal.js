@@ -11,7 +11,7 @@ class ServiceWebhook {
     return "SELECT * FROM collaborator WHERE id_collaborator=?";
   }
   static insertOrder() {
-    return "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, email, status, total_price, date_delivered, referral_link) VALUES(?,?,?,?,?,?,?,?,?,?)";
+    return "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, email, status, total_price, referral_link) VALUES(?,?,?,?,?,?,?,?,?)";
   }
   static getAllOrders() {
     return "SELECT * FROM orders ORDER BY orders.id_orders DESC LIMIT 1";

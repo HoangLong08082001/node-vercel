@@ -6,10 +6,10 @@ class ServiceCommission {
     return "SELECT * FROM commission join orders on commission.id_orders = orders.id_orders join collaborator on commission.id_collaborator = collaborator.id_collaborator WHERE commission.id_commission=?";
   }
   static commissionYesterday() {
-    return "SELECT SUM(commission_net) AS total_yesterday FROM commission WHERE create_at = CURDATE() - INTERVAL 1 DAY";
+    return "SELECT SUM(commission_net) AS total_yesterday FROM commission WHERE create_at = CURDATE() - INTERVAL 1 DAY AND commission.id_collaborator=?";
   }
   static commissionToday() {
-    return "SELECT SUM(commission_net) AS total_today FROM commission WHERE create_at = CURDATE()";
+    return "SELECT SUM(commission_net) AS total_today FROM commission WHERE create_at = CURDATE() AND commission.id_collaborator=?";
   }
 }
 
