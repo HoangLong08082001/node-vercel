@@ -1,6 +1,11 @@
 const { default: axios } = require("axios");
 const pool = require("../config/database");
-const { ServiceWebhook, handleCommission } = require("../WEBHOOK/WebhookModal");
+const {
+  ServiceWebhook,
+  handleCommission,
+  handleBeforePersonalTax,
+  handleCommissionBeforePersonalTax,
+} = require("../WEBHOOK/WebhookModal");
 const formatDate = (date) => {
   const dateObject = new Date(date);
   const year = dateObject.getFullYear();
@@ -19,14 +24,27 @@ const formatDateYYYYMMDD = (date) => {
   const day = String(dateObject.getDate()).padStart(2, "0");
   return `${year}-${month}-${day}`;
 };
+const formatTimeHHMMSS = (dateString) => {
+  const date = new Date(dateString);
+
+  // Chuyển đổi thời gian UTC sang thời gian Việt Nam (GMT+7)
+  const vietnamOffset = 7 * 60; // 7 hours in minutes
+  const localDate = new Date(date.getTime() + vietnamOffset * 60 * 1000);
+
+  const hours = String(localDate.getUTCHours()).padStart(2, "0");
+  const minutes = String(localDate.getUTCMinutes()).padStart(2, "0");
+  const seconds = String(localDate.getUTCSeconds()).padStart(2, "0");
+
+  return `${hours}:${minutes}:${seconds}`;
+};
 async function getOrders() {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://apec-ecoop-test.mysapo.net/admin/orders.json`, {
+      .get(`https://test-apec.mysapo.net/admin/orders.json`, {
         auth: {
-          username: "7a98656a3d14471381c3e26e217c9bc4", // API Key
-          password: "4ce9d5302b1f47ef80a5d68af1fc7c4c", // API Secret
+          username: "e29c2e7f3b564e68bb13492ef0de9e3d", // API Key
+          password: "800949895b534e409b5ab3c98724aed0", // API Secret
         },
       })
       .then(async (response) => {
@@ -61,66 +79,81 @@ async function getOrders() {
                   if (data.length > 0) {
                     return;
                   } else {
-                    pool.query(
-                      "UPDATE orders SET financial_status=?, fulfillment_status=?, date_delivered=? WHERE orders.id_orders_sapo=?",
-                      [
-                        "paid",
-                        "fulfilled",
-                        formatDate(fulfillments[0]?.delivered_on),
-                        id,
-                      ],
-                      (err, data) => {
-                        if (err) {
-                          return;
+                    if (
+                      financial_status === "paid" &&
+                      fulfillment_status === null
+                    ) {
+                      pool.query(
+                        "UPDATE orders SET financial_status=? WHERE orders.id_orders_sapo=?",
+                        ["paid", id],
+                        (err, data) => {
+                          if (err) {
+                          }
+                          if (data) {
+                            return;
+                          }
                         }
-                        if (data) {
-                          pool.query(
-                            ServiceWebhook.checkIdSapo(),
-                            [id],
-                            (err, data) => {
-                              if (err) {
-                                return;
-                              }
-                              if (data.length > 0) {
-                                let id_ordrer = data[0].id_orders;
-                                // Process commission and update payments here
-                                // Example: handleCommission and pool.query for updating payments
-                                pool.query(
-                                  ServiceWebhook.checkIdSapo(),
-                                  [id],
-                                  (err, data) => {
-                                    if (data.length > 0) {
-                                      const bwaf = data[0].referral_link; // Giả sử cột chứa dữ liệu là 'bwaf'
-                                      const phone = data[0].customer_phone;
-                                      if (bwaf.includes("-")) {
-                                        // Cắt chuỗi để lấy phần sau dấu "="
-                                        var parts = bwaf.split("=");
+                      );
+                    }
+                    if (status !== "cancelled") {
+                      pool.query(
+                        "UPDATE orders SET financial_status=?, fulfillment_status=?, date_delivered=? WHERE orders.id_orders_sapo=?",
+                        [
+                          "paid",
+                          "fulfilled",
+                          formatDate(fulfillments[0]?.delivered_on),
+                          id,
+                        ],
+                        (err, data) => {
+                          if (err) {
+                            return;
+                          }
+                          if (data) {
+                            pool.query(
+                              ServiceWebhook.checkIdSapo(),
+                              [id],
+                              (err, data) => {
+                                if (err) {
+                                  return;
+                                }
+                                if (data.length > 0) {
+                                  let id_ordrer = data[0].id_orders;
+                                  // Process commission and update payments here
+                                  // Example: handleCommission and pool.query for updating payments
+                                  pool.query(
+                                    ServiceWebhook.checkIdSapo(),
+                                    [id],
+                                    (err, data) => {
+                                      if (data.length > 0) {
+                                        const bwaf = data[0].referral_link; // Giả sử cột chứa dữ liệu là 'bwaf'
+                                        const phone = data[0].customer_phone;
+                                        if (bwaf.includes("-")) {
+                                          // Cắt chuỗi để lấy phần sau dấu "="
+                                          var parts = bwaf.split("=");
 
-                                        // Lấy chuỗi chứa "78-100"
-                                        var numberStr = parts[1];
+                                          // Lấy chuỗi chứa "78-100"
+                                          var numberStr = parts[1];
 
-                                        // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-                                        var numbers = numberStr.split("-");
+                                          // Cắt chuỗi "78-100" thành hai phần "78" và "100"
+                                          var numbers = numberStr.split("-");
 
-                                        // Gán kết quả vào các biến
-                                        var firstNumber = numbers[0];
-                                        var secondNumber = numbers[1];
-                                        const orderValue = data[0].total_price;
-                                        let precent_tax = handleCommission(
-                                          orderValue,
-                                          10,
-                                          1
-                                        );
-                                        pool.query(
-                                          ServiceWebhook.checkPayment(),
-                                          [firstNumber],
-                                          (err, data) => {
-                                            if (err) {
-                                            }
-                                            if (data.length > 0) {
-                                              if (
-                                                data[0].status_account === 1
-                                              ) {
+                                          // Gán kết quả vào các biến
+                                          var firstNumber = numbers[0];
+                                          var secondNumber = numbers[1];
+                                          const orderValue =
+                                            data[0].total_price;
+                                          let precent_tax = handleCommission(
+                                            orderValue,
+                                            10,
+                                            1
+                                          );
+                                          pool.query(
+                                            ServiceWebhook.checkPayment(),
+                                            [firstNumber],
+                                            (err, data) => {
+                                              if (err) {
+                                              }
+                                              if (data.length > 0) {
                                                 const sum = (a, b) => {
                                                   return parseInt(a + b);
                                                 };
@@ -132,6 +165,8 @@ async function getOrders() {
                                                   ),
                                                   parseInt(precent_tax)
                                                 );
+                                                let id_collaborator =
+                                                  data[0].id_collaborator;
                                                 pool.query(
                                                   ServiceWebhook.addCommission(),
                                                   [
@@ -139,11 +174,17 @@ async function getOrders() {
                                                     1,
                                                     orderValue,
                                                     precent_tax,
-                                                    data[0].id_collaborator,
+                                                    0,
                                                     formatDateYYYYMMDD(
                                                       fulfillments[0]
                                                         ?.delivered_on
                                                     ),
+                                                    formatTimeHHMMSS(
+                                                      fulfillments[0]
+                                                        ?.delivered_on
+                                                    ),
+                                                    id_collaborator,
+                                                    precent_tax,
                                                     id_ordrer,
                                                   ],
                                                   (err, data) => {
@@ -152,51 +193,93 @@ async function getOrders() {
                                                     }
                                                     if (data) {
                                                       pool.query(
-                                                        ServiceWebhook.updatePayment(),
+                                                        ServiceWebhook.addTax(),
                                                         [
-                                                          new_commission,
-                                                          firstNumber,
+                                                          id_collaborator,
+                                                          orderValue,
+                                                          handleCommissionBeforePersonalTax(
+                                                            orderValue,
+                                                            1
+                                                          ),
+                                                          handleBeforePersonalTax(
+                                                            handleCommissionBeforePersonalTax(
+                                                              orderValue,
+                                                              1
+                                                            ),
+                                                            10
+                                                          ),
+                                                          parseInt(
+                                                            handleCommissionBeforePersonalTax(
+                                                              orderValue,
+                                                              1
+                                                            ) -
+                                                              handleBeforePersonalTax(
+                                                                handleCommissionBeforePersonalTax(
+                                                                  orderValue,
+                                                                  1
+                                                                ),
+                                                                10
+                                                              )
+                                                          ),
+                                                          id_ordrer,
+                                                          formatDateYYYYMMDD(
+                                                            fulfillments[0]
+                                                              ?.delivered_on
+                                                          ),
+                                                          formatTimeHHMMSS(
+                                                            fulfillments[0]
+                                                              ?.delivered_on
+                                                          ),
                                                         ],
-                                                        (err, result) => {
+                                                        (err, data) => {
                                                           if (err) {
+                                                            return;
                                                           }
-                                                          if (result) {
+                                                          if (data) {
+                                                            pool.query(
+                                                              ServiceWebhook.updatePayment(),
+                                                              [
+                                                                new_commission,
+                                                                firstNumber,
+                                                              ],
+                                                              (err, result) => {
+                                                                if (err) {
+                                                                }
+                                                                if (result) {
+                                                                }
+                                                              }
+                                                            );
                                                           }
                                                         }
                                                       );
                                                     }
                                                   }
                                                 );
-                                              } else {
-                                                return;
                                               }
                                             }
-                                          }
-                                        );
-                                        pool.query(
-                                          ServiceWebhook.checkAffiliateLevel2(),
-                                          [secondNumber],
-                                          (err, data) => {
-                                            if (err) {
-                                            }
-                                            if (data.length > 0) {
-                                              pool.query(
-                                                ServiceWebhook.checkAffiliateLevel1(),
-                                                [firstNumber, data[0].phone],
-                                                (err, data) => {
-                                                  if (data.length > 0) {
-                                                    pool.query(
-                                                      ServiceWebhook.checkPayment(),
-                                                      [secondNumber],
-                                                      (err, data) => {
-                                                        if (err) {
-                                                        }
-                                                        if (data.length > 0) {
-                                                          if (
-                                                            data[0]
-                                                              .status_account ===
-                                                            1
-                                                          ) {
+                                          );
+                                          pool.query(
+                                            ServiceWebhook.checkAffiliateLevel2(),
+                                            [secondNumber],
+                                            (err, data) => {
+                                              if (err) {
+                                              }
+                                              if (data.length > 0) {
+                                                pool.query(
+                                                  ServiceWebhook.checkAffiliateLevel1(),
+                                                  [firstNumber, data[0].phone],
+                                                  (err, data) => {
+                                                    if (err) {
+                                                      return;
+                                                    }
+                                                    if (data.length > 0) {
+                                                      pool.query(
+                                                        ServiceWebhook.checkPayment(),
+                                                        [secondNumber],
+                                                        (err, data) => {
+                                                          if (err) {
+                                                          }
+                                                          if (data.length > 0) {
                                                             const sum = (
                                                               a,
                                                               b
@@ -218,15 +301,27 @@ async function getOrders() {
                                                                   precent_tax
                                                                 )
                                                               );
+                                                            let id_collaborator =
+                                                              data[0]
+                                                                .id_collaborator;
                                                             pool.query(
                                                               ServiceWebhook.addCommission(),
                                                               [
                                                                 10,
                                                                 1,
                                                                 orderValue,
+                                                                0,
                                                                 precent_tax,
-                                                                data[0]
-                                                                  .id_collaborator,
+                                                                formatDateYYYYMMDD(
+                                                                  fulfillments[0]
+                                                                    ?.delivered_on
+                                                                ),
+                                                                formatTimeHHMMSS(
+                                                                  fulfillments[0]
+                                                                    ?.delivered_on
+                                                                ),
+                                                                id_collaborator,
+                                                                precent_tax,
                                                                 id_ordrer,
                                                               ],
                                                               (err, data) => {
@@ -237,57 +332,108 @@ async function getOrders() {
                                                                 }
                                                                 if (data) {
                                                                   pool.query(
-                                                                    ServiceWebhook.updatePayment(),
+                                                                    ServiceWebhook.addTax(),
                                                                     [
-                                                                      new_commission,
-                                                                      secondNumber,
+                                                                      id_collaborator,
+                                                                      orderValue,
+                                                                      handleCommissionBeforePersonalTax(
+                                                                        orderValue,
+                                                                        1
+                                                                      ),
+                                                                      handleBeforePersonalTax(
+                                                                        handleCommissionBeforePersonalTax(
+                                                                          orderValue,
+                                                                          1
+                                                                        ),
+                                                                        10
+                                                                      ),
+                                                                      parseInt(
+                                                                        handleCommissionBeforePersonalTax(
+                                                                          orderValue,
+                                                                          1
+                                                                        ) -
+                                                                          handleBeforePersonalTax(
+                                                                            handleCommissionBeforePersonalTax(
+                                                                              orderValue,
+                                                                              1
+                                                                            ),
+                                                                            10
+                                                                          )
+                                                                      ),
+                                                                      id_ordrer,
+                                                                      formatDateYYYYMMDD(
+                                                                        fulfillments[0]
+                                                                          ?.delivered_on
+                                                                      ),
+                                                                      formatTimeHHMMSS(
+                                                                        fulfillments[0]
+                                                                          ?.delivered_on
+                                                                      ),
                                                                     ],
                                                                     (
                                                                       err,
-                                                                      result
+                                                                      data
                                                                     ) => {
                                                                       if (err) {
                                                                       }
                                                                       if (
-                                                                        result
+                                                                        data
                                                                       ) {
+                                                                        pool.query(
+                                                                          ServiceWebhook.updatePayment(),
+                                                                          [
+                                                                            new_commission,
+                                                                            secondNumber,
+                                                                          ],
+                                                                          (
+                                                                            err,
+                                                                            result
+                                                                          ) => {
+                                                                            if (
+                                                                              err
+                                                                            ) {
+                                                                            }
+                                                                            if (
+                                                                              result
+                                                                            ) {
+                                                                            }
+                                                                          }
+                                                                        );
                                                                       }
                                                                     }
                                                                   );
                                                                 }
                                                               }
                                                             );
-                                                          } else {
-                                                            return;
                                                           }
                                                         }
-                                                      }
-                                                    );
+                                                      );
+                                                    } else {
+                                                      return;
+                                                    }
                                                   }
-                                                }
-                                              );
+                                                );
+                                              } else {
+                                                return;
+                                              }
                                             }
-                                          }
-                                        );
-                                      } else {
-                                        const bwafValue = bwaf.split("=")[1];
-                                        const orderValue = order.total_price;
-                                        let precent_tax = handleCommission(
-                                          orderValue,
-                                          10,
-                                          1
-                                        );
+                                          );
+                                        } else {
+                                          const bwafValue = bwaf.split("=")[1];
+                                          const orderValue = order.total_price;
+                                          let precent_tax = handleCommission(
+                                            orderValue,
+                                            10,
+                                            1
+                                          );
 
-                                        pool.query(
-                                          ServiceWebhook.checkPayment(),
-                                          [bwafValue],
-                                          (err, data) => {
-                                            if (err) {
-                                            }
-                                            if (data.length > 0) {
-                                              if (
-                                                data[0].status_account === 1
-                                              ) {
+                                          pool.query(
+                                            ServiceWebhook.checkPayment(),
+                                            [bwafValue],
+                                            (err, data) => {
+                                              if (err) {
+                                              }
+                                              if (data.length > 0) {
                                                 const sum = (a, b) => {
                                                   return parseInt(a + b);
                                                 };
@@ -299,6 +445,8 @@ async function getOrders() {
                                                   ),
                                                   parseInt(precent_tax)
                                                 );
+                                                let id_collaborator =
+                                                  data[0].id_collaborator;
                                                 pool.query(
                                                   ServiceWebhook.addCommission(),
                                                   [
@@ -306,11 +454,17 @@ async function getOrders() {
                                                     1,
                                                     orderValue,
                                                     precent_tax,
-                                                    data[0].id_collaborator,
+                                                    0,
                                                     formatDateYYYYMMDD(
                                                       fulfillments[0]
                                                         ?.delivered_on
                                                     ),
+                                                    formatTimeHHMMSS(
+                                                      fulfillments[0]
+                                                        ?.delivered_on
+                                                    ),
+                                                    id_collaborator,
+                                                    precent_tax,
                                                     id_ordrer,
                                                   ],
                                                   (err, data) => {
@@ -319,74 +473,114 @@ async function getOrders() {
                                                     }
                                                     if (data) {
                                                       pool.query(
-                                                        ServiceWebhook.updatePayment(),
+                                                        ServiceWebhook.addTax(),
                                                         [
-                                                          new_commission,
-                                                          bwafValue,
+                                                          id_collaborator,
+                                                          orderValue,
+                                                          handleCommissionBeforePersonalTax(
+                                                            orderValue,
+                                                            1
+                                                          ),
+                                                          handleBeforePersonalTax(
+                                                            handleCommissionBeforePersonalTax(
+                                                              orderValue,
+                                                              1
+                                                            ),
+                                                            10
+                                                          ),
+                                                          parseInt(
+                                                            handleCommissionBeforePersonalTax(
+                                                              orderValue,
+                                                              1
+                                                            ) -
+                                                              handleBeforePersonalTax(
+                                                                handleCommissionBeforePersonalTax(
+                                                                  orderValue,
+                                                                  1
+                                                                ),
+                                                                10
+                                                              )
+                                                          ),
+                                                          id_ordrer,
+                                                          formatDateYYYYMMDD(
+                                                            fulfillments[0]
+                                                              ?.delivered_on
+                                                          ),
+                                                          formatTimeHHMMSS(
+                                                            fulfillments[0]
+                                                              ?.delivered_on
+                                                          ),
                                                         ],
-                                                        (err, result) => {
+                                                        (err, data) => {
                                                           if (err) {
                                                           }
-                                                          if (result) {
+                                                          if (data) {
+                                                            pool.query(
+                                                              ServiceWebhook.updatePayment(),
+                                                              [
+                                                                new_commission,
+                                                                bwafValue,
+                                                              ],
+                                                              (err, result) => {
+                                                                if (err) {
+                                                                }
+                                                                if (result) {
+                                                                }
+                                                              }
+                                                            );
                                                           }
                                                         }
                                                       );
                                                     }
                                                   }
                                                 );
-                                              } else {
-                                                returnl;
                                               }
                                             }
-                                          }
-                                        );
-                                      }
-                                      if (
-                                        bwaf === "/password" ||
-                                        bwaf === "/" ||
-                                        bwaf === ""
-                                      ) {
-                                        pool.query(
-                                          ServiceWebhook.checkPhoneEmailOrder(),
-                                          [phone],
-                                          (err, data) => {
-                                            if (err) {
-                                            }
-                                            if (data.length > 0) {
-                                              let bwaf = data[0].referral_link;
-                                              if (bwaf.includes("-")) {
-                                                // Cắt chuỗi để lấy phần sau dấu "="
-                                                var parts = bwaf.split("=");
+                                          );
+                                        }
+                                        if (
+                                          bwaf === "/password" ||
+                                          bwaf === "/" ||
+                                          bwaf === ""
+                                        ) {
+                                          pool.query(
+                                            ServiceWebhook.checkPhoneEmailOrder(),
+                                            [phone],
+                                            (err, data) => {
+                                              if (err) {
+                                              }
+                                              if (data.length > 0) {
+                                                let bwaf =
+                                                  data[0].referral_link;
+                                                if (bwaf.includes("-")) {
+                                                  // Cắt chuỗi để lấy phần sau dấu "="
+                                                  var parts = bwaf.split("=");
 
-                                                // Lấy chuỗi chứa "78-100"
-                                                var numberStr = parts[1];
+                                                  // Lấy chuỗi chứa "78-100"
+                                                  var numberStr = parts[1];
 
-                                                // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-                                                var numbers =
-                                                  numberStr.split("-");
+                                                  // Cắt chuỗi "78-100" thành hai phần "78" và "100"
+                                                  var numbers =
+                                                    numberStr.split("-");
 
-                                                // Gán kết quả vào các biến
-                                                var firstNumber = numbers[0];
-                                                var secondNumber = numbers[1];
-                                                const orderValue =
-                                                  data[0].total_price;
-                                                let precent_tax =
-                                                  handleCommission(
-                                                    orderValue,
-                                                    10,
-                                                    1
-                                                  );
-                                                pool.query(
-                                                  ServiceWebhook.checkPayment(),
-                                                  [firstNumber],
-                                                  (err, data) => {
-                                                    if (err) {
-                                                    }
-                                                    if (data.length > 0) {
-                                                      if (
-                                                        data[0]
-                                                          .status_account === 1
-                                                      ) {
+                                                  // Gán kết quả vào các biến
+                                                  var firstNumber = numbers[0];
+                                                  var secondNumber = numbers[1];
+                                                  const orderValue =
+                                                    data[0].total_price;
+                                                  let precent_tax =
+                                                    handleCommission(
+                                                      orderValue,
+                                                      10,
+                                                      1
+                                                    );
+                                                  pool.query(
+                                                    ServiceWebhook.checkPayment(),
+                                                    [firstNumber],
+                                                    (err, data) => {
+                                                      if (err) {
+                                                      }
+                                                      if (data.length > 0) {
                                                         const sum = (a, b) => {
                                                           return parseInt(
                                                             a + b
@@ -405,6 +599,9 @@ async function getOrders() {
                                                               precent_tax
                                                             )
                                                           );
+                                                        let id_collaborator =
+                                                          data[0]
+                                                            .id_collaborator;
                                                         pool.query(
                                                           ServiceWebhook.addCommission(),
                                                           [
@@ -412,12 +609,17 @@ async function getOrders() {
                                                             1,
                                                             orderValue,
                                                             precent_tax,
-                                                            data[0]
-                                                              .id_collaborator,
+                                                            0,
                                                             formatDateYYYYMMDD(
                                                               fulfillments[0]
                                                                 ?.delivered_on
                                                             ),
+                                                            formatTimeHHMMSS(
+                                                              fulfillments[0]
+                                                                ?.delivered_on
+                                                            ),
+                                                            id_collaborator,
+                                                            precent_tax,
                                                             id_ordrer,
                                                           ],
                                                           (err, data) => {
@@ -426,62 +628,106 @@ async function getOrders() {
                                                             }
                                                             if (data) {
                                                               pool.query(
-                                                                ServiceWebhook.updatePayment(),
+                                                                ServiceWebhook.addTax(),
                                                                 [
-                                                                  new_commission,
-                                                                  firstNumber,
+                                                                  id_collaborator,
+                                                                  orderValue,
+                                                                  handleCommissionBeforePersonalTax(
+                                                                    orderValue,
+                                                                    1
+                                                                  ),
+                                                                  handleBeforePersonalTax(
+                                                                    handleCommissionBeforePersonalTax(
+                                                                      orderValue,
+                                                                      1
+                                                                    ),
+                                                                    10
+                                                                  ),
+                                                                  parseInt(
+                                                                    handleCommissionBeforePersonalTax(
+                                                                      orderValue,
+                                                                      1
+                                                                    ) -
+                                                                      handleBeforePersonalTax(
+                                                                        handleCommissionBeforePersonalTax(
+                                                                          orderValue,
+                                                                          1
+                                                                        ),
+                                                                        10
+                                                                      )
+                                                                  ),
+                                                                  id_ordrer,
+                                                                  formatDateYYYYMMDD(
+                                                                    fulfillments[0]
+                                                                      ?.delivered_on
+                                                                  ),
+                                                                  formatTimeHHMMSS(
+                                                                    fulfillments[0]
+                                                                      ?.delivered_on
+                                                                  ),
                                                                 ],
-                                                                (
-                                                                  err,
-                                                                  result
-                                                                ) => {
+                                                                (err, data) => {
                                                                   if (err) {
-                                                                    console.log(
-                                                                      "error"
-                                                                    );
                                                                   }
-                                                                  if (result) {
+                                                                  if (data) {
+                                                                    pool.query(
+                                                                      ServiceWebhook.updatePayment(),
+                                                                      [
+                                                                        new_commission,
+                                                                        firstNumber,
+                                                                      ],
+                                                                      (
+                                                                        err,
+                                                                        result
+                                                                      ) => {
+                                                                        if (
+                                                                          err
+                                                                        ) {
+                                                                          console.log(
+                                                                            "error"
+                                                                          );
+                                                                        }
+                                                                        if (
+                                                                          result
+                                                                        ) {
+                                                                        }
+                                                                      }
+                                                                    );
                                                                   }
                                                                 }
                                                               );
                                                             }
                                                           }
                                                         );
-                                                      } else {
-                                                        return;
                                                       }
                                                     }
-                                                  }
-                                                );
-                                                pool.query(
-                                                  ServiceWebhook.checkAffiliateLevel2(),
-                                                  [secondNumber],
-                                                  (err, data) => {
-                                                    if (err) {
-                                                    }
-                                                    if (data.length > 0) {
-                                                      pool.query(
-                                                        ServiceWebhook.checkAffiliateLevel1(),
-                                                        [
-                                                          firstNumber,
-                                                          data[0].phone,
-                                                        ],
-                                                        (err, data) => {
-                                                          if (data.length > 0) {
-                                                            pool.query(
-                                                              ServiceWebhook.checkPayment(),
-                                                              [secondNumber],
-                                                              (err, data) => {
-                                                                if (err) {
-                                                                }
-                                                                if (
-                                                                  data.length >
-                                                                  0
-                                                                ) {
+                                                  );
+                                                  pool.query(
+                                                    ServiceWebhook.checkAffiliateLevel2(),
+                                                    [secondNumber],
+                                                    (err, data) => {
+                                                      if (err) {
+                                                      }
+                                                      if (data.length > 0) {
+                                                        pool.query(
+                                                          ServiceWebhook.checkAffiliateLevel1(),
+                                                          [
+                                                            firstNumber,
+                                                            data[0].phone,
+                                                          ],
+                                                          (err, data) => {
+                                                            if (
+                                                              data.length > 0
+                                                            ) {
+                                                              pool.query(
+                                                                ServiceWebhook.checkPayment(),
+                                                                [secondNumber],
+                                                                (err, data) => {
+                                                                  if (err) {
+                                                                  }
                                                                   if (
-                                                                    data[0]
-                                                                      .status_account ===
-                                                                    1
+                                                                    data.length >
+                                                                    0
                                                                   ) {
                                                                     const sum =
                                                                       (
@@ -505,19 +751,27 @@ async function getOrders() {
                                                                           precent_tax
                                                                         )
                                                                       );
+                                                                    let id_collaborator =
+                                                                      data[0]
+                                                                        .id_collaborator;
                                                                     pool.query(
                                                                       ServiceWebhook.addCommission(),
                                                                       [
                                                                         10,
                                                                         1,
                                                                         orderValue,
+                                                                        0,
                                                                         precent_tax,
-                                                                        data[0]
-                                                                          .id_collaborator,
                                                                         formatDateYYYYMMDD(
                                                                           fulfillments[0]
                                                                             ?.delivered_on
                                                                         ),
+                                                                        formatTimeHHMMSS(
+                                                                          fulfillments[0]
+                                                                            ?.delivered_on
+                                                                        ),
+                                                                        id_collaborator,
+                                                                        precent_tax,
                                                                         id_ordrer,
                                                                       ],
                                                                       (
@@ -535,65 +789,111 @@ async function getOrders() {
                                                                           data
                                                                         ) {
                                                                           pool.query(
-                                                                            ServiceWebhook.updatePayment(),
+                                                                            ServiceWebhook.addTax(),
                                                                             [
-                                                                              new_commission,
-                                                                              secondNumber,
+                                                                              id_collaborator,
+                                                                              orderValue,
+                                                                              handleCommissionBeforePersonalTax(
+                                                                                orderValue,
+                                                                                1
+                                                                              ),
+                                                                              handleBeforePersonalTax(
+                                                                                handleCommissionBeforePersonalTax(
+                                                                                  orderValue,
+                                                                                  1
+                                                                                ),
+                                                                                10
+                                                                              ),
+                                                                              parseInt(
+                                                                                handleCommissionBeforePersonalTax(
+                                                                                  orderValue,
+                                                                                  1
+                                                                                ) -
+                                                                                  handleBeforePersonalTax(
+                                                                                    handleCommissionBeforePersonalTax(
+                                                                                      orderValue,
+                                                                                      1
+                                                                                    ),
+                                                                                    10
+                                                                                  )
+                                                                              ),
+                                                                              id_ordrer,
+                                                                              formatDateYYYYMMDD(
+                                                                                fulfillments[0]
+                                                                                  ?.delivered_on
+                                                                              ),
+                                                                              formatTimeHHMMSS(
+                                                                                fulfillments[0]
+                                                                                  ?.delivered_on
+                                                                              ),
                                                                             ],
                                                                             (
                                                                               err,
-                                                                              result
+                                                                              data
                                                                             ) => {
                                                                               if (
                                                                                 err
                                                                               ) {
                                                                               }
                                                                               if (
-                                                                                result
+                                                                                data
                                                                               ) {
+                                                                                pool.query(
+                                                                                  ServiceWebhook.updatePayment(),
+                                                                                  [
+                                                                                    new_commission,
+                                                                                    secondNumber,
+                                                                                  ],
+                                                                                  (
+                                                                                    err,
+                                                                                    result
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      err
+                                                                                    ) {
+                                                                                    }
+                                                                                    if (
+                                                                                      result
+                                                                                    ) {
+                                                                                    }
+                                                                                  }
+                                                                                );
                                                                               }
                                                                             }
                                                                           );
                                                                         }
                                                                       }
                                                                     );
-                                                                  } else {
-                                                                    return;
                                                                   }
                                                                 }
-                                                              }
-                                                            );
+                                                              );
+                                                            }
                                                           }
-                                                        }
-                                                      );
+                                                        );
+                                                      }
                                                     }
-                                                  }
-                                                );
-                                              }
-                                              if (!bwaf.includes("-")) {
-                                                const bwafValue =
-                                                  bwaf.split("=")[1];
-                                                const orderValue =
-                                                  order.total_price;
-                                                let precent_tax =
-                                                  handleCommission(
-                                                    orderValue,
-                                                    10,
-                                                    1
                                                   );
-                                                console.log(precent_tax);
-                                                pool.query(
-                                                  ServiceWebhook.checkPayment(),
-                                                  [bwafValue],
-                                                  (err, data) => {
-                                                    if (err) {
-                                                      console.log("fails");
-                                                    }
-                                                    if (data.length > 0) {
-                                                      if (
-                                                        data[0]
-                                                          .status_account === 1
-                                                      ) {
+                                                }
+                                                if (!bwaf.includes("-")) {
+                                                  const bwafValue =
+                                                    bwaf.split("=")[1];
+                                                  const orderValue =
+                                                    order.total_price;
+                                                  let precent_tax =
+                                                    handleCommission(
+                                                      orderValue,
+                                                      10,
+                                                      1
+                                                    );
+                                                  console.log(precent_tax);
+                                                  pool.query(
+                                                    ServiceWebhook.checkPayment(),
+                                                    [bwafValue],
+                                                    (err, data) => {
+                                                      if (err) {
+                                                        console.log("fails");
+                                                      }
+                                                      if (data.length > 0) {
                                                         const sum = (a, b) => {
                                                           return parseInt(
                                                             a + b
@@ -621,6 +921,9 @@ async function getOrders() {
                                                         console.log(
                                                           new_commission
                                                         );
+                                                        let id_collaborator =
+                                                          data[0]
+                                                            .id_collaborator;
                                                         pool.query(
                                                           ServiceWebhook.addCommission(),
                                                           [
@@ -628,12 +931,17 @@ async function getOrders() {
                                                             1,
                                                             orderValue,
                                                             precent_tax,
-                                                            data[0]
-                                                              .id_collaborator,
+                                                            0,
                                                             formatDateYYYYMMDD(
                                                               fulfillments[0]
                                                                 ?.delivered_on
                                                             ),
+                                                            formatTimeHHMMSS(
+                                                              fulfillments[0]
+                                                                ?.delivered_on
+                                                            ),
+                                                            id_collaborator,
+                                                            precent_tax,
                                                             id_ordrer,
                                                           ],
                                                           (err, data) => {
@@ -642,23 +950,73 @@ async function getOrders() {
                                                             }
                                                             if (data) {
                                                               pool.query(
-                                                                ServiceWebhook.updatePayment(),
+                                                                ServiceWebhook.addTax(),
                                                                 [
-                                                                  new_commission,
-                                                                  bwafValue,
+                                                                  id_collaborator,
+                                                                  orderValue,
+                                                                  handleCommissionBeforePersonalTax(
+                                                                    orderValue,
+                                                                    1
+                                                                  ),
+                                                                  handleBeforePersonalTax(
+                                                                    handleCommissionBeforePersonalTax(
+                                                                      orderValue,
+                                                                      1
+                                                                    ),
+                                                                    10
+                                                                  ),
+                                                                  parseInt(
+                                                                    handleCommissionBeforePersonalTax(
+                                                                      orderValue,
+                                                                      1
+                                                                    ) -
+                                                                      handleBeforePersonalTax(
+                                                                        handleCommissionBeforePersonalTax(
+                                                                          orderValue,
+                                                                          1
+                                                                        ),
+                                                                        10
+                                                                      )
+                                                                  ),
+                                                                  id_ordrer,
+                                                                  formatDateYYYYMMDD(
+                                                                    fulfillments[0]
+                                                                      ?.delivered_on
+                                                                  ),
+                                                                  formatTimeHHMMSS(
+                                                                    fulfillments[0]
+                                                                      ?.delivered_on
+                                                                  ),
                                                                 ],
-                                                                (
-                                                                  err,
-                                                                  result
-                                                                ) => {
+                                                                (err, data) => {
                                                                   if (err) {
-                                                                    console.log(
-                                                                      "fails"
-                                                                    );
                                                                   }
-                                                                  if (result) {
-                                                                    console.log(
-                                                                      "success"
+                                                                  if (data) {
+                                                                    pool.query(
+                                                                      ServiceWebhook.updatePayment(),
+                                                                      [
+                                                                        new_commission,
+                                                                        bwafValue,
+                                                                      ],
+                                                                      (
+                                                                        err,
+                                                                        result
+                                                                      ) => {
+                                                                        if (
+                                                                          err
+                                                                        ) {
+                                                                          console.log(
+                                                                            "fails"
+                                                                          );
+                                                                        }
+                                                                        if (
+                                                                          result
+                                                                        ) {
+                                                                          console.log(
+                                                                            "success"
+                                                                          );
+                                                                        }
+                                                                      }
                                                                     );
                                                                   }
                                                                 }
@@ -666,26 +1024,36 @@ async function getOrders() {
                                                             }
                                                           }
                                                         );
-                                                      } else {
-                                                        return;
                                                       }
                                                     }
-                                                  }
-                                                );
+                                                  );
+                                                }
                                               }
                                             }
-                                          }
-                                        );
+                                          );
+                                        }
                                       }
                                     }
-                                  }
-                                );
+                                  );
+                                }
                               }
-                            }
-                          );
+                            );
+                          }
                         }
-                      }
-                    );
+                      );
+                    } else {
+                      pool.query(
+                        "UPDATE orders SET 	financial_status=?, status=? WHERE id_orders_sapo=?",
+                        ["refunded", "cancelled", id],
+                        (err, data) => {
+                          if (err) {
+                          }
+                          if (data) {
+                            return;
+                          }
+                        }
+                      );
+                    }
                   }
                 }
               );

@@ -56,7 +56,7 @@ const registerAccount = async (req, res) => {
                   if (result) {
                     pool.query(
                       ServicePayment.addpayment(),
-                      [0, 0, result.insertId],
+                      [0, 0, 0, 0, result.insertId],
                       (err, result) => {
                         if (err) {
                           throw err;
@@ -299,7 +299,7 @@ const presenterPhone = (req, res) => {
                                         ServiceCollaborator.createTeam(),
                                         [
                                           0,
-                                          `https://apec-ecoop-test.mysapo.net/?bwaf=`,
+                                          `https://test-apec.mysapo.net/?bwaf=`,
                                         ],
                                         (err, data) => {
                                           if (err) {

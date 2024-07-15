@@ -47,7 +47,6 @@ function TeamRoutes(app) {
       req.app.set("name", "Lấy danh sách các cộng tác viên trong team");
       next();
     },
-    authenticationToken,
     getAllCollaboratorOfTeam
   );
   router.get(

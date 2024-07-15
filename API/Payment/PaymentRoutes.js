@@ -4,6 +4,8 @@ const {
   confirmTransfer,
   getDraws,
   getAllPayment,
+  getAllCommission,
+  getDataChartOrder,
 } = require("./PaymentController");
 const { authenticationToken } = require("../../middleware/JwtAction");
 const readLog = require("../logs/Logs");
@@ -25,7 +27,6 @@ module.exports = function PaymentRoutes(app) {
       req.app.set("name", "Xác nhận đã chuyển khoản");
       next();
     },
-    authenticationToken,
     confirmTransfer
   );
   router.get(
@@ -33,10 +34,11 @@ module.exports = function PaymentRoutes(app) {
     (req, res, next) => {
       req.app.set("name", "Lấy danh sách tất cả lệnh rút");
       next();
-    },
-    authenticationToken,
+    },authenticationToken,
     getDraws
   );
+  router.get("/get-all", authenticationToken, getAllCommission);
   router.get("/all-payment", authenticationToken, getAllPayment);
+  router.get("/data-chart/:id", authenticationToken, getDataChartOrder);
   return app.use("/commission", router);
 };

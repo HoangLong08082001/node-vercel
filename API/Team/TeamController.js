@@ -195,7 +195,7 @@ const getAllCollaboratorOfTeam = (req, res) => {
         let id_team = data[0].id_team;
 
         pool.query(
-          TeamModal.getCollaboratorTeamHaving,
+          TeamModal.getCollaboratorTeamHaving(),
           [id_team],
           (err, data) => {
             if (err) {

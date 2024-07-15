@@ -15,6 +15,7 @@ module.exports = function CommissionRoutes(app) {
       req.app.set("name", "Lấy danh sách Hoa hồng");
       next();
     },
+    authenticationToken,
     getAllCommission
   );
   router.get(
@@ -23,8 +24,9 @@ module.exports = function CommissionRoutes(app) {
       req.app.set("name", `Lấy thông tin chi tiết hoa hồng ${req.params.id}`);
       next();
     },
+    authenticationToken,
     getByIdCommission
   );
-  router.get("/get-percent/:id", compareCommission);
+  router.get("/get-percent/:id", authenticationToken, compareCommission);
   app.use("/payment", router);
 };

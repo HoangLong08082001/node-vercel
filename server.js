@@ -30,6 +30,7 @@ const getOrders = require("./OrdersRealTime/getOrders.js");
 const PaymentRoutes = require("./API/Payment/PaymentRoutes.js");
 const CommissionRoutes = require("./API/Commission/CommissionRoutes.js");
 const NotificationSystemRoutes = require("./API/NotificationSytem/NotificationSystemRoutes.js");
+const TaxRoutes = require("./API/Tax/TaxRoutes.js");
 // const admin = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
 
@@ -98,6 +99,7 @@ PaymentRoutes(app);
 ProductRoutes(app);
 CommissionRoutes(app);
 NotificationSystemRoutes(app);
+TaxRoutes(app);
 // app.post("/store-token", async (req, res) => {
 //   const { token } = req.body;
 //   if (!token) {

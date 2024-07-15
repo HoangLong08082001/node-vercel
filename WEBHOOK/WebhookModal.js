@@ -3,6 +3,15 @@ const handleCommission = (total_price, personal_tax, affiliate_tax) => {
   return total_price * (affiliate_tax / 100) - tax;
 };
 
+const handleCommissionBeforePersonalTax = (
+  total_price,
+  affiliate_commission
+) => {
+  return total_price * (affiliate_commission / 100);
+};
+const handleBeforePersonalTax = (total_price, personal_tax) => {
+  return total_price * (personal_tax / 100);
+};
 class ServiceWebhook {
   static checkAffiliateLevel1() {
     return "SELECT * FROM collaborator WHERE id_collaborator=? AND presenter_phone=?";
@@ -37,12 +46,17 @@ class ServiceWebhook {
   static checkPhoneEmailOrder() {
     return "SELECT * FROM orders WHERE customer_phone = ?";
   }
-  static addCommission(){
-    return "INSERT INTO commission (personal_tax, affiliate_commission, total_price, commission_net, id_collaborator, create_at, id_orders) VALUES(?,?,?,?,?,?,?)";
+  static addCommission() {
+    return "INSERT INTO commission (personal_tax, affiliate_commission, total_price, direct_commission, indirect_commission, create_at, time_at, id_collaborator, actually_recived, id_orders) VALUES(?,?,?,?,?,?,?,?,?,?)";
+  }
+  static addTax() {
+    return "INSERT INTO tax (id_collaborator,total_price, before_tax, tax_rate, after_tax, id_orders, created_on, created_time) VALUES (?,?,?,?,?,?,?,?)";
   }
 }
 
 module.exports = {
   handleCommission,
   ServiceWebhook,
+  handleBeforePersonalTax,
+  handleCommissionBeforePersonalTax,
 };

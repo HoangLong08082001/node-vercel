@@ -39,7 +39,7 @@ const createCampaign = (req, res) => {
         ServiceCampaign.create(),
         [
           image,
-          "https://apec-ecoop-test.mysapo.net/",
+          "https://test-apec.mysapo.net/",
           name,
           commission,
           description,

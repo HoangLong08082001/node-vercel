@@ -39,7 +39,7 @@ class TeamModal {
     return "SELECT team_collaborator.id_team FROM team_collaborator join collaborator on team_collaborator.id_collaborator = collaborator.id_collaborator WHERE collaborator.phone=?";
   }
   static getCollaboratorTeamHaving() {
-    return "SELECT c1.phone, c1.email_collaborator, c1.id_collaborator, c1.name_collaborator, c1.gender, c1.avatar, COUNT(c2.phone) AS count FROM collaborator c1 LEFT JOIN collaborator c2 ON c1.phone = c2.presenter_phone INNER JOIN team_collaborator tc ON c1.id_collaborator = tc.id_collaborator GROUP BY c1.name_collaborator, c1.phone, c1.email_collaborator, c1.id_collaborator, c1.gender, c1.avatar , tc.id_team HAVING tc.id_team = ?";
+    return "SELECT c1.phone, c1.email_collaborator, c1.id_collaborator, c1.name_collaborator, c1.avatar, COUNT(c2.phone) AS count FROM collaborator c1 LEFT JOIN collaborator c2 ON c1.phone = c2.presenter_phone INNER JOIN team_collaborator tc ON c1.id_collaborator = tc.id_collaborator GROUP BY c1.name_collaborator, c1.phone, c1.email_collaborator, c1.id_collaborator, c1.avatar , tc.id_team HAVING tc.id_team = ?";
   }
   static getDetailCollaborator() {
     return "SELECT c1.id_collaborator, c1.name_collaborator, c1.phone, c1.email_collaborator FROM collaborator c1 join collaborator c2 on c1.presenter_phone = c2.phone WHERE c2.id_collaborator = ?";
