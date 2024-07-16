@@ -1075,7 +1075,7 @@ async function getOrders() {
                 (err, data) => {
                   if (err) {
                     console.error("Error inserting order:", err);
-                  } else {
+                  } if(data) {
                     return;
                   }
                 }

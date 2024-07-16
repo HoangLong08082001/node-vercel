@@ -211,7 +211,6 @@ const confirmTransfer = (req, res) => {
       }
       if (data.length > 0) {
         let total_withdrawn_payment = data[0].total_withdrawn;
-        let total_recived_payment = data[0].total_recived;
         pool.query(ServicePayment.getAmountWithDraw(), [id], (err, data) => {
           if (err) {
             throw err;
@@ -230,7 +229,7 @@ const confirmTransfer = (req, res) => {
                     ServicePayment.updateRecivedAfterTransfer(),
                     [
                       parseInt(
-                        parseInt(total_recived_payment) -
+                        parseInt(total_recived_withdraw) -
                           parseInt(total_recived_withdraw)
                       ),
                       parseInt(
@@ -268,13 +267,11 @@ const getDraws = (req, res) => {
       if (data) {
         let maxdate = data[0].max_date;
         let mindate = data[0].min_date;
-        return res
-          .status(200)
-          .json({
-            max_date: formatDate1(maxdate),
-            min_date: formatDate1(mindate),
-            data,
-          });
+        return res.status(200).json({
+          max_date: formatDate1(maxdate),
+          min_date: formatDate1(mindate),
+          data,
+        });
       }
     });
   } catch (error) {

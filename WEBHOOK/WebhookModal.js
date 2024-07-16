@@ -52,6 +52,9 @@ class ServiceWebhook {
   static addTax() {
     return "INSERT INTO tax (id_collaborator,total_price, before_tax, tax_rate, after_tax, id_orders, created_on, created_time) VALUES (?,?,?,?,?,?,?,?)";
   }
+  static checkWithDraw(){
+    return "SELECT * FROM withdraw.id_orders_sapo = ?"
+  }
 }
 
 module.exports = {
