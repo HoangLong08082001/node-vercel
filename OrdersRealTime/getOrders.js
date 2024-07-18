@@ -118,6 +118,7 @@ async function getOrders() {
                                 }
                                 if (data.length > 0) {
                                   let id_ordrer = data[0].id_orders;
+                                  let id_order_sapo = data[0].id_orders_sapo;
                                   // Process commission and update payments here
                                   // Example: handleCommission and pool.query for updating payments
                                   pool.query(
@@ -154,6 +155,8 @@ async function getOrders() {
                                               if (err) {
                                               }
                                               if (data.length > 0) {
+                                                let init_balance =
+                                                  data[0].total_recived;
                                                 const sum = (a, b) => {
                                                   return parseInt(a + b);
                                                 };
@@ -246,6 +249,71 @@ async function getOrders() {
                                                                 if (err) {
                                                                 }
                                                                 if (result) {
+                                                                  pool.query(
+                                                                    ServiceWebhook.checkPayment(),
+                                                                    [
+                                                                      firstNumber,
+                                                                    ],
+                                                                    (
+                                                                      err,
+                                                                      data
+                                                                    ) => {
+                                                                      if (err) {
+                                                                      }
+                                                                      if (
+                                                                        data.length >
+                                                                        0
+                                                                      ) {
+                                                                        let recived =
+                                                                          data[0]
+                                                                            .total_recived;
+                                                                        pool.query(
+                                                                          "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                          [
+                                                                            handleCommission(
+                                                                              orderValue,
+                                                                              10,
+                                                                              1
+                                                                            ),
+                                                                            formatDateYYYYMMDD(
+                                                                              new Date()
+                                                                            ),
+                                                                            1,
+                                                                            id_ordrer,
+                                                                            0,
+                                                                            id_order_sapo,
+                                                                            parseInt(
+                                                                              parseInt(
+                                                                                init_balance
+                                                                              ) +
+                                                                                parseInt(
+                                                                                  handleCommission(
+                                                                                    orderValue,
+                                                                                    10,
+                                                                                    1
+                                                                                  )
+                                                                                )
+                                                                            ),
+                                                                            firstNumber,
+                                                                          ],
+                                                                          (
+                                                                            err,
+                                                                            data
+                                                                          ) => {
+                                                                            if (
+                                                                              err
+                                                                            ) {
+                                                                            }
+                                                                            if (
+                                                                              data
+                                                                            ) {
+                                                                            }
+                                                                          }
+                                                                        );
+                                                                      }
+                                                                    }
+                                                                  );
                                                                 }
                                                               }
                                                             );
@@ -280,6 +348,9 @@ async function getOrders() {
                                                           if (err) {
                                                           }
                                                           if (data.length > 0) {
+                                                            let init_balance =
+                                                              data[0]
+                                                                .total_recived;
                                                             const sum = (
                                                               a,
                                                               b
@@ -396,6 +467,73 @@ async function getOrders() {
                                                                             if (
                                                                               result
                                                                             ) {
+                                                                              pool.query(
+                                                                                ServiceWebhook.checkPayment(),
+                                                                                [
+                                                                                  secondNumber,
+                                                                                ],
+                                                                                (
+                                                                                  err,
+                                                                                  data
+                                                                                ) => {
+                                                                                  if (
+                                                                                    err
+                                                                                  ) {
+                                                                                  }
+                                                                                  if (
+                                                                                    data.length >
+                                                                                    0
+                                                                                  ) {
+                                                                                    let recived =
+                                                                                      data[0]
+                                                                                        .total_recived;
+                                                                                    pool.query(
+                                                                                      "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                                      [
+                                                                                        handleCommission(
+                                                                                          orderValue,
+                                                                                          10,
+                                                                                          1
+                                                                                        ),
+                                                                                        formatDateYYYYMMDD(
+                                                                                          new Date()
+                                                                                        ),
+                                                                                        1,
+                                                                                        id_ordrer,
+                                                                                        0,
+                                                                                        id_order_sapo,
+                                                                                        parseInt(
+                                                                                          parseInt(
+                                                                                            init_balance
+                                                                                          ) +
+                                                                                            parseInt(
+                                                                                              handleCommission(
+                                                                                                orderValue,
+                                                                                                10,
+                                                                                                1
+                                                                                              )
+                                                                                            )
+                                                                                        ),
+                                                                                        secondNumber,
+                                                                                      ],
+                                                                                      (
+                                                                                        err,
+                                                                                        data
+                                                                                      ) => {
+                                                                                        if (
+                                                                                          err
+                                                                                        ) {
+                                                                                        }
+                                                                                        if (
+                                                                                          data
+                                                                                        ) {
+                                                                                        }
+                                                                                      }
+                                                                                    );
+                                                                                  }
+                                                                                }
+                                                                              );
                                                                             }
                                                                           }
                                                                         );
@@ -434,6 +572,8 @@ async function getOrders() {
                                               if (err) {
                                               }
                                               if (data.length > 0) {
+                                                let init_balance =
+                                                  data[0].total_recived;
                                                 const sum = (a, b) => {
                                                   return parseInt(a + b);
                                                 };
@@ -525,6 +665,69 @@ async function getOrders() {
                                                                 if (err) {
                                                                 }
                                                                 if (result) {
+                                                                  pool.query(
+                                                                    ServiceWebhook.checkPayment(),
+                                                                    [bwafValue],
+                                                                    (
+                                                                      err,
+                                                                      data
+                                                                    ) => {
+                                                                      if (err) {
+                                                                      }
+                                                                      if (
+                                                                        data.length >
+                                                                        0
+                                                                      ) {
+                                                                        let recived =
+                                                                          data[0]
+                                                                            .total_recived;
+                                                                        pool.query(
+                                                                          "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                          [
+                                                                            handleCommission(
+                                                                              orderValue,
+                                                                              10,
+                                                                              1
+                                                                            ),
+                                                                            formatDateYYYYMMDD(
+                                                                              new Date()
+                                                                            ),
+                                                                            1,
+                                                                            id_ordrer,
+                                                                            0,
+                                                                            id_order_sapo,
+                                                                            parseInt(
+                                                                              parseInt(
+                                                                                init_balance
+                                                                              ) +
+                                                                                parseInt(
+                                                                                  handleCommission(
+                                                                                    orderValue,
+                                                                                    10,
+                                                                                    1
+                                                                                  )
+                                                                                )
+                                                                            ),
+                                                                            bwafValue,
+                                                                          ],
+                                                                          (
+                                                                            err,
+                                                                            data
+                                                                          ) => {
+                                                                            if (
+                                                                              err
+                                                                            ) {
+                                                                            }
+                                                                            if (
+                                                                              data
+                                                                            ) {
+                                                                            }
+                                                                          }
+                                                                        );
+                                                                      }
+                                                                    }
+                                                                  );
                                                                 }
                                                               }
                                                             );
@@ -581,6 +784,8 @@ async function getOrders() {
                                                       if (err) {
                                                       }
                                                       if (data.length > 0) {
+                                                        let init_balance =
+                                                          data[0].total_recived;
                                                         const sum = (a, b) => {
                                                           return parseInt(
                                                             a + b
@@ -690,6 +895,73 @@ async function getOrders() {
                                                                         if (
                                                                           result
                                                                         ) {
+                                                                          pool.query(
+                                                                            ServiceWebhook.checkPayment(),
+                                                                            [
+                                                                              firstNumber,
+                                                                            ],
+                                                                            (
+                                                                              err,
+                                                                              data
+                                                                            ) => {
+                                                                              if (
+                                                                                err
+                                                                              ) {
+                                                                              }
+                                                                              if (
+                                                                                data.length >
+                                                                                0
+                                                                              ) {
+                                                                                let recived =
+                                                                                  data[0]
+                                                                                    .total_recived;
+                                                                                pool.query(
+                                                                                  "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                                  [
+                                                                                    handleCommission(
+                                                                                      orderValue,
+                                                                                      10,
+                                                                                      1
+                                                                                    ),
+                                                                                    formatDateYYYYMMDD(
+                                                                                      new Date()
+                                                                                    ),
+                                                                                    1,
+                                                                                    id_ordrer,
+                                                                                    0,
+                                                                                    id_order_sapo,
+                                                                                    parseInt(
+                                                                                      parseInt(
+                                                                                        init_balance
+                                                                                      ) +
+                                                                                        parseInt(
+                                                                                          handleCommission(
+                                                                                            orderValue,
+                                                                                            10,
+                                                                                            1
+                                                                                          )
+                                                                                        )
+                                                                                    ),
+                                                                                    firstNumber,
+                                                                                  ],
+                                                                                  (
+                                                                                    err,
+                                                                                    data
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      err
+                                                                                    ) {
+                                                                                    }
+                                                                                    if (
+                                                                                      data
+                                                                                    ) {
+                                                                                    }
+                                                                                  }
+                                                                                );
+                                                                              }
+                                                                            }
+                                                                          );
                                                                         }
                                                                       }
                                                                     );
@@ -729,6 +1001,9 @@ async function getOrders() {
                                                                     data.length >
                                                                     0
                                                                   ) {
+                                                                    let init_balance =
+                                                                      data[0]
+                                                                        .total_recived;
                                                                     const sum =
                                                                       (
                                                                         a,
@@ -855,6 +1130,73 @@ async function getOrders() {
                                                                                     if (
                                                                                       result
                                                                                     ) {
+                                                                                      pool.query(
+                                                                                        ServiceWebhook.checkPayment(),
+                                                                                        [
+                                                                                          secondNumber,
+                                                                                        ],
+                                                                                        (
+                                                                                          err,
+                                                                                          data
+                                                                                        ) => {
+                                                                                          if (
+                                                                                            err
+                                                                                          ) {
+                                                                                          }
+                                                                                          if (
+                                                                                            data.length >
+                                                                                            0
+                                                                                          ) {
+                                                                                            let recived =
+                                                                                              data[0]
+                                                                                                .total_recived;
+                                                                                            pool.query(
+                                                                                              "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                                              [
+                                                                                                handleCommission(
+                                                                                                  orderValue,
+                                                                                                  10,
+                                                                                                  1
+                                                                                                ),
+                                                                                                formatDateYYYYMMDD(
+                                                                                                  new Date()
+                                                                                                ),
+                                                                                                1,
+                                                                                                id_ordrer,
+                                                                                                0,
+                                                                                                id_order_sapo,
+                                                                                                parseInt(
+                                                                                                  parseInt(
+                                                                                                    init_balance
+                                                                                                  ) +
+                                                                                                    parseInt(
+                                                                                                      handleCommission(
+                                                                                                        orderValue,
+                                                                                                        10,
+                                                                                                        1
+                                                                                                      )
+                                                                                                    )
+                                                                                                ),
+                                                                                                secondNumber,
+                                                                                              ],
+                                                                                              (
+                                                                                                err,
+                                                                                                data
+                                                                                              ) => {
+                                                                                                if (
+                                                                                                  err
+                                                                                                ) {
+                                                                                                }
+                                                                                                if (
+                                                                                                  data
+                                                                                                ) {
+                                                                                                }
+                                                                                              }
+                                                                                            );
+                                                                                          }
+                                                                                        }
+                                                                                      );
                                                                                     }
                                                                                   }
                                                                                 );
@@ -894,6 +1236,7 @@ async function getOrders() {
                                                         console.log("fails");
                                                       }
                                                       if (data.length > 0) {
+                                                        let init_balance = data[0].total_recived;
                                                         const sum = (a, b) => {
                                                           return parseInt(
                                                             a + b
@@ -1012,8 +1355,72 @@ async function getOrders() {
                                                                         if (
                                                                           result
                                                                         ) {
-                                                                          console.log(
-                                                                            "success"
+                                                                          pool.query(
+                                                                            ServiceWebhook.checkPayment(),
+                                                                            [
+                                                                              bwafValue,
+                                                                            ],
+                                                                            (
+                                                                              err,
+                                                                              data
+                                                                            ) => {
+                                                                              if (
+                                                                                err
+                                                                              ) {
+                                                                              }
+                                                                              if (
+                                                                                data.length >
+                                                                                0
+                                                                              ) {
+                                                                                let recived =
+                                                                                  data[0]
+                                                                                    .total_recived;
+                                                                                pool.query(
+                                                                                  "INSERT INTO withdraw (amount_recived, date_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
+
+                                                                                  [
+                                                                                    handleCommission(
+                                                                                      orderValue,
+                                                                                      10,
+                                                                                      1
+                                                                                    ),
+                                                                                    formatDateYYYYMMDD(
+                                                                                      new Date()
+                                                                                    ),
+                                                                                    1,
+                                                                                    id_ordrer,
+                                                                                    0,
+                                                                                    id_order_sapo,
+                                                                                    parseInt(
+                                                                                      parseInt(
+                                                                                        init_balance
+                                                                                      ) +
+                                                                                        parseInt(
+                                                                                          handleCommission(
+                                                                                            orderValue,
+                                                                                            10,
+                                                                                            1
+                                                                                          )
+                                                                                        )
+                                                                                    ),
+                                                                                    bwafValue,
+                                                                                  ],
+                                                                                  (
+                                                                                    err,
+                                                                                    data
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      err
+                                                                                    ) {
+                                                                                    }
+                                                                                    if (
+                                                                                      data
+                                                                                    ) {
+                                                                                    }
+                                                                                  }
+                                                                                );
+                                                                              }
+                                                                            }
                                                                           );
                                                                         }
                                                                       }
@@ -1075,7 +1482,8 @@ async function getOrders() {
                 (err, data) => {
                   if (err) {
                     console.error("Error inserting order:", err);
-                  } if(data) {
+                  }
+                  if (data) {
                     return;
                   }
                 }

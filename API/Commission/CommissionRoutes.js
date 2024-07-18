@@ -6,6 +6,9 @@ const {
 } = require("./CommissionController");
 const readLog = require("../logs/Logs");
 const { authenticationToken } = require("../../middleware/JwtAction");
+const {
+  getDataCollaboratorWithdrawal,
+} = require("../Payment/PaymentController");
 const router = express.Router();
 module.exports = function CommissionRoutes(app) {
   router.use(readLog);
@@ -28,5 +31,10 @@ module.exports = function CommissionRoutes(app) {
     getByIdCommission
   );
   router.get("/get-percent/:id", authenticationToken, compareCommission);
+  router.get(
+    "/get-total-withdraw",
+    authenticationToken,
+    getDataCollaboratorWithdrawal
+  );
   app.use("/payment", router);
 };

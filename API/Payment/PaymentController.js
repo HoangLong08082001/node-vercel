@@ -43,13 +43,14 @@ const drawCommission = (req, res) => {
                     let total_pending = data[0].total_pending;
 
                     pool.query(
-                      "INSERT INTO withdraw (date_request, initial_balance, amount_pending, amount_transferred, status_transferred, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?)",
+                      "INSERT INTO withdraw (date_request, initial_balance, amount_pending, amount_transferred, status_transferred, type_transferred, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?)",
                       [
                         formatDate(new Date()),
                         total_recived2,
                         total_recived2,
                         total_recived2,
                         0,
+                        1,
                         0,
                         id,
                       ],
@@ -340,6 +341,30 @@ GROUP BY
     return res.status(500).json({ message: "fails" });
   }
 };
+const getDataCollaboratorWithdrawal = (req, res) => {
+  try {
+    pool.query(
+      "SELECT withdraw.id_withdraw, collaborator.id_collaborator, collaborator.name_collaborator, collaborator.phone, collaborator.avatar,  withdraw.amount_transferred, withdraw.date_transferred, withdraw.time_transferred, withdraw.amount_recived, DATE_FORMAT(DATE_ADD(withdraw.date_transferred, INTERVAL 7 HOUR), '%d-%m-%Y') AS day_transferred, withdraw.status_transferred, withdraw.type_transferred, withdraw.available_balance FROM withdraw join collaborator on withdraw.id_collaborator = collaborator.id_collaborator WHERE status_transferred = 1",
+      [],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data) {
+          let maxdate = data[0].date_transferred;
+          let mindate = data[0].date_transferred;
+          return res.status(200).json({
+            max_date: formatDate1(maxdate),
+            min_date: formatDate1(mindate),
+            data,
+          });
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
   getAllCommission,
   getDraws,
@@ -347,4 +372,5 @@ module.exports = {
   confirmTransfer,
   getAllPayment,
   getDataChartOrder,
+  getDataCollaboratorWithdrawal,
 };

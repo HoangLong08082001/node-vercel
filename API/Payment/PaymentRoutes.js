@@ -6,6 +6,7 @@ const {
   getAllPayment,
   getAllCommission,
   getDataChartOrder,
+  getDataCollaboratorWithdrawal,
 } = require("./PaymentController");
 const { authenticationToken } = require("../../middleware/JwtAction");
 const readLog = require("../logs/Logs");
