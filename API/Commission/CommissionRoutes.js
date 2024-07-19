@@ -8,6 +8,8 @@ const readLog = require("../logs/Logs");
 const { authenticationToken } = require("../../middleware/JwtAction");
 const {
   getDataCollaboratorWithdrawal,
+  getListConfirm,
+  confirmTransfer,
 } = require("../Payment/PaymentController");
 const router = express.Router();
 module.exports = function CommissionRoutes(app) {
@@ -35,6 +37,16 @@ module.exports = function CommissionRoutes(app) {
     "/get-total-withdraw",
     authenticationToken,
     getDataCollaboratorWithdrawal
+  );
+  router.get("/get-list-confirm", authenticationToken, getListConfirm);
+  router.put(
+    "/confirm",
+    (req, res, next) => {
+      req.app.set("name", "Xác nhận đã chuyển khoản");
+      next();
+    },
+    authenticationToken,
+    confirmTransfer
   );
   app.use("/payment", router);
 };

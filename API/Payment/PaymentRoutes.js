@@ -22,14 +22,7 @@ module.exports = function PaymentRoutes(app) {
     authenticationToken,
     drawCommission
   );
-  router.put(
-    "/confirm/:id",
-    (req, res, next) => {
-      req.app.set("name", "Xác nhận đã chuyển khoản");
-      next();
-    },
-    confirmTransfer
-  );
+  
   router.get(
     "/get-draws",
     (req, res, next) => {

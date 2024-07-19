@@ -589,7 +589,7 @@ const reNewpassword = (req, res) => {
       } else {
         return res
           .status(400)
-          .json({ message: "Không tìm thấy email đã đăng ký" });
+          .json({ message: "Không tồn tại email" });
       }
     });
   } catch (error) {

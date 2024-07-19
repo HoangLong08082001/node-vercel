@@ -196,7 +196,7 @@ const getAllCollaboratorOfTeam = (req, res) => {
 
         pool.query(
           TeamModal.getCollaboratorTeamHaving(),
-          [id_team],
+          [id_team, phone],
           (err, data) => {
             if (err) {
               return res.status(500).json({ error: err.message });

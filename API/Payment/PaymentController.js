@@ -13,6 +13,13 @@ const formatDate1 = (date) => {
   const year = date.getFullYear();
   return `${day}-${month}-${year}`;
 };
+function getCurrentTimeFormatted() {
+  const date = new Date();
+  const hours = String(date.getHours()).padStart(2, "0");
+  const minutes = String(date.getMinutes()).padStart(2, "0");
+  const seconds = String(date.getSeconds()).padStart(2, "0");
+  return `${hours}:${minutes}:${seconds}`;
+}
 const drawCommission = (req, res) => {
   let id = req.body.id_collaborator;
   try {
@@ -204,61 +211,144 @@ const drawCommission = (req, res) => {
   }
 };
 const confirmTransfer = (req, res) => {
-  let id = req.params.id;
+  let id = req.body.data.id_withdraws;
   try {
-    pool.query(ServicePayment.getTotalRecived(), [id], (err, data) => {
-      if (err) {
-        throw err;
-      }
-      if (data.length > 0) {
-        let total_withdrawn_payment = data[0].total_withdrawn;
-        pool.query(ServicePayment.getAmountWithDraw(), [id], (err, data) => {
-          if (err) {
-            throw err;
-          }
-          if (data.length > 0) {
-            let total_recived_withdraw = data[0].amount_transferred;
+    pool.query(
+      "SELECT * FROM withdraw WHERE withdraw.id_withdraw IN (?) ",
+      [id],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          data.forEach((item) => {
+            const {
+              id_withdraw,
+              amount_pending,
+              amount_transferred,
+              id_collaborator,
+            } = item;
             pool.query(
-              ServicePayment.updateStatusDate(),
-              [formatDate(new Date()), id],
+              "SELECT * FROM payment WHERE id_collaborator = ? ",
+              [id_collaborator],
               (err, data) => {
                 if (err) {
                   throw err;
                 }
-                if (data) {
+                if (data.length > 0) {
+                  let total_recived = data[0].total_recived;
+                  let total_withdraw = data[0].total_withdrawn;
                   pool.query(
-                    ServicePayment.updateRecivedAfterTransfer(),
-                    [
-                      parseInt(
-                        parseInt(total_recived_withdraw) -
-                          parseInt(total_recived_withdraw)
-                      ),
-                      parseInt(
-                        parseInt(total_recived_withdraw) +
-                          parseInt(total_withdrawn_payment)
-                      ),
-                      id,
-                    ],
+                    "SELECT * FROM withdraw WHERE id_collaborator=? AND id_withdraw=? AND status_transferred = 0",
+                    [id_collaborator, id_withdraw],
                     (err, data) => {
                       if (err) {
                         throw err;
                       }
-                      if (data) {
-                        return res.status(200).json({ message: "success" });
+                      if (data.length > 0) {
+                        let withdraw_id = data[0].id_withdraw;
+                        let id_colla = data[0].id_collaborator;
+                        pool.query(
+                          "UPDATE withdraw SET date_transferred=?, time_transferred=?, status_transferred=1, available_balance=? WHERE id_withdraw = ?",
+                          [
+                            formatDate(new Date()),
+                            getCurrentTimeFormatted(),
+                            0,
+                            withdraw_id,
+                          ],
+                          (err, data) => {
+                            if (err) {
+                              throw err;
+                            }
+                            if (data) {
+                              res.json();
+                              pool.query(
+                                "SELECT SUM(withdraw.amount_transferred) as total_withdraw, withdraw.amount_transferred, payment.total_recived, payment.total_pending, payment.total_withdrawn FROM withdraw join payment on withdraw.id_collaborator = payment.id_collaborator WHERE withdraw.id_collaborator = ? AND withdraw.type_transferred = 1",
+                                [id_colla],
+                                (err, data) => {
+                                  if (err) {
+                                    throw err;
+                                  }
+                                  if (data.length > 0) {
+                                    console.log(data[0].total_withdraw);
+                                    let total_withdraw = data[0].total_withdraw;
+                                    pool.query(
+                                      "UPDATE payment SET total_withdrawn = ? WHERE id_collaborator = ?",
+                                      [total_withdraw, id_colla],
+                                      (err, data) => {
+                                        if (err) {
+                                          throw err;
+                                        }
+                                        if (data) {
+                                          res.json();
+                                        }
+                                      }
+                                    );
+                                  }
+                                }
+                              );
+                            }
+                          }
+                        );
                       }
                     }
                   );
+                } else {
+                  return res.status(500).json({ message: "not exists" });
                 }
               }
             );
-          }
-        });
+          });
+        } else {
+          return res.status(500).json({ message: "not exists" });
+        }
       }
-    });
+    );
   } catch (error) {
     return res.status(500).json({ message: "fails" });
   }
 };
+// const confirmTransfer = (req, res) => {
+//   let ids = req.body.data.id_withdraws;
+//   try {
+//     pool.query(
+//       "SELECT * FROM withdraw WHERE id_withdraw in (?)",
+//       [ids],
+//       (err, data) => {
+//         if (err) {
+//           throw err;
+//         }
+//         if (data.length > 0) {
+//           for (let item in data) {
+//             const { id_withdraw, id_collaborator, amount_transferred } = item;
+//             pool.query(
+//               "UPDATE withdraw SET date_transferred = ?, time_transferred = ?, status_transferred = 1, available_balance = ? WHERE id_withdraw = ? AND status_transferred = 0",
+//               [
+//                 formatDate(new Date()),
+//                 getCurrentTimeFormatted(),
+//                 amount_transferred,
+//                 id_withdraw,
+//               ],
+//               (err, result) => {
+//                 if (err) {
+//                   throw err;
+//                 }
+//                 if (result) {
+//                   res.json();
+//                 }
+//               }
+//             );
+//           }
+//         } else {
+//           return res.status(400).json({ message: "fails" });
+//         }
+//       }
+//     );
+//   } catch (error) {
+//     return res.status(500).json({ message: "fails" });
+//   }
+// };
+
 const getDraws = (req, res) => {
   try {
     pool.query(ServicePayment.getAllDraw(), [], (err, data) => {
@@ -365,6 +455,24 @@ const getDataCollaboratorWithdrawal = (req, res) => {
     return res.status(500).json({ message: "fails" });
   }
 };
+const getListConfirm = (req, res) => {
+  try {
+    pool.query(
+      "SELECT withdraw.id_withdraw, collaborator.name_collaborator, collaborator.phone, collaborator.email_collaborator, collaborator.avatar, DATE_FORMAT(DATE_ADD(withdraw.date_request, INTERVAL 7 HOUR), '%d-%m-%Y') as date_request , withdraw.amount_pending, withdraw.initial_balance FROM withdraw join collaborator on withdraw.id_collaborator = collaborator.id_collaborator WHERE withdraw.status_transferred = 0",
+      [],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          return res.status(200).json(data);
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
   getAllCommission,
   getDraws,
@@ -373,4 +481,5 @@ module.exports = {
   getAllPayment,
   getDataChartOrder,
   getDataCollaboratorWithdrawal,
+  getListConfirm,
 };
