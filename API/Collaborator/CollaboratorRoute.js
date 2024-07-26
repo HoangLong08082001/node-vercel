@@ -23,83 +23,32 @@ module.exports = function CollaboratorRoute(app) {
   router.use(readLog);
   router.post(
     "/register",
-    (req, res, next) => {
-      req.app.set("name", "Đăng ký tài khoản mới");
-      next();
-    },
     registerAccount
   );
   router.post(
     "/login",
-    (req, res, next) => {
-      req.app.set("name", "Đăng nhập");
-      next();
-    },
     loginAccount
   );
-  router.post(
-    "/logout",
-    (req, res, next) => {
-      req.app.set("name", "Đăng xuất");
-      next();
-    },
-    signOutAccount
-  );
-  router.post(
-    "/verify",
-    (req, res, next) => {
-      req.app.set("name", "Xác minh tài khoản");
-      next();
-    },
-    codeVerify
-  );
-  router.post(
-    "/presenter-phone",
-    (req, res, next) => {
-      req.app.set("name", "Nhập số điện thoại người giới thiệu");
-      next();
-    },
-    presenterPhone
-  );
-  router.get(
-    "/account",
-    (req, res, next) => {
-      req.app.set("name", "Đăng xuất");
-      next();
-    },
-    getAccount
-  );
+  router.post("/logout", signOutAccount);
+  router.post("/verify", codeVerify);
+  router.post("/presenter-phone", presenterPhone);
+  router.get("/account", getAccount);
   router.put(
     "/update-collaborator",
-    (req, res, next) => {
-      req.app.set("name", "Cập nhật thông tin");
-      next();
-    },
     authenticationToken,
     updateInformation
   );
   router.post(
     "/renew-password",
-    (req, res, next) => {
-      req.app.set("name", "Làm mới mật khẩu");
-      next();
-    },
     reNewpassword
   );
   router.post(
     "/resend",
-    (req, res, next) => {
-      req.app.set("name", "Nhấn nút gửi lại mã xác minh");
-    },
     authenticationToken,
     resendCodeVerify
   );
   router.get(
     "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách cộng tác viên");
-      next();
-    },
     authenticationToken,
     getAllCollaborator
   );
@@ -125,10 +74,6 @@ module.exports = function CollaboratorRoute(app) {
   router.post("/send-email", sendEmailVerifyCode);
   router.put(
     "/renew-password",
-    (req, res, next) => {
-      req.app.set("name", "Tạo lại mật khẩu mới");
-      next();
-    },
     newPass
   );
   return app.use("/collaborator", router);

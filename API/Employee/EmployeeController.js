@@ -53,20 +53,23 @@ const createEmployee = (req, res, io) => {
   });
 };
 const loginEmployee = (req, res) => {
-  let username = req.body.username;
-  let password = req.body.password;
+  const username = req.body.username;
+  const password = req.body.password;
+
+  // Kiểm tra trong bảng employee trước
   pool.query(
     ServiceEmployee.checkLogin(),
     [username, username],
     (err, data) => {
       if (err) {
-        throw err;
+        return res.status(500).json({ message: "Internal server error" });
       }
+
       if (data.length > 0) {
-        console.log(data[0]);
+        // Tìm thấy user trong bảng employee
         bcrypt.compare(password.toString(), data[0].password, (err, result) => {
           if (err) {
-            throw err;
+            return res.status(500).json({ message: "Internal server error" });
           }
           if (result) {
             pool.query(
@@ -74,31 +77,93 @@ const loginEmployee = (req, res) => {
               [username],
               (err, response) => {
                 if (err) {
-                  throw err;
+                  return res
+                    .status(500)
+                    .json({ message: "Internal server error" });
                 }
                 if (response.length > 0) {
-                  console.log(response[0]);
-                  let payload = {
-                    data: response,
-                  };
-                  let token = createJwtApp(payload);
-                  if (response && token) {
+                  const payload = { data: response };
+                  const token = createJwtApp(payload);
+                  if (token) {
                     res.cookie("jwt", token, { httpOnly: true });
+                    return res.status(200).json({
+                      message: "success",
+                      response,
+                      access_token: token,
+                    });
                   }
-                  return res.status(200).json({
-                    message: "success",
-                    response,
-                    access_token: token,
-                  });
                 }
+                return res.status(401).json({ message: "Unauthorized" });
               }
             );
+          } else {
+            return res.status(401).json({ message: "Invalid password" });
           }
         });
       } else {
-        return res
-          .status(400)
-          .json({ message: "Email hoặc số điện thoại này không tồn tại" });
+        // Nếu không tìm thấy trong bảng employee, kiểm tra bảng collaborator
+        pool.query(
+          "SELECT * FROM collaborator WHERE email_collaborator = ? OR phone = ?",
+          [username, username],
+          (err, data) => {
+            if (err) {
+              return res.status(500).json({ message: "Internal server error" });
+            }
+
+            if (data.length > 0) {
+              bcrypt.compare(
+                password.toString(),
+                data[0].password_collaborator,
+                (err, hash) => {
+                  if (err) {
+                    return res
+                      .status(500)
+                      .json({ message: "Internal server error" });
+                  }
+                  if (hash) {
+                    pool.query(
+                      "SELECT email_collaborator as username, name_collaborator as name, phone, status_account as status FROM collaborator WHERE email_collaborator=? OR phone=?",
+                      [username, username],
+                      (err, response) => {
+                        if (err) {
+                          return res
+                            .status(500)
+                            .json({ message: "Internal server error" });
+                        }
+                        if (response.length > 0) {
+                          response[0].name_department = "Cộng tác viên";
+                          const payload = { data: response };
+                          const token = createJwtApp(payload);
+                          if (token) {
+                            res.cookie("jwt", token, { httpOnly: true });
+                            return res.status(200).json({
+                              message: "success",
+                              response,
+                              access_token: token,
+                            });
+                          }
+                        }
+                        return res
+                          .status(401)
+                          .json({ message: "Unauthorized" });
+                      }
+                    );
+                  } else {
+                    return res
+                      .status(401)
+                      .json({ message: "Invalid password" });
+                  }
+                }
+              );
+            } else {
+              return res
+                .status(400)
+                .json({
+                  message: "Email hoặc số điện thoại này không tồn tại",
+                });
+            }
+          }
+        );
       }
     }
   );
@@ -122,7 +187,6 @@ const getAllEmployee = (req, res) => {
 const rePassword = (req, res) => {
   let username = req.body.email;
   let newpass = "";
-  console.log(username);
   try {
     pool.query(
       ServiceEmployee.checkLogin(),
@@ -168,7 +232,6 @@ const rePassword = (req, res) => {
                       if (error) {
                         throw error;
                       }
-                      console.log("Verify code from Ecoop: " + info.response);
                     });
                     return res.status(200).json({ message: "success" });
                   }
@@ -190,7 +253,6 @@ const setNewPassword = (req, res) => {
   let username = req.body.email;
   let oldPassowrd = req.body.oldPassword;
   let newPassword = req.body.newPassword;
-  console.log(username + " " + oldPassowrd + " " + newPassword);
   try {
     pool.query(
       ServiceEmployee.checkUsernamePassword(),
@@ -200,7 +262,6 @@ const setNewPassword = (req, res) => {
           throw err;
         }
         if (result.length > 0) {
-          console.log(result[0]);
           bcrypt.compare(
             oldPassowrd.toString(),
             result[0].password,
@@ -252,12 +313,6 @@ const updateInformation = (req, res) => {
   let oldusername = req.body.oldusername;
   let oldname = req.body.oldname;
   let oldphone = req.body.oldphone;
-  console.log(username);
-  console.log(name);
-  console.log(phone);
-  console.log(oldusername);
-  console.log(oldname);
-  console.log(oldphone);
   try {
     if (username === oldusername && name === oldname && phone === oldphone) {
       return res
@@ -396,7 +451,6 @@ const updateInformation = (req, res) => {
 
 const blockEmployee = (req, res) => {
   let id_employee = req.body.employees;
-  console.log(id_employee);
   try {
     if (!Array.isArray(id_employee) || id_employee.length === 0) {
       return res.status(400).json({ error: "Invalid input" });
@@ -406,7 +460,6 @@ const blockEmployee = (req, res) => {
         throw err;
       }
       if (data.length > 0) {
-        console.log(true);
         pool.query(
           ServiceEmployee.updateStatusTrue(),
           [id_employee],
@@ -420,7 +473,6 @@ const blockEmployee = (req, res) => {
           }
         );
       } else {
-        console.log(false);
         pool.query(
           ServiceEmployee.updateStatusFalse(),
           [id_employee],
@@ -436,7 +488,6 @@ const blockEmployee = (req, res) => {
       }
     });
   } catch (error) {
-    console.log(error);
     return res.status(500).json({ message: "fails" });
   }
 };
@@ -483,7 +534,6 @@ const sendMailToLogin = (req, res) => {
                 if (info) {
                   return res.status(200).json({ message: "success" });
                 }
-                console.log("Verify code from Ecoop: " + info.response);
               });
             }
           }

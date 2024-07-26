@@ -25,7 +25,6 @@ const registerAccount = async (req, res) => {
           throw err;
         }
         if (result.length > 0) {
-          console.log(result);
           return res
             .status(400)
             .json({ message: "Email hoặc số điện thoại đã tồn tại!" });
@@ -62,7 +61,6 @@ const registerAccount = async (req, res) => {
                           throw err;
                         }
                         if (result) {
-                          console.log(result);
                           return res.status(200).json({ message: "success" });
                         }
                       }
@@ -95,7 +93,6 @@ const loginAccount = (req, res) => {
           throw err;
         }
         if (data.length > 0) {
-          console.log(data[0]);
           bcrypt.compare(
             password.toString(),
             data[0].password_collaborator,
@@ -185,7 +182,6 @@ const codeVerify = (req, res) => {
 const presenterPhone = (req, res) => {
   let email = req.body.email;
   let phone = req.body.phone;
-  console.log(email + phone);
   pool.query(
     ServiceCollaborator.checkPresenterPhone(),
     [phone],
@@ -263,29 +259,26 @@ const presenterPhone = (req, res) => {
                                                         throw err;
                                                       }
                                                       if (data)
-                                                        console.log(
-                                                          data[0].soluong
+                                                        pool.query(
+                                                          ServiceCollaborator.updateQuantity(),
+                                                          [
+                                                            data[0].soluong,
+                                                            id_team,
+                                                          ],
+                                                          (err, data) => {
+                                                            if (err) {
+                                                              throw err;
+                                                            }
+                                                            if (data) {
+                                                              return res
+                                                                .status(200)
+                                                                .json({
+                                                                  message:
+                                                                    "success",
+                                                                });
+                                                            }
+                                                          }
                                                         );
-                                                      pool.query(
-                                                        ServiceCollaborator.updateQuantity(),
-                                                        [
-                                                          data[0].soluong,
-                                                          id_team,
-                                                        ],
-                                                        (err, data) => {
-                                                          if (err) {
-                                                            throw err;
-                                                          }
-                                                          if (data) {
-                                                            return res
-                                                              .status(200)
-                                                              .json({
-                                                                message:
-                                                                  "success",
-                                                              });
-                                                          }
-                                                        }
-                                                      );
                                                     }
                                                   );
                                                 }
@@ -299,7 +292,7 @@ const presenterPhone = (req, res) => {
                                         ServiceCollaborator.createTeam(),
                                         [
                                           0,
-                                          `https://test-apec.mysapo.net/?bwaf=`,
+                                          `https://test-website-affiliate.mysapo.net/?bwaf=`,
                                         ],
                                         (err, data) => {
                                           if (err) {
@@ -331,9 +324,7 @@ const presenterPhone = (req, res) => {
                                                               throw err;
                                                             }
                                                             if (data) {
-                                                              console.log(
-                                                                data[0].soluong
-                                                              );
+                                                              
                                                               pool.query(
                                                                 ServiceCollaborator.updateQuantity(),
                                                                 [
@@ -418,7 +409,6 @@ const updateInformation = (req, res) => {
   let email = req.body.email;
   let emailData = req.body.emailData;
   let presenterPhone = req.body.referral;
-  console.log(name + " " + email + " " + emailData + presenterPhone);
 
   if (
     (presenterPhone === "" || presenterPhone === undefined) &&
@@ -439,11 +429,10 @@ const updateInformation = (req, res) => {
             [name, email, emailData],
             (err, result) => {
               if (err) {
-                console.log(err);
+                
                 return res.status(500).json({ message: "fails" });
               }
               if (result) {
-                console.log(result);
                 return res
                   .status(200)
                   .json({ message: "success", data: result });
@@ -466,11 +455,9 @@ const updateInformation = (req, res) => {
         [name, email, emailData],
         (err, result) => {
           if (err) {
-            console.log(err);
             return res.status(500).json({ message: "fails" });
           }
           if (result) {
-            console.log(result);
             return res.status(200).json({ message: "success", data: result });
           }
         }
@@ -485,16 +472,208 @@ const updateInformation = (req, res) => {
   ) {
     try {
       pool.query(
-        ServiceCollaborator.updateCollaborator(),
-        [name, email, presenterPhone, 2, email],
-        (err, result) => {
+        ServiceCollaborator.checkPresenter(),
+        [presenterPhone],
+        (err, data) => {
           if (err) {
-            console.log(err);
-            return res.status(500).json({ message: "fails" });
+            throw err;
           }
-          if (result) {
-            console.log(result);
-            return res.status(200).json({ message: "success", data: result });
+          if (data.length > 0) {
+            pool.query(
+              ServiceCollaborator.updateCollaborator(),
+              [name, email, presenterPhone, 2, email],
+              (err, result) => {
+                if (err) {
+                  return res.status(500).json({ message: "fails" });
+                }
+                if (result) {
+                  pool.query(
+                    ServiceCollaborator.updateStatusPhone(),
+                    [presenterPhone],
+                    (err, data) => {
+                      if (err) {
+                        throw err;
+                      }
+                      if (data) {
+                        let id_lv1 = null;
+                        let id_lv2 = null;
+                        pool.query(
+                          ServiceCollaborator.checkExistsPhone(),
+                          [presenterPhone],
+                          (err, data) => {
+                            if (err) {
+                              throw err;
+                            }
+                            if (data.length > 0) {
+                              id_lv1 = data[0].id_collaborator;
+                              pool.query(
+                                ServiceCollaborator.checkExistsEmail(),
+                                [email],
+                                (err, data) => {
+                                  if (err) {
+                                    throw err;
+                                  }
+                                  if (data.length > 0) {
+                                    id_lv2 = data[0].id_collaborator;
+                                    pool.query(
+                                      ServiceCollaborator.checkIdCap1(),
+                                      [id_lv1],
+                                      (err, data) => {
+                                        if (err) {
+                                          throw err;
+                                        }
+                                        if (data.length > 0) {
+                                          pool.query(
+                                            ServiceCollaborator.checkIdCap1Team(),
+                                            [id_lv1],
+                                            (err, data) => {
+                                              if (err) {
+                                                throw err;
+                                              }
+                                              if (data) {
+                                                let id_team = data[0].id_team;
+                                                pool.query(
+                                                  ServiceCollaborator.createTeamCTV(),
+                                                  [id_team, id_lv2],
+                                                  (err, data) => {
+                                                    if (err) {
+                                                      throw err;
+                                                    }
+                                                    if (data) {
+                                                      pool.query(
+                                                        ServiceCollaborator.getCount(),
+                                                        [id_team],
+                                                        (err, data) => {
+                                                          if (err) {
+                                                            throw err;
+                                                          }
+                                                          if (data)
+                                                            pool.query(
+                                                              ServiceCollaborator.updateQuantity(),
+                                                              [
+                                                                data[0].soluong,
+                                                                id_team,
+                                                              ],
+                                                              (err, data) => {
+                                                                if (err) {
+                                                                  throw err;
+                                                                }
+                                                                if (data) {
+                                                                  return res
+                                                                    .status(200)
+                                                                    .json({
+                                                                      message:
+                                                                        "success",
+                                                                    });
+                                                                }
+                                                              }
+                                                            );
+                                                        }
+                                                      );
+                                                    }
+                                                  }
+                                                );
+                                              }
+                                            }
+                                          );
+                                        } else {
+                                          pool.query(
+                                            ServiceCollaborator.createTeam(),
+                                            [
+                                              0,
+                                              `https://test-website-affiliate.mysapo.net/?bwaf=`,
+                                            ],
+                                            (err, data) => {
+                                              if (err) {
+                                                throw err;
+                                              }
+                                              if (data) {
+                                                let idTeam = data.insertId;
+                                                pool.query(
+                                                  ServiceCollaborator.createTeamCTVC1(),
+                                                  [idTeam, id_lv1],
+                                                  (err, data) => {
+                                                    if (err) {
+                                                      throw err;
+                                                    }
+                                                    if (data) {
+                                                      pool.query(
+                                                        ServiceCollaborator.createTeamCTVC1(),
+                                                        [idTeam, id_lv2],
+                                                        (err, data) => {
+                                                          if (err) {
+                                                            throw err;
+                                                          }
+                                                          if (data) {
+                                                            pool.query(
+                                                              ServiceCollaborator.getCount(),
+                                                              [idTeam],
+                                                              (err, data) => {
+                                                                if (err) {
+                                                                  throw err;
+                                                                }
+                                                                if (data) {
+                                                                  pool.query(
+                                                                    ServiceCollaborator.updateQuantity(),
+                                                                    [
+                                                                      data[0]
+                                                                        .soluong,
+                                                                      idTeam,
+                                                                    ],
+                                                                    (
+                                                                      err,
+                                                                      data
+                                                                    ) => {
+                                                                      if (err) {
+                                                                        throw err;
+                                                                      }
+                                                                      if (
+                                                                        data
+                                                                      ) {
+                                                                        return res
+                                                                          .status(
+                                                                            200
+                                                                          )
+                                                                          .json(
+                                                                            {
+                                                                              message:
+                                                                                "success",
+                                                                            }
+                                                                          );
+                                                                      }
+                                                                    }
+                                                                  );
+                                                                }
+                                                              }
+                                                            );
+                                                          }
+                                                        }
+                                                      );
+                                                    }
+                                                  }
+                                                );
+                                              }
+                                            }
+                                          );
+                                        }
+                                      }
+                                    );
+                                  }
+                                }
+                              );
+                            }
+                          }
+                        );
+                      }
+                    }
+                  );
+                }
+              }
+            );
+          } else {
+            return res.status(400).json({
+              message: "Số điện thoại này chưa tồn tại! Vui lòng thủ lại",
+            });
           }
         }
       );
@@ -517,18 +696,31 @@ const updateInformation = (req, res) => {
             .json({ message: "Email đã tồn tại! vui lòng nhập email khác" });
         } else {
           pool.query(
-            ServiceCollaborator.updateCollaborator(),
-            [name, email, presenterPhone, 2, emailData],
-            (err, result) => {
+            ServiceCollaborator.checkPresenter(),
+            [presenterPhone],
+            (err, data) => {
               if (err) {
-                console.log(err);
-                return res.status(500).json({ message: "fails" });
+                throw err;
               }
-              if (result) {
-                console.log(result);
-                return res
-                  .status(200)
-                  .json({ message: "success", data: result });
+              if (data.length > 0) {
+                pool.query(
+                  ServiceCollaborator.updateCollaborator(),
+                  [name, email, presenterPhone, 2, emailData],
+                  (err, result) => {
+                    if (err) {
+                      return res.status(500).json({ message: "fails" });
+                    }
+                    if (result) {
+                      return res
+                        .status(200)
+                        .json({ message: "success", data: result });
+                    }
+                  }
+                );
+              } else {
+                return res.status(400).json({
+                  message: "Số điện thoại này chưa tồn tại! Vui lòng thủ lại",
+                });
               }
             }
           );
@@ -549,11 +741,9 @@ const reNewpassword = (req, res) => {
         throw err;
       }
       if (data.length > 0) {
-        console.log(data[0]);
         let payload = { data: data[0] };
         let token = createJwtApp(payload);
         const modifiedToken = token.replace(/\./g, "/");
-        console.log(modifiedToken);
         const transport = nodemailer.createTransport({
           host: "smtp.gmail.com",
           port: 587,
@@ -582,14 +772,11 @@ const reNewpassword = (req, res) => {
             throw error;
           }
           if (info) {
-            console.log("Verify code from Ecoop: " + info.response);
             return res.status(200).json({ message: "success" });
           }
         });
       } else {
-        return res
-          .status(400)
-          .json({ message: "Không tồn tại email" });
+        return res.status(400).json({ message: "Không tồn tại email" });
       }
     });
   } catch (error) {
@@ -661,7 +848,6 @@ const getAllCollaborator = (req, res) => {
 
 const setStatus = (req, res) => {
   let id_collaborator = req.body.collaborators;
-  console.log(id_collaborator);
   try {
     if (!Array.isArray(id_collaborator) || id_collaborator.length === 0) {
       return res.status(400).json({ error: "Invalid input" });
@@ -815,8 +1001,6 @@ const sendEmailVerifyCode = (req, res) => {
 const newPass = (req, res) => {
   let email = req.body.payload.email;
   let password = req.body.payload.password;
-  console.log(email);
-  console.log(password);
   try {
     pool.query(
       ServiceCollaborator.getCollaboratorByEmail(),

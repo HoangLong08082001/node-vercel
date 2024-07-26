@@ -134,6 +134,9 @@ class ServiceCollaborator {
   static checkExistsCollaborator() {
     return "SELECT * FROM collaborator join collaborator_campaign on collaborator.id_collaborator = collaborator_campaign.id_collaborator join commission on collaborator.id_collaborator = commission.id_collaborator join payment on collaborator.id_collaborator = payment.id_collaborator join team_collaborator on collaborator.id_collaborator = team_collaborator.id_collaborator WHERE collaborator_campaign.id_collaborator=? OR commission.id_collaborator = ? OR payment.id_collaborator=? OR team_collaborator.id_collaborator=?";
   }
+  static checkPresenter() {
+    return "SELECT * FROM collaborator WHERE collaborator.presenter_phone = ?";
+  }
 }
 
 module.exports = { ServiceCollaborator };

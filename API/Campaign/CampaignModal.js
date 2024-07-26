@@ -6,7 +6,7 @@ class ServiceCampaign {
     return "SELECT * FROM campaign JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign JOIN products ON campaign_products.id_products = products.id_products";
   }
   static getCampaignWithProduct() {
-    return "SELECT campaign.id_campaign, campaign.name_campaign, products.id_products, products.id_products_sapo, campaign.link_product, products.alias, campaign.description, campaign.date_start, campaign.date_end, campaign.commission, campaign.image, products.image_product, products.name_product FROM campaign LEFT JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign LEFT JOIN products ON campaign_products.id_products = products.id_products";
+    return "SELECT (SELECT COUNT(collaborator_campaign.id_collaborator) FROM collaborator_campaign GROUP BY collaborator_campaign.id_campaign) as count_collaborator, campaign.id_campaign, campaign.name_campaign, products.id_products, products.id_products_sapo, campaign.link_product, products.alias, campaign.description, campaign.date_start, campaign.date_end, campaign.commission, campaign.image, products.image_product, products.name_product FROM campaign LEFT JOIN campaign_products ON campaign.id_campaign = campaign_products.id_campaign LEFT JOIN products ON campaign_products.id_products = products.id_products;";
   }
   static getCampaignById() {
     return "SELECT id_products FROM campaign_products WHERE id_campaign = ?";

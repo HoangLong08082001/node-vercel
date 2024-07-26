@@ -31,6 +31,8 @@ const PaymentRoutes = require("./API/Payment/PaymentRoutes.js");
 const CommissionRoutes = require("./API/Commission/CommissionRoutes.js");
 const NotificationSystemRoutes = require("./API/NotificationSytem/NotificationSystemRoutes.js");
 const TaxRoutes = require("./API/Tax/TaxRoutes.js");
+const DashboardRoutes = require("./API/Dashboard/DashboardRoutes.js");
+const getProducts = require("./ProductsRealTime/ProductsRealTime.js");
 // const admin = require("firebase-admin");
 // const serviceAccount = require("./serviceAccountKey.json");
 
@@ -100,6 +102,7 @@ ProductRoutes(app);
 CommissionRoutes(app);
 NotificationSystemRoutes(app);
 TaxRoutes(app);
+DashboardRoutes(app);
 // app.post("/store-token", async (req, res) => {
 //   const { token } = req.body;
 //   if (!token) {
@@ -156,7 +159,7 @@ TaxRoutes(app);
 // });
 
 app.get("/logs", (req, res) => {
-  const logFilePath = path.join(__dirname, "combined.log");
+  const logFilePath = path.join(__dirname, "info.log");
   fs.readFile(logFilePath, "utf8", (err, data) => {
     if (err) {
       throw err;
@@ -165,7 +168,6 @@ app.get("/logs", (req, res) => {
       try {
         const logsLine = data.split("\n").filter((line) => line.trim() !== "");
         const logObject = logsLine.map((item) => JSON.parse(item));
-        console.log(logObject);
         return res.status(200).json(logObject);
       } catch (error) {
         return res.status(500).json({ message: "fails" });
@@ -176,6 +178,7 @@ app.get("/logs", (req, res) => {
 
 setInterval(() => {
   getOrders();
+  getProducts();
 }, 10000);
 server.listen(port, (err) => {
   if (err) {

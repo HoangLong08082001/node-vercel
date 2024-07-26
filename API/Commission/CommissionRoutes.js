@@ -16,19 +16,11 @@ module.exports = function CommissionRoutes(app) {
   router.use(readLog);
   router.get(
     "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách Hoa hồng");
-      next();
-    },
     authenticationToken,
     getAllCommission
   );
   router.get(
     "/get-by-id/:id",
-    (req, res, next) => {
-      req.app.set("name", `Lấy thông tin chi tiết hoa hồng ${req.params.id}`);
-      next();
-    },
     authenticationToken,
     getByIdCommission
   );
@@ -42,7 +34,7 @@ module.exports = function CommissionRoutes(app) {
   router.put(
     "/confirm",
     (req, res, next) => {
-      req.app.set("name", "Xác nhận đã chuyển khoản");
+      req.app.set("name", `Xác nhận đã chuyển khoản ${req.body}`);
       next();
     },
     authenticationToken,

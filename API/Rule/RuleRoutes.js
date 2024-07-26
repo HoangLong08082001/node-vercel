@@ -23,17 +23,13 @@ function RuleRoute(app) {
   );
   router.get(
     "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy tất cả các quyền của hệ thống");
-      next();
-    },
     authenticationToken,
     GetRule
   );
   router.put(
     "/update",
     (req, res, next) => {
-      req.app.set("name", "Cập nhật thông tin quyền hệ thống");
+      req.app.set("name", "cập nhật thông tin quyền hệ thống");
       next();
     },
     authenticationToken,
@@ -42,7 +38,7 @@ function RuleRoute(app) {
   router.delete(
     "/delete",
     (req, res, next) => {
-      req.app.set("name", "Xoá quyền này khỏi hệ thống");
+      req.app.set("name", "xoá quyền này khỏi hệ thống");
       next();
     },
     authenticationToken,

@@ -31,7 +31,6 @@ const getDepartmentWithRule = (req, res) => {
         throw err;
       }
       if (data) {
-        console.log(data);
         const departments = [];
         data.forEach((row) => {
           const { id_department, id_rule, rule, name_department } = row;
@@ -78,7 +77,6 @@ const getAlDepartment = (req, res) => {
 
 const checkPermission = (req, res) => {
   const { ids_department, ids_rule } = req.body.data;
-  console.log(ids_department + " " + ids_rule);
 
   if (!ids_department || !Array.isArray(ids_rule)) {
     return res.status(400).json({ error: "Invalid input" });

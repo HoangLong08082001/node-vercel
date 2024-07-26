@@ -20,10 +20,6 @@ module.exports = function OrdersRoutes(app) {
   );
   router.get(
     "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách tất cả đơn hàng");
-      next();
-    },
     authenticationToken,
     getAll
   );

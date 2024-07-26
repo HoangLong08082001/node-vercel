@@ -5,11 +5,9 @@ const GetRule = (req, res) => {
   try {
     pool.query(RuleService.GetRule(), [], (err, data) => {
       if (err) {
-        console.log(err);
         throw err;
       }
       if (data) {
-        console.log(data);
         return res.status(200).json(data);
       }
     });
@@ -23,11 +21,9 @@ const CraeteRule = (req, res, io) => {
   try {
     pool.query(RuleService.CreateRule(), [rule], (err, result) => {
       if (err) {
-        console.log(err);
         throw err;
       }
       if (result) {
-        console.log(result);
         return res.status(200).json({ message: "success" });
       }
     });
@@ -39,15 +35,12 @@ const CraeteRule = (req, res, io) => {
 const UpdateRule = (req, res) => {
   let id_rule = req.body.id_rule;
   let rule = req.body.rule;
-  console.log(id_rule + " " + rule);
   try {
     // Thực hiện truy vấn cập nhật
     pool.query(RuleService.updateRule(), [rule, id_rule], (err, result) => {
       if (err) {
-        console.log(err);
         throw err;
       }
-      console.log("Rule updated:", result);
       return res.status(200).json({ message: "rule updated successfully" });
     });
   } catch (error) {
@@ -59,7 +52,6 @@ const UpdateRule = (req, res) => {
 // Check lai
 const DeleteRule = (req, res) => {
   let id_rule = req.body.id_rule;
-  console.log(id_rule);
   // try {
   //   // res.status(200).json({ data: id_rule });
   //   pool.query(RuleService.DeleteRule, [id_rule], (err, result) => {

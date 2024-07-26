@@ -23,10 +23,6 @@ module.exports = function DepartmentRoutes(app) {
   );
   router.get(
     "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách vị trí truy cập hệ thống");
-      next();
-    },
     authenticationToken,
     getAlDepartment
   );

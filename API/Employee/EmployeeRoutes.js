@@ -27,29 +27,23 @@ module.exports = function EmployeeRoutes(app) {
     authenticationToken,
     (req, res) => createEmployee(req, res, req.app.get("io"))
   );
-  router.get(
-    "/get-all",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách nhân viên hệ thống");
-      next();
-    },
-    authenticationToken,
-    getAllEmployee
-  );
+  router.get("/get-all", authenticationToken, getAllEmployee);
   router.post("/login", loginEmployee);
   router.put(
     "/re-password",
     (req, res, next) => {
-      req.app.set("name", "Tạo mật khẩu mới");
+      req.app.set(
+        "name",
+        `${req.body.email} yêu cầu gửi mail cấp lại mật khẩu mới`
+      );
       next();
     },
-    authenticationToken,
     rePassword
   );
   router.put(
     "/renew-password",
     (req, res, next) => {
-      req.app.set("name", "Tạo mật khẩu mới");
+      req.app.set("name", `${req.body.email} thay đổi mật khẩu mới`);
       next();
     },
     authenticationToken,
@@ -68,7 +62,7 @@ module.exports = function EmployeeRoutes(app) {
   router.put(
     "/update",
     (req, res, next) => {
-      req.app.set("name", "Cập nhật mới thông tin cá nhân");
+      req.app.set("name", `${req.body.email} cập nhật mới thông tin cá nhân`);
       next();
     },
     authenticationToken,

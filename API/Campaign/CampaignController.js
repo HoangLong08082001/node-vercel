@@ -24,13 +24,6 @@ const createCampaign = (req, res) => {
   let date_start = formatDate(req.body.date_start);
   let date_end = formatDate(req.body.date_end);
   let image = req.body.image;
-  console.log(link);
-  console.log(name);
-  console.log(commission);
-  console.log(description);
-  console.log(date_start);
-  console.log(date_end);
-  console.log(image);
   try {
     if (!name || !commission || !description || !date_start || !date_end) {
       return res.status(400).json({ message: "Vui lòng không để trống" });
@@ -39,7 +32,7 @@ const createCampaign = (req, res) => {
         ServiceCampaign.create(),
         [
           image,
-          "https://test-apec.mysapo.net/",
+          "https://test-website-affiliate.mysapo.net/",
           name,
           commission,
           description,
@@ -168,6 +161,7 @@ const getAllCampaign = (req, res) => {
           image_product,
           alias,
           name_product,
+          count_collaborator,
         } = row;
         if (!acc[id_campaign]) {
           acc[id_campaign] = {
@@ -179,6 +173,7 @@ const getAllCampaign = (req, res) => {
             start: date_start,
             end: date_end,
             url: link_product,
+            count: count_collaborator,
             products: [],
           };
         }
@@ -203,8 +198,6 @@ const getAllCampaign = (req, res) => {
 
 const addProductToCampaign = (req, res, next) => {
   const { ids_campaign, ids_product } = req.body;
-  console.log(ids_campaign);
-  console.log(ids_product);
   if (!ids_campaign || !Array.isArray(ids_product)) {
     return res.status(400).json({ error: "Invalid input" });
   }
@@ -287,10 +280,89 @@ const blockCampaign = (req, res) => {
     return res.status(500).json({ message: "fails" });
   }
 };
+const getTagsProducts = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(
+      "SELECT products.id_products, products.type_products FROM products join campaign_products on products.id_products = campaign_products.id_products join campaign on campaign_products.id_campaign = campaign.id_campaign WHERE campaign.id_campaign = ?;",
+      [id],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          return res.status(200).json(data);
+        } else {
+          return res.status(200).json([]);
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+const addCampaignCollaborator = (req, res) => {
+  let id_campaign = req.body.id_campaign;
+  let id_collaborator = req.body.id_collaborator;
+  try {
+    pool.query(
+      "SELECT * FROM collaborator_campaign WHERE id_collaborator = ?",
+      [id_collaborator],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          return res.status(200).json({ message: "success" });
+        } else {
+          pool.query(
+            "INSERT INTO collaborator_campaign (id_collaborator, id_campaign) VALUES (?,?)",
+            [id_collaborator, id_campaign],
+            (err, data) => {
+              if (err) {
+                throw err;
+              }
+              if (data) {
+                return res.status(200).json({ message: "success" });
+              }
+            }
+          );
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
+
+const countCollaboratorOnCampaign = (req, res) => {
+  let id = req.params.id;
+  try {
+    pool.query(
+      "SELECT COUNT(collaborator_campaign.id_campaign) as count FROM collaborator_campaign WHERE collaborator_campaign.id_campaign = ?",
+      [id],
+      (err, data) => {
+        if (err) {
+          throw err;
+        }
+        if (data.length > 0) {
+          return res.status(200).json(data);
+        } else {
+          return res.start(200).json(0);
+        }
+      }
+    );
+  } catch (error) {
+    return res.status(500).json({ message: "fails" });
+  }
+};
 module.exports = {
   blockCampaign,
   createCampaign,
   deleteCampaign,
   getAllCampaign,
   addProductToCampaign,
+  getTagsProducts,
+  addCampaignCollaborator,
+  countCollaboratorOnCampaign,
 };

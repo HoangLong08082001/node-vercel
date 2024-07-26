@@ -6,6 +6,9 @@ const {
   getAllCampaign,
   addProductToCampaign,
   blockCampaign,
+  getTagsProducts,
+  addCampaignCollaborator,
+  countCollaboratorOnCampaign,
 } = require("./CampaignController");
 
 const express = require("express");
@@ -31,15 +34,7 @@ module.exports = function CampaignRoutes(app) {
     authenticationToken,
     deleteCampaign
   );
-  router.get(
-    "/all-campaign",
-    (req, res, next) => {
-      req.app.set("name", "Lấy danh sách chiến dịch");
-      next();
-    },
-    authenticationToken,
-    getAllCampaign
-  );
+  router.get("/all-campaign", authenticationToken, getAllCampaign);
   router.post(
     "/add-product-campaign",
     (req, res, next) => {
@@ -57,6 +52,17 @@ module.exports = function CampaignRoutes(app) {
     },
     authenticationToken,
     blockCampaign
+  );
+  router.get("/get-tags-products/:id", authenticationToken, getTagsProducts);
+  router.post(
+    "/add-campaign-collaborator",
+    authenticationToken,
+    addCampaignCollaborator
+  );
+  router.get(
+    "/get-count-collaborator/:id",
+    authenticationToken,
+    countCollaboratorOnCampaign
   );
   return app.use("/campaign", router);
 };

@@ -15,7 +15,7 @@ const createTeam = (req, res) => {
         } else {
           pool.query(
             TeamModal.create(),
-            [1, "https://ecoop.vn/"],
+            [1, "https:test-website-affiliate.mysapo.net/"],
             (err, result) => {
               if (err) {
                 console.error(err);
@@ -27,7 +27,6 @@ const createTeam = (req, res) => {
                   [id, id_collaborator],
                   (err, data) => {
                     if (err) {
-                      console.log(err);
                       return res.status(200).json({ message: "fails" });
                     }
                     if (data) {
@@ -158,7 +157,6 @@ const getAllTeam = (req, res) => {
                       throw err;
                     }
                     if (data) {
-                      console.log(data);
                       return res.status(200).json({
                         name_leader: name_leader,
                         avatar_leader: avatar_leader,

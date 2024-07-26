@@ -27,6 +27,8 @@ const getAllCommission = (req, res) => {
           min_date: formatDate(mindate),
           data,
         });
+      }else{
+        return res.status(200).json([]);
       }
     });
   } catch (error) {
