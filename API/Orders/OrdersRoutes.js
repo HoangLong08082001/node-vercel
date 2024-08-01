@@ -20,7 +20,6 @@ module.exports = function OrdersRoutes(app) {
   );
   router.get(
     "/get-all",
-    authenticationToken,
     getAll
   );
   router.get("/all-orders", authenticationToken, allOrder);

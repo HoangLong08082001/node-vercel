@@ -6,6 +6,10 @@ const {
   handleBeforePersonalTax,
   handleCommissionBeforePersonalTax,
 } = require("../WEBHOOK/WebhookModal");
+const {
+  sendNotificationToAll,
+  setItem,
+} = require("../config/sendNotification");
 const formatDate = (date) => {
   const dateObject = new Date(date);
   const year = dateObject.getFullYear();
@@ -94,6 +98,7 @@ async function getOrders() {
             total_price,
             landing_site,
             fulfillments,
+            customer,
             return_status,
           } = order;
 
@@ -159,6 +164,8 @@ async function getOrders() {
                                     [id],
                                     (err, data) => {
                                       if (data.length > 0) {
+                                        let date_delivered =
+                                          data[0].date_deliverd;
                                         const bwafOrigin =
                                           data[0].referral_link; // Giả sử cột chứa dữ liệu là 'bwaf'
                                         const phone = data[0].customer_phone;
@@ -358,6 +365,14 @@ async function getOrders() {
                                                                               if (
                                                                                 data
                                                                               ) {
+                                                                                setItem(
+                                                                                  "Thông báo đơn hàng",
+                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                );
+                                                                                sendNotificationToAll(
+                                                                                  "Thông báo đơn hàng",
+                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                );
                                                                               }
                                                                             }
                                                                           );
@@ -802,6 +817,14 @@ async function getOrders() {
                                                                               if (
                                                                                 data
                                                                               ) {
+                                                                                setItem(
+                                                                                  "Thông báo đơn hàng",
+                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                );
+                                                                                sendNotificationToAll(
+                                                                                  "Thông báo đơn hàng",
+                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                );
                                                                               }
                                                                             }
                                                                           );
@@ -833,120 +856,96 @@ async function getOrders() {
                                                 if (err) {
                                                 }
                                                 if (data.length > 0) {
-                                                  let bwaf =
-                                                    data[0].referral_link;
-                                                  if (bwaf.includes("-")) {
-                                                    // Cắt chuỗi để lấy phần sau dấu "="
-                                                    var parts = bwaf.split("=");
+                                                  let last_id =
+                                                    data[0].last_id_order;
+                                                  pool.query(
+                                                    "SELECT * FROM orders where orders.id_orders_sapo = ?",
+                                                    [last_id],
+                                                    (err, data) => {
+                                                      if (err) {
+                                                        return;
+                                                      }
+                                                      if (data.length > 0) {
+                                                        let bwaf =
+                                                          data[0].referral_link;
+                                                        if (
+                                                          bwaf.includes("-")
+                                                        ) {
+                                                          // Cắt chuỗi để lấy phần sau dấu "="
+                                                          var parts =
+                                                            bwaf.split("=");
 
-                                                    // Lấy chuỗi chứa "78-100"
-                                                    var numberStr = parts[1];
+                                                          // Lấy chuỗi chứa "78-100"
+                                                          var numberStr =
+                                                            parts[1];
 
-                                                    // Cắt chuỗi "78-100" thành hai phần "78" và "100"
-                                                    var numbers =
-                                                      numberStr.split("-");
-
-                                                    // Gán kết quả vào các biến
-                                                    var firstNumber =
-                                                      numbers[0];
-                                                    var secondNumber =
-                                                      numbers[1];
-                                                    const orderValue =
-                                                      data[0].total_price;
-                                                    let precent_tax =
-                                                      handleCommission(
-                                                        orderValue,
-                                                        10,
-                                                        1
-                                                      );
-                                                    pool.query(
-                                                      ServiceWebhook.checkPayment(),
-                                                      [parseInt(firstNumber)],
-                                                      (err, data) => {
-                                                        if (err) {
-                                                        }
-                                                        if (data.length > 0) {
-                                                          let init_balance =
-                                                            data[0]
-                                                              .total_recived;
-                                                          const sum = (
-                                                            a,
-                                                            b
-                                                          ) => {
-                                                            return parseInt(
-                                                              a + b
+                                                          // Cắt chuỗi "78-100" thành hai phần "78" và "100"
+                                                          var numbers =
+                                                            numberStr.split(
+                                                              "-"
                                                             );
-                                                          };
-                                                          let new_commission =
-                                                            sum(
-                                                              parseInt(
-                                                                data[0]
-                                                                  .total_recived
-                                                                  ? data[0]
-                                                                      .total_recived
-                                                                  : 0
-                                                              ),
-                                                              parseInt(
-                                                                precent_tax
-                                                              )
-                                                            );
-                                                          let id_collaborator =
-                                                            data[0]
-                                                              .id_collaborator;
-                                                          pool.query(
-                                                            ServiceWebhook.addCommission(),
-                                                            [
-                                                              10,
-                                                              1,
+
+                                                          // Gán kết quả vào các biến
+                                                          var firstNumber =
+                                                            numbers[0];
+                                                          var secondNumber =
+                                                            numbers[1];
+                                                          const orderValue =
+                                                            data[0].total_price;
+                                                          let precent_tax =
+                                                            handleCommission(
                                                               orderValue,
-                                                              precent_tax,
-                                                              0,
-                                                              formatDateYYYYMMDD(
-                                                                fulfillments[0]
-                                                                  ?.delivered_on
+                                                              10,
+                                                              1
+                                                            );
+                                                          pool.query(
+                                                            ServiceWebhook.checkPayment(),
+                                                            [
+                                                              parseInt(
+                                                                firstNumber
                                                               ),
-                                                              formatTimeHHMMSS(
-                                                                fulfillments[0]
-                                                                  ?.delivered_on
-                                                              ),
-                                                              id_collaborator,
-                                                              precent_tax,
-                                                              id_ordrer,
                                                             ],
                                                             (err, data) => {
                                                               if (err) {
                                                               }
-                                                              if (data) {
-                                                                pool.query(
-                                                                  ServiceWebhook.addTax(),
-                                                                  [
-                                                                    id_collaborator,
-                                                                    orderValue,
-                                                                    handleCommissionBeforePersonalTax(
-                                                                      orderValue,
-                                                                      1
-                                                                    ),
-                                                                    handleBeforePersonalTax(
-                                                                      handleCommissionBeforePersonalTax(
-                                                                        orderValue,
-                                                                        1
-                                                                      ),
-                                                                      10
+                                                              if (
+                                                                data.length > 0
+                                                              ) {
+                                                                let init_balance =
+                                                                  data[0]
+                                                                    .total_recived;
+                                                                const sum = (
+                                                                  a,
+                                                                  b
+                                                                ) => {
+                                                                  return parseInt(
+                                                                    a + b
+                                                                  );
+                                                                };
+                                                                let new_commission =
+                                                                  sum(
+                                                                    parseInt(
+                                                                      data[0]
+                                                                        .total_recived
+                                                                        ? data[0]
+                                                                            .total_recived
+                                                                        : 0
                                                                     ),
                                                                     parseInt(
-                                                                      handleCommissionBeforePersonalTax(
-                                                                        orderValue,
-                                                                        1
-                                                                      ) -
-                                                                        handleBeforePersonalTax(
-                                                                          handleCommissionBeforePersonalTax(
-                                                                            orderValue,
-                                                                            1
-                                                                          ),
-                                                                          10
-                                                                        )
-                                                                    ),
-                                                                    id_ordrer,
+                                                                      precent_tax
+                                                                    )
+                                                                  );
+                                                                let id_collaborator =
+                                                                  data[0]
+                                                                    .id_collaborator;
+                                                                pool.query(
+                                                                  ServiceWebhook.addCommission(),
+                                                                  [
+                                                                    10,
+                                                                    1,
+                                                                    orderValue,
+                                                                    precent_tax,
+                                                                    0,
                                                                     formatDateYYYYMMDD(
                                                                       fulfillments[0]
                                                                         ?.delivered_on
@@ -955,6 +954,9 @@ async function getOrders() {
                                                                       fulfillments[0]
                                                                         ?.delivered_on
                                                                     ),
+                                                                    id_collaborator,
+                                                                    precent_tax,
+                                                                    id_ordrer,
                                                                   ],
                                                                   (
                                                                     err,
@@ -964,75 +966,77 @@ async function getOrders() {
                                                                     }
                                                                     if (data) {
                                                                       pool.query(
-                                                                        ServiceWebhook.updatePayment(),
+                                                                        ServiceWebhook.addTax(),
                                                                         [
-                                                                          new_commission,
+                                                                          id_collaborator,
+                                                                          orderValue,
+                                                                          handleCommissionBeforePersonalTax(
+                                                                            orderValue,
+                                                                            1
+                                                                          ),
+                                                                          handleBeforePersonalTax(
+                                                                            handleCommissionBeforePersonalTax(
+                                                                              orderValue,
+                                                                              1
+                                                                            ),
+                                                                            10
+                                                                          ),
                                                                           parseInt(
-                                                                            firstNumber
+                                                                            handleCommissionBeforePersonalTax(
+                                                                              orderValue,
+                                                                              1
+                                                                            ) -
+                                                                              handleBeforePersonalTax(
+                                                                                handleCommissionBeforePersonalTax(
+                                                                                  orderValue,
+                                                                                  1
+                                                                                ),
+                                                                                10
+                                                                              )
+                                                                          ),
+                                                                          id_ordrer,
+                                                                          formatDateYYYYMMDD(
+                                                                            fulfillments[0]
+                                                                              ?.delivered_on
+                                                                          ),
+                                                                          formatTimeHHMMSS(
+                                                                            fulfillments[0]
+                                                                              ?.delivered_on
                                                                           ),
                                                                         ],
                                                                         (
                                                                           err,
-                                                                          result
+                                                                          data
                                                                         ) => {
                                                                           if (
                                                                             err
                                                                           ) {
                                                                           }
                                                                           if (
-                                                                            result
+                                                                            data
                                                                           ) {
                                                                             pool.query(
-                                                                              ServiceWebhook.checkPayment(),
+                                                                              ServiceWebhook.updatePayment(),
                                                                               [
+                                                                                new_commission,
                                                                                 parseInt(
                                                                                   firstNumber
                                                                                 ),
                                                                               ],
                                                                               (
                                                                                 err,
-                                                                                data
+                                                                                result
                                                                               ) => {
                                                                                 if (
                                                                                   err
                                                                                 ) {
                                                                                 }
                                                                                 if (
-                                                                                  data.length >
-                                                                                  0
+                                                                                  result
                                                                                 ) {
-                                                                                  let recived =
-                                                                                    data[0]
-                                                                                      .total_recived;
                                                                                   pool.query(
-                                                                                    "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
-
+                                                                                    ServiceWebhook.checkPayment(),
                                                                                     [
-                                                                                      handleCommission(
-                                                                                        orderValue,
-                                                                                        10,
-                                                                                        1
-                                                                                      ),
-                                                                                      formatDateYYYYMMDD(
-                                                                                        new Date()
-                                                                                      ),
-                                                                                      getCurrentTimeFormatted(),
-                                                                                      1,
-                                                                                      id_ordrer,
-                                                                                      0,
-                                                                                      id_order_sapo,
-                                                                                      parseInt(
-                                                                                        parseInt(
-                                                                                          init_balance
-                                                                                        ) +
-                                                                                          parseInt(
-                                                                                            handleCommission(
-                                                                                              orderValue,
-                                                                                              10,
-                                                                                              1
-                                                                                            )
-                                                                                          )
-                                                                                      ),
                                                                                       parseInt(
                                                                                         firstNumber
                                                                                       ),
@@ -1046,8 +1050,67 @@ async function getOrders() {
                                                                                       ) {
                                                                                       }
                                                                                       if (
-                                                                                        data
+                                                                                        data.length >
+                                                                                        0
                                                                                       ) {
+                                                                                        let recived =
+                                                                                          data[0]
+                                                                                            .total_recived;
+                                                                                        pool.query(
+                                                                                          "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
+
+                                                                                          [
+                                                                                            handleCommission(
+                                                                                              orderValue,
+                                                                                              10,
+                                                                                              1
+                                                                                            ),
+                                                                                            formatDateYYYYMMDD(
+                                                                                              new Date()
+                                                                                            ),
+                                                                                            getCurrentTimeFormatted(),
+                                                                                            1,
+                                                                                            id_ordrer,
+                                                                                            0,
+                                                                                            id_order_sapo,
+                                                                                            parseInt(
+                                                                                              parseInt(
+                                                                                                init_balance
+                                                                                              ) +
+                                                                                                parseInt(
+                                                                                                  handleCommission(
+                                                                                                    orderValue,
+                                                                                                    10,
+                                                                                                    1
+                                                                                                  )
+                                                                                                )
+                                                                                            ),
+                                                                                            parseInt(
+                                                                                              firstNumber
+                                                                                            ),
+                                                                                          ],
+                                                                                          (
+                                                                                            err,
+                                                                                            data
+                                                                                          ) => {
+                                                                                            if (
+                                                                                              err
+                                                                                            ) {
+                                                                                            }
+                                                                                            if (
+                                                                                              data
+                                                                                            ) {
+                                                                                              setItem(
+                                                                                                "Thông báo đơn hàng",
+                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                              );
+                                                                                              sendNotificationToAll(
+                                                                                                "Thông báo đơn hàng",
+                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                              );
+                                                                                            }
+                                                                                          }
+                                                                                        );
                                                                                       }
                                                                                     }
                                                                                   );
@@ -1063,93 +1126,42 @@ async function getOrders() {
                                                               }
                                                             }
                                                           );
-                                                        }
-                                                      }
-                                                    );
-                                                    pool.query(
-                                                      ServiceWebhook.checkAffiliateLevel2(),
-                                                      [parseInt(secondNumber)],
-                                                      (err, data) => {
-                                                        if (err) {
-                                                        }
-                                                        if (data.length > 0) {
                                                           pool.query(
-                                                            ServiceWebhook.checkAffiliateLevel1(),
+                                                            ServiceWebhook.checkAffiliateLevel2(),
                                                             [
                                                               parseInt(
-                                                                firstNumber
+                                                                secondNumber
                                                               ),
-                                                              data[0].phone,
                                                             ],
                                                             (err, data) => {
+                                                              if (err) {
+                                                              }
                                                               if (
                                                                 data.length > 0
                                                               ) {
                                                                 pool.query(
-                                                                  ServiceWebhook.checkPayment(),
+                                                                  ServiceWebhook.checkAffiliateLevel1(),
                                                                   [
                                                                     parseInt(
-                                                                      secondNumber
+                                                                      firstNumber
                                                                     ),
+                                                                    data[0]
+                                                                      .phone,
                                                                   ],
                                                                   (
                                                                     err,
                                                                     data
                                                                   ) => {
-                                                                    if (err) {
-                                                                    }
                                                                     if (
                                                                       data.length >
                                                                       0
                                                                     ) {
-                                                                      let init_balance =
-                                                                        data[0]
-                                                                          .total_recived;
-                                                                      const sum =
-                                                                        (
-                                                                          a,
-                                                                          b
-                                                                        ) => {
-                                                                          return parseInt(
-                                                                            a +
-                                                                              b
-                                                                          );
-                                                                        };
-                                                                      let new_commission =
-                                                                        sum(
-                                                                          parseInt(
-                                                                            data[0]
-                                                                              .total_recived
-                                                                              ? data[0]
-                                                                                  .total_recived
-                                                                              : 0
-                                                                          ),
-                                                                          parseInt(
-                                                                            precent_tax
-                                                                          )
-                                                                        );
-                                                                      let id_collaborator =
-                                                                        data[0]
-                                                                          .id_collaborator;
                                                                       pool.query(
-                                                                        ServiceWebhook.addCommission(),
+                                                                        ServiceWebhook.checkPayment(),
                                                                         [
-                                                                          10,
-                                                                          1,
-                                                                          orderValue,
-                                                                          0,
-                                                                          precent_tax,
-                                                                          formatDateYYYYMMDD(
-                                                                            fulfillments[0]
-                                                                              ?.delivered_on
+                                                                          parseInt(
+                                                                            secondNumber
                                                                           ),
-                                                                          formatTimeHHMMSS(
-                                                                            fulfillments[0]
-                                                                              ?.delivered_on
-                                                                          ),
-                                                                          id_collaborator,
-                                                                          precent_tax,
-                                                                          id_ordrer,
                                                                         ],
                                                                         (
                                                                           err,
@@ -1160,38 +1172,46 @@ async function getOrders() {
                                                                           ) {
                                                                           }
                                                                           if (
-                                                                            data
+                                                                            data.length >
+                                                                            0
                                                                           ) {
-                                                                            pool.query(
-                                                                              ServiceWebhook.addTax(),
-                                                                              [
-                                                                                id_collaborator,
-                                                                                orderValue,
-                                                                                handleCommissionBeforePersonalTax(
-                                                                                  orderValue,
-                                                                                  1
-                                                                                ),
-                                                                                handleBeforePersonalTax(
-                                                                                  handleCommissionBeforePersonalTax(
-                                                                                    orderValue,
-                                                                                    1
-                                                                                  ),
-                                                                                  10
+                                                                            let init_balance =
+                                                                              data[0]
+                                                                                .total_recived;
+                                                                            const sum =
+                                                                              (
+                                                                                a,
+                                                                                b
+                                                                              ) => {
+                                                                                return parseInt(
+                                                                                  a +
+                                                                                    b
+                                                                                );
+                                                                              };
+                                                                            let new_commission =
+                                                                              sum(
+                                                                                parseInt(
+                                                                                  data[0]
+                                                                                    .total_recived
+                                                                                    ? data[0]
+                                                                                        .total_recived
+                                                                                    : 0
                                                                                 ),
                                                                                 parseInt(
-                                                                                  handleCommissionBeforePersonalTax(
-                                                                                    orderValue,
-                                                                                    1
-                                                                                  ) -
-                                                                                    handleBeforePersonalTax(
-                                                                                      handleCommissionBeforePersonalTax(
-                                                                                        orderValue,
-                                                                                        1
-                                                                                      ),
-                                                                                      10
-                                                                                    )
-                                                                                ),
-                                                                                id_ordrer,
+                                                                                  precent_tax
+                                                                                )
+                                                                              );
+                                                                            let id_collaborator =
+                                                                              data[0]
+                                                                                .id_collaborator;
+                                                                            pool.query(
+                                                                              ServiceWebhook.addCommission(),
+                                                                              [
+                                                                                10,
+                                                                                1,
+                                                                                orderValue,
+                                                                                0,
+                                                                                precent_tax,
                                                                                 formatDateYYYYMMDD(
                                                                                   fulfillments[0]
                                                                                     ?.delivered_on
@@ -1200,6 +1220,9 @@ async function getOrders() {
                                                                                   fulfillments[0]
                                                                                     ?.delivered_on
                                                                                 ),
+                                                                                id_collaborator,
+                                                                                precent_tax,
+                                                                                id_ordrer,
                                                                               ],
                                                                               (
                                                                                 err,
@@ -1213,75 +1236,77 @@ async function getOrders() {
                                                                                   data
                                                                                 ) {
                                                                                   pool.query(
-                                                                                    ServiceWebhook.updatePayment(),
+                                                                                    ServiceWebhook.addTax(),
                                                                                     [
-                                                                                      new_commission,
+                                                                                      id_collaborator,
+                                                                                      orderValue,
+                                                                                      handleCommissionBeforePersonalTax(
+                                                                                        orderValue,
+                                                                                        1
+                                                                                      ),
+                                                                                      handleBeforePersonalTax(
+                                                                                        handleCommissionBeforePersonalTax(
+                                                                                          orderValue,
+                                                                                          1
+                                                                                        ),
+                                                                                        10
+                                                                                      ),
                                                                                       parseInt(
-                                                                                        secondNumber
+                                                                                        handleCommissionBeforePersonalTax(
+                                                                                          orderValue,
+                                                                                          1
+                                                                                        ) -
+                                                                                          handleBeforePersonalTax(
+                                                                                            handleCommissionBeforePersonalTax(
+                                                                                              orderValue,
+                                                                                              1
+                                                                                            ),
+                                                                                            10
+                                                                                          )
+                                                                                      ),
+                                                                                      id_ordrer,
+                                                                                      formatDateYYYYMMDD(
+                                                                                        fulfillments[0]
+                                                                                          ?.delivered_on
+                                                                                      ),
+                                                                                      formatTimeHHMMSS(
+                                                                                        fulfillments[0]
+                                                                                          ?.delivered_on
                                                                                       ),
                                                                                     ],
                                                                                     (
                                                                                       err,
-                                                                                      result
+                                                                                      data
                                                                                     ) => {
                                                                                       if (
                                                                                         err
                                                                                       ) {
                                                                                       }
                                                                                       if (
-                                                                                        result
+                                                                                        data
                                                                                       ) {
                                                                                         pool.query(
-                                                                                          ServiceWebhook.checkPayment(),
+                                                                                          ServiceWebhook.updatePayment(),
                                                                                           [
+                                                                                            new_commission,
                                                                                             parseInt(
                                                                                               secondNumber
                                                                                             ),
                                                                                           ],
                                                                                           (
                                                                                             err,
-                                                                                            data
+                                                                                            result
                                                                                           ) => {
                                                                                             if (
                                                                                               err
                                                                                             ) {
                                                                                             }
                                                                                             if (
-                                                                                              data.length >
-                                                                                              0
+                                                                                              result
                                                                                             ) {
-                                                                                              let recived =
-                                                                                                data[0]
-                                                                                                  .total_recived;
                                                                                               pool.query(
-                                                                                                "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
-
+                                                                                                ServiceWebhook.checkPayment(),
                                                                                                 [
-                                                                                                  handleCommission(
-                                                                                                    orderValue,
-                                                                                                    10,
-                                                                                                    1
-                                                                                                  ),
-                                                                                                  formatDateYYYYMMDD(
-                                                                                                    new Date()
-                                                                                                  ),
-                                                                                                  getCurrentTimeFormatted(),
-                                                                                                  1,
-                                                                                                  id_ordrer,
-                                                                                                  0,
-                                                                                                  id_order_sapo,
-                                                                                                  parseInt(
-                                                                                                    parseInt(
-                                                                                                      init_balance
-                                                                                                    ) +
-                                                                                                      parseInt(
-                                                                                                        handleCommission(
-                                                                                                          orderValue,
-                                                                                                          10,
-                                                                                                          1
-                                                                                                        )
-                                                                                                      )
-                                                                                                  ),
                                                                                                   parseInt(
                                                                                                     secondNumber
                                                                                                   ),
@@ -1295,8 +1320,59 @@ async function getOrders() {
                                                                                                   ) {
                                                                                                   }
                                                                                                   if (
-                                                                                                    data
+                                                                                                    data.length >
+                                                                                                    0
                                                                                                   ) {
+                                                                                                    let recived =
+                                                                                                      data[0]
+                                                                                                        .total_recived;
+                                                                                                    pool.query(
+                                                                                                      "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
+
+                                                                                                      [
+                                                                                                        handleCommission(
+                                                                                                          orderValue,
+                                                                                                          10,
+                                                                                                          1
+                                                                                                        ),
+                                                                                                        formatDateYYYYMMDD(
+                                                                                                          new Date()
+                                                                                                        ),
+                                                                                                        getCurrentTimeFormatted(),
+                                                                                                        1,
+                                                                                                        id_ordrer,
+                                                                                                        0,
+                                                                                                        id_order_sapo,
+                                                                                                        parseInt(
+                                                                                                          parseInt(
+                                                                                                            init_balance
+                                                                                                          ) +
+                                                                                                            parseInt(
+                                                                                                              handleCommission(
+                                                                                                                orderValue,
+                                                                                                                10,
+                                                                                                                1
+                                                                                                              )
+                                                                                                            )
+                                                                                                        ),
+                                                                                                        parseInt(
+                                                                                                          secondNumber
+                                                                                                        ),
+                                                                                                      ],
+                                                                                                      (
+                                                                                                        err,
+                                                                                                        data
+                                                                                                      ) => {
+                                                                                                        if (
+                                                                                                          err
+                                                                                                        ) {
+                                                                                                        }
+                                                                                                        if (
+                                                                                                          data
+                                                                                                        ) {
+                                                                                                        }
+                                                                                                      }
+                                                                                                    );
                                                                                                   }
                                                                                                 }
                                                                                               );
@@ -1319,110 +1395,69 @@ async function getOrders() {
                                                             }
                                                           );
                                                         }
-                                                      }
-                                                    );
-                                                  }
-                                                  if (!bwaf.includes("-")) {
-                                                    const bwafValue =
-                                                      bwaf.split("=")[1];
+                                                        if (
+                                                          !bwaf.includes("-")
+                                                        ) {
+                                                          const bwafValue =
+                                                            bwaf.split("=")[1];
 
-                                                    const orderValue =
-                                                      order.total_price;
-                                                    let precent_tax =
-                                                      handleCommission(
-                                                        orderValue,
-                                                        10,
-                                                        1
-                                                      );
-                                                    pool.query(
-                                                      ServiceWebhook.checkPayment(),
-                                                      [parseInt(bwafValue)],
-                                                      (err, data) => {
-                                                        if (err) {
-                                                        }
-                                                        if (data.length > 0) {
-                                                          let init_balance =
-                                                            data[0]
-                                                              .total_recived;
-                                                          const sum = (
-                                                            a,
-                                                            b
-                                                          ) => {
-                                                            return parseInt(
-                                                              a + b
-                                                            );
-                                                          };
-                                                          let new_commission =
-                                                            sum(
-                                                              parseInt(
-                                                                data[0]
-                                                                  .total_recived
-                                                                  ? data[0]
-                                                                      .total_recived
-                                                                  : 0
-                                                              ),
-                                                              parseInt(
-                                                                precent_tax
-                                                              )
-                                                            );
-
-                                                          let id_collaborator =
-                                                            data[0]
-                                                              .id_collaborator;
-                                                          pool.query(
-                                                            ServiceWebhook.addCommission(),
-                                                            [
-                                                              10,
-                                                              1,
+                                                          const orderValue =
+                                                            order.total_price;
+                                                          let precent_tax =
+                                                            handleCommission(
                                                               orderValue,
-                                                              precent_tax,
-                                                              0,
-                                                              formatDateYYYYMMDD(
-                                                                fulfillments[0]
-                                                                  ?.delivered_on
+                                                              10,
+                                                              1
+                                                            );
+                                                          pool.query(
+                                                            ServiceWebhook.checkPayment(),
+                                                            [
+                                                              parseInt(
+                                                                bwafValue
                                                               ),
-                                                              formatTimeHHMMSS(
-                                                                fulfillments[0]
-                                                                  ?.delivered_on
-                                                              ),
-                                                              id_collaborator,
-                                                              precent_tax,
-                                                              id_ordrer,
                                                             ],
                                                             (err, data) => {
                                                               if (err) {
                                                               }
-                                                              if (data) {
-                                                                pool.query(
-                                                                  ServiceWebhook.addTax(),
-                                                                  [
-                                                                    id_collaborator,
-                                                                    orderValue,
-                                                                    handleCommissionBeforePersonalTax(
-                                                                      orderValue,
-                                                                      1
-                                                                    ),
-                                                                    handleBeforePersonalTax(
-                                                                      handleCommissionBeforePersonalTax(
-                                                                        orderValue,
-                                                                        1
-                                                                      ),
-                                                                      10
+                                                              if (
+                                                                data.length > 0
+                                                              ) {
+                                                                let init_balance =
+                                                                  data[0]
+                                                                    .total_recived;
+                                                                const sum = (
+                                                                  a,
+                                                                  b
+                                                                ) => {
+                                                                  return parseInt(
+                                                                    a + b
+                                                                  );
+                                                                };
+                                                                let new_commission =
+                                                                  sum(
+                                                                    parseInt(
+                                                                      data[0]
+                                                                        .total_recived
+                                                                        ? data[0]
+                                                                            .total_recived
+                                                                        : 0
                                                                     ),
                                                                     parseInt(
-                                                                      handleCommissionBeforePersonalTax(
-                                                                        orderValue,
-                                                                        1
-                                                                      ) -
-                                                                        handleBeforePersonalTax(
-                                                                          handleCommissionBeforePersonalTax(
-                                                                            orderValue,
-                                                                            1
-                                                                          ),
-                                                                          10
-                                                                        )
-                                                                    ),
-                                                                    id_ordrer,
+                                                                      precent_tax
+                                                                    )
+                                                                  );
+
+                                                                let id_collaborator =
+                                                                  data[0]
+                                                                    .id_collaborator;
+                                                                pool.query(
+                                                                  ServiceWebhook.addCommission(),
+                                                                  [
+                                                                    10,
+                                                                    1,
+                                                                    orderValue,
+                                                                    precent_tax,
+                                                                    0,
                                                                     formatDateYYYYMMDD(
                                                                       fulfillments[0]
                                                                         ?.delivered_on
@@ -1431,6 +1466,9 @@ async function getOrders() {
                                                                       fulfillments[0]
                                                                         ?.delivered_on
                                                                     ),
+                                                                    id_collaborator,
+                                                                    precent_tax,
+                                                                    id_ordrer,
                                                                   ],
                                                                   (
                                                                     err,
@@ -1440,75 +1478,77 @@ async function getOrders() {
                                                                     }
                                                                     if (data) {
                                                                       pool.query(
-                                                                        ServiceWebhook.updatePayment(),
+                                                                        ServiceWebhook.addTax(),
                                                                         [
-                                                                          new_commission,
+                                                                          id_collaborator,
+                                                                          orderValue,
+                                                                          handleCommissionBeforePersonalTax(
+                                                                            orderValue,
+                                                                            1
+                                                                          ),
+                                                                          handleBeforePersonalTax(
+                                                                            handleCommissionBeforePersonalTax(
+                                                                              orderValue,
+                                                                              1
+                                                                            ),
+                                                                            10
+                                                                          ),
                                                                           parseInt(
-                                                                            bwafValue
+                                                                            handleCommissionBeforePersonalTax(
+                                                                              orderValue,
+                                                                              1
+                                                                            ) -
+                                                                              handleBeforePersonalTax(
+                                                                                handleCommissionBeforePersonalTax(
+                                                                                  orderValue,
+                                                                                  1
+                                                                                ),
+                                                                                10
+                                                                              )
+                                                                          ),
+                                                                          id_ordrer,
+                                                                          formatDateYYYYMMDD(
+                                                                            fulfillments[0]
+                                                                              ?.delivered_on
+                                                                          ),
+                                                                          formatTimeHHMMSS(
+                                                                            fulfillments[0]
+                                                                              ?.delivered_on
                                                                           ),
                                                                         ],
                                                                         (
                                                                           err,
-                                                                          result
+                                                                          data
                                                                         ) => {
                                                                           if (
                                                                             err
                                                                           ) {
                                                                           }
                                                                           if (
-                                                                            result
+                                                                            data
                                                                           ) {
                                                                             pool.query(
-                                                                              ServiceWebhook.checkPayment(),
+                                                                              ServiceWebhook.updatePayment(),
                                                                               [
+                                                                                new_commission,
                                                                                 parseInt(
                                                                                   bwafValue
                                                                                 ),
                                                                               ],
                                                                               (
                                                                                 err,
-                                                                                data
+                                                                                result
                                                                               ) => {
                                                                                 if (
                                                                                   err
                                                                                 ) {
                                                                                 }
                                                                                 if (
-                                                                                  data.length >
-                                                                                  0
+                                                                                  result
                                                                                 ) {
-                                                                                  let recived =
-                                                                                    data[0]
-                                                                                      .total_recived;
                                                                                   pool.query(
-                                                                                    "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
-
+                                                                                    ServiceWebhook.checkPayment(),
                                                                                     [
-                                                                                      handleCommission(
-                                                                                        orderValue,
-                                                                                        10,
-                                                                                        1
-                                                                                      ),
-                                                                                      formatDateYYYYMMDD(
-                                                                                        new Date()
-                                                                                      ),
-                                                                                      getCurrentTimeFormatted(),
-                                                                                      1,
-                                                                                      id_ordrer,
-                                                                                      0,
-                                                                                      id_order_sapo,
-                                                                                      parseInt(
-                                                                                        parseInt(
-                                                                                          init_balance
-                                                                                        ) +
-                                                                                          parseInt(
-                                                                                            handleCommission(
-                                                                                              orderValue,
-                                                                                              10,
-                                                                                              1
-                                                                                            )
-                                                                                          )
-                                                                                      ),
                                                                                       parseInt(
                                                                                         bwafValue
                                                                                       ),
@@ -1522,8 +1562,67 @@ async function getOrders() {
                                                                                       ) {
                                                                                       }
                                                                                       if (
-                                                                                        data
+                                                                                        data.length >
+                                                                                        0
                                                                                       ) {
+                                                                                        let recived =
+                                                                                          data[0]
+                                                                                            .total_recived;
+                                                                                        pool.query(
+                                                                                          "INSERT INTO withdraw (amount_recived, date_transferred, time_transferred, status_transferred, id_orders, type_transferred, id_orders_sapo, available_balance, id_collaborator) VALUES (?,?,?,?,?,?,?,?,?)",
+
+                                                                                          [
+                                                                                            handleCommission(
+                                                                                              orderValue,
+                                                                                              10,
+                                                                                              1
+                                                                                            ),
+                                                                                            formatDateYYYYMMDD(
+                                                                                              new Date()
+                                                                                            ),
+                                                                                            getCurrentTimeFormatted(),
+                                                                                            1,
+                                                                                            id_ordrer,
+                                                                                            0,
+                                                                                            id_order_sapo,
+                                                                                            parseInt(
+                                                                                              parseInt(
+                                                                                                init_balance
+                                                                                              ) +
+                                                                                                parseInt(
+                                                                                                  handleCommission(
+                                                                                                    orderValue,
+                                                                                                    10,
+                                                                                                    1
+                                                                                                  )
+                                                                                                )
+                                                                                            ),
+                                                                                            parseInt(
+                                                                                              bwafValue
+                                                                                            ),
+                                                                                          ],
+                                                                                          (
+                                                                                            err,
+                                                                                            data
+                                                                                          ) => {
+                                                                                            if (
+                                                                                              err
+                                                                                            ) {
+                                                                                            }
+                                                                                            if (
+                                                                                              data
+                                                                                            ) {
+                                                                                              setItem(
+                                                                                                "Thông báo đơn hàng",
+                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                              );
+                                                                                              sendNotificationToAll(
+                                                                                                "Thông báo đơn hàng",
+                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                              );
+                                                                                            }
+                                                                                          }
+                                                                                        );
                                                                                       }
                                                                                     }
                                                                                   );
@@ -1541,8 +1640,8 @@ async function getOrders() {
                                                           );
                                                         }
                                                       }
-                                                    );
-                                                  }
+                                                    }
+                                                  );
                                                 }
                                               }
                                             );
@@ -1585,6 +1684,7 @@ async function getOrders() {
                   financial_status,
                   fulfillment_status,
                   phone,
+                  customer?.last_order_id,
                   email,
                   status,
                   total_price,

@@ -1,4 +1,8 @@
 const pool = require("../../config/database.js");
+const {
+  setItem,
+  sendNotificationToAll,
+} = require("../../config/sendNotification.js");
 const { ServiceCampaign } = require("./CampaignModal.js");
 
 //id_collaborator	id_orders	link_product	name_campaign	personal_tax	affiliate_tax	description	date_start	date_end
@@ -45,6 +49,14 @@ const createCampaign = (req, res) => {
             throw err;
           }
           if (data) {
+            setItem(
+              "Thông báo chiến dịch",
+              `Chiến dịch mới, ${name} vừa được tạo. Hãy tham gia ngay`
+            );
+            sendNotificationToAll(
+              "Thông báo chiến dịch",
+              `Chiến dịch mới, ${name} vừa được tạo. Hãy tham gia ngay`
+            );
             return res.status(200).json({ message: "success" });
           }
         }
@@ -323,6 +335,14 @@ const addCampaignCollaborator = (req, res) => {
                 throw err;
               }
               if (data) {
+                setItem(
+                  "Thông báo chiến dịch",
+                  `Chiến dịch vừa có thêm cộng tác viên tham gia. Hãy cùng tham gia.`
+                );
+                sendNotificationToAll(
+                  "Thông báo chiến dịch",
+                  `Chiến dịch vừa có thêm cộng tác viên tham gia. Hãy cùng tham gia.`
+                );
                 return res.status(200).json({ message: "success" });
               }
             }

@@ -33,8 +33,8 @@ const NotificationSystemRoutes = require("./API/NotificationSytem/NotificationSy
 const TaxRoutes = require("./API/Tax/TaxRoutes.js");
 const DashboardRoutes = require("./API/Dashboard/DashboardRoutes.js");
 const getProducts = require("./ProductsRealTime/ProductsRealTime.js");
-// const admin = require("firebase-admin");
-// const serviceAccount = require("./serviceAccountKey.json");
+const admin = require("firebase-admin");
+const { RouterFirebase } = require("./config/sendNotification.js");
 
 dotenv.config();
 const app = express();
@@ -103,45 +103,8 @@ CommissionRoutes(app);
 NotificationSystemRoutes(app);
 TaxRoutes(app);
 DashboardRoutes(app);
-// app.post("/store-token", async (req, res) => {
-//   const { token } = req.body;
-//   if (!token) {
-//     return res.status(400).send("Token is required");
-//   }
-//   try {
-//     // Lưu token vào Firebase Realtime Database
-//     const tokenRef = admin.database().ref("/tokens").push();
-//     await tokenRef.set(token);
-//     res.status(200).send("Token stored successfully");
-//   } catch (error) {
-//     console.error("Error storing token:", error);
-//     res.status(500).send("Error storing token: " + error.message);
-//   }
-// });
+RouterFirebase(app)
 
-// // Hàm để gửi thông báo đến tất cả các token đã lưu
-// async function sendNotificationToAll(title, body) {
-//   const tokensSnapshot = await admin.database().ref("/tokens").once("value");
-//   const tokens = tokensSnapshot.val();
-//   if (!tokens) {
-//     console.log("No tokens found");
-//     return;
-//   }
-//   const tokenList = Object.values(tokens);
-//   const message = {
-//     notification: { title, body },
-//     tokens: tokenList,
-//   };
-//   admin
-//     .messaging()
-//     .sendMulticast(message)
-//     .then((response) => {
-//       console.log("Successfully sent message:", response);
-//     })
-//     .catch((error) => {
-//       console.error("Error sending message:", error);
-//     });
-// }
 
 // // Endpoint để gửi thông báo
 // app.post("/send-notification", async (req, res) => {

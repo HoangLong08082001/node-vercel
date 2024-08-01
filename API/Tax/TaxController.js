@@ -15,6 +15,7 @@ const getAll = (req, res) => {
       if (data) {
         let maxdate = data[0].max_date;
         let mindate = data[0].min_date;
+        
         return res.status(200).json({
           max_date: formatDate(maxdate),
           min_date: formatDate(mindate),

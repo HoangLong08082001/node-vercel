@@ -20,7 +20,7 @@ class ServiceWebhook {
     return "SELECT * FROM collaborator WHERE id_collaborator=?";
   }
   static insertOrder() {
-    return "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, email, status, total_price, referral_link) VALUES(?,?,?,?,?,?,?,?,?)";
+    return "INSERT INTO orders (id_orders_sapo, date_created, financial_status, fulfillment_status, customer_phone, last_id_orders, email, status, total_price, referral_link) VALUES(?,?,?,?,?,?,?,?,?,?)";
   }
   static getAllOrders() {
     return "SELECT * FROM orders ORDER BY orders.id_orders DESC LIMIT 1";
@@ -52,8 +52,8 @@ class ServiceWebhook {
   static addTax() {
     return "INSERT INTO tax (id_collaborator,total_price, before_tax, tax_rate, after_tax, id_orders, created_on, created_time) VALUES (?,?,?,?,?,?,?,?)";
   }
-  static checkWithDraw(){
-    return "SELECT * FROM withdraw.id_orders_sapo = ?"
+  static checkWithDraw() {
+    return "SELECT * FROM withdraw.id_orders_sapo = ?";
   }
 }
 

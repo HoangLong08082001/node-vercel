@@ -28,7 +28,14 @@ module.exports = function EmployeeRoutes(app) {
     (req, res) => createEmployee(req, res, req.app.get("io"))
   );
   router.get("/get-all", authenticationToken, getAllEmployee);
-  router.post("/login", loginEmployee);
+  router.post(
+    "/login",
+    (req, res, next) => {
+      req.app.set("name", "Nhân viên truy cập hệ thống");
+      next();
+    },
+    loginEmployee
+  );
   router.put(
     "/re-password",
     (req, res, next) => {

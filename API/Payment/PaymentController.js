@@ -1,4 +1,8 @@
 const pool = require("../../config/database");
+const {
+  setItem,
+  sendNotificationToAll,
+} = require("../../config/sendNotification");
 const ServicePayment = require("./PaymentModal");
 function formatDate(date) {
   const year = date.getFullYear();
@@ -288,6 +292,14 @@ const confirmTransfer = (req, res) => {
                                         throw err;
                                       }
                                       if (data) {
+                                        setItem(
+                                          "Thông báo chuyển khoản",
+                                          "Hoa hồng đã được chuyển vài tài khoản của bạn! Vui lòng kiểm tra"
+                                        );
+                                        sendNotificationToAll(
+                                          "Thông báo chuyển khoản",
+                                          "Hoa hồng đã được chuyển vài tài khoản của bạn! Vui lòng kiểm tra"
+                                        );
                                         res.json();
                                       }
                                     }
