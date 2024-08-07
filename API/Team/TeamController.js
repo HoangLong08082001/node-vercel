@@ -15,7 +15,7 @@ const createTeam = (req, res) => {
         } else {
           pool.query(
             TeamModal.create(),
-            [1, "https:test-website-affiliate.mysapo.net/"],
+            [1, "https://demo-affiliate-apec.mysapo.net/"],
             (err, result) => {
               if (err) {
                 console.error(err);

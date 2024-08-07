@@ -1,5 +1,12 @@
 const pool = require("../../config/database");
 const { ServiceOrder } = require("./OrdersModals");
+const formatDateXec = (date1) => {
+  const date = new Date(date1);
+  const day = String(date.getDate()).padStart(2, "0");
+  const month = String(date.getMonth() + 1).padStart(2, "0"); // Tháng bắt đầu từ 0
+  const year = date.getFullYear();
+  return `${day}/${month}/${year}`;
+};
 const decode = (code) => {
   const map =
     "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_";
@@ -71,14 +78,20 @@ function getOrdersByReferralLink(req, res) {
     //   }
     // );
     pool.query(
-      "SELECT withdraw.id_withdraw, withdraw.id_orders_sapo, withdraw.id_orders, withdraw.amount_recived, DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y') as date_transfer, withdraw.time_transferred FROM withdraw WHERE withdraw.id_collaborator = ? AND withdraw.type_transferred = 0;",
+      "SELECT withdraw.id_withdraw, withdraw.id_orders_sapo, withdraw.id_orders, withdraw.amount_recived, DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y') as date_transfer, withdraw.time_transferred, (SELECT MAX(withdraw.date_transferred) FROM withdraw) as max_date, (SELECT MIN(withdraw.date_transferred) FROM withdraw) as min_date FROM withdraw WHERE withdraw.id_collaborator = 125 AND withdraw.type_transferred = 0;",
       [id],
       (err, data) => {
         if (err) {
           throw err;
         }
         if (data.length > 0) {
-          return res.status(200).json(data);
+          let max_date = data[0].max_date;
+          let min_date = data[0].min_date;
+          return res.status(200).json({
+            max_date: formatDateXec(max_date),
+            min_date: formatDateXec(min_date),
+            list_orders: data,
+          });
         } else {
           return res.status(200).json([]);
         }
@@ -139,14 +152,20 @@ function getOrdersByReferralLinkTeam(req, res) {
         if (data.length > 0) {
           let presenter_phone = data[0].phone;
           pool.query(
-            "SELECT withdraw.id_orders_sapo, withdraw.amount_recived, collaborator.phone, DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y') as date_transfer, withdraw.time_transferred FROM collaborator JOIN withdraw on collaborator.id_collaborator = withdraw.id_collaborator WHERE collaborator.presenter_phone = ?;",
+            "SELECT withdraw.id_orders_sapo, withdraw.amount_recived, collaborator.phone, DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y') as date_transfer, withdraw.time_transferred, (SELECT MAX(DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y')) FROM withdraw) as max_date, (SELECT MIN(DATE_FORMAT(CONVERT_TZ(withdraw.date_transferred, '+00:00', '+07:00'), '%d/%m/%Y')) FROM withdraw) as min_date FROM collaborator JOIN withdraw on collaborator.id_collaborator = withdraw.id_collaborator WHERE collaborator.presenter_phone = ?;",
             [presenter_phone],
             (err, data) => {
               if (err) {
                 throw err;
               }
               if (data.length > 0) {
-                return res.status(200).json(data);
+                let max_date = data[0].max_date;
+                let min_date = data[0].min_date;
+                return res.status(200).json({
+                  max_date: formatDateXec(max_date),
+                  min_date: formatDateXec(min_date),
+                  list_orders: data,
+                });
               } else {
                 return res.status(200).json([]);
               }

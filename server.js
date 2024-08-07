@@ -35,6 +35,8 @@ const DashboardRoutes = require("./API/Dashboard/DashboardRoutes.js");
 const getProducts = require("./ProductsRealTime/ProductsRealTime.js");
 const admin = require("firebase-admin");
 const { RouterFirebase } = require("./config/sendNotification.js");
+const LinkRoutes = require("./API/Link/LinkRoutes.js");
+const BannerRoutes = require("./API/Banner/BannerRoutes.js");
 
 dotenv.config();
 const app = express();
@@ -103,8 +105,9 @@ CommissionRoutes(app);
 NotificationSystemRoutes(app);
 TaxRoutes(app);
 DashboardRoutes(app);
-RouterFirebase(app)
-
+RouterFirebase(app);
+LinkRoutes(app);
+BannerRoutes(app);
 
 // // Endpoint để gửi thông báo
 // app.post("/send-notification", async (req, res) => {

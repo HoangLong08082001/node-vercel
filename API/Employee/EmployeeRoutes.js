@@ -21,6 +21,7 @@ module.exports = function EmployeeRoutes(app) {
   router.post(
     "/create",
     (req, res, next) => {
+      req.app.set("id", req.body.id);
       req.app.set("name", "Tạo tài khoản mới nhân viên truy cập hệ thống");
       next();
     },
@@ -31,6 +32,7 @@ module.exports = function EmployeeRoutes(app) {
   router.post(
     "/login",
     (req, res, next) => {
+      req.app.set("id", req.body.username);
       req.app.set("name", "Nhân viên truy cập hệ thống");
       next();
     },

@@ -16,6 +16,7 @@ module.exports = function PaymentRoutes(app) {
   router.post(
     "/draw",
     (req, res, next) => {
+      req.app.set("id", req.body.phone);
       req.app.set("name", `${req.body.phone} thực hiện lệnh rút`);
       next();
     },

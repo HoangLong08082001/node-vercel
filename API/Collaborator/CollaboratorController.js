@@ -20,58 +20,145 @@ const registerAccount = async (req, res) => {
       (name !== "" && password !== "" && email !== "" && phone !== "") ||
       (name !== null && password !== null && email !== null && phone !== null)
     ) {
-      pool.query(ServiceCollaborator.check(), [email, phone], (err, result) => {
-        if (err) {
-          throw err;
-        }
-        if (result.length > 0) {
-          return res
-            .status(400)
-            .json({ message: "Email hoặc số điện thoại đã tồn tại!" });
-        } else {
-          bcrypt.hash(password, salt, (err, hash) => {
-            if (err) {
-              throw er;
-            }
-            if (hash) {
-              pool.query(
-                ServiceCollaborator.register(),
-                [
-                  name,
-                  hash,
-                  email,
-                  phone,
-
-                  1,
-                  1,
-                  0,
-                  1,
-                  randomNumberCodeVerfify(),
-                ],
-                (err, result) => {
-                  if (err) {
-                    throw err;
-                  }
-                  if (result) {
-                    pool.query(
-                      ServicePayment.addpayment(),
-                      [0, 0, 0, 0, result.insertId],
-                      (err, result) => {
-                        if (err) {
-                          throw err;
-                        }
-                        if (result) {
-                          return res.status(200).json({ message: "success" });
-                        }
-                      }
-                    );
-                  }
+      pool.query(
+        "SELECT * FROM temp_collaborator WHERE email_temp_collaborator = ? AND phone_temp_collaborator = ?",
+        [email, phone],
+        (err, data) => {
+          if (err) {
+            throw err;
+          }
+          if (data.length > 0) {
+            let id_temp_collaborator = data[0].id_temp_collaborator;
+            let presenter_id = data[0].id_collaborator;
+            pool.query(
+              "SELECT * FROM collaborator WHERE id_collaborator = ?",
+              [presenter_id],
+              (err, data) => {
+                if (err) {
+                  throw err;
                 }
-              );
-            }
-          });
+                if (data.length > 0) {
+                  let presenter_phone = data[0].phone;
+                  bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) {
+                      throw err;
+                    }
+                    if (hash) {
+                      pool.query(
+                        "INSERT INTO collaborator (name_collaborator, password_collaborator, email_collaborator, phone, presenter_phone,status_collaborator, status_leader, status_verify, status_account, code_verify) VALUES (?,?,?,?,?,?,?,?,?,?)",
+                        [
+                          name,
+                          hash,
+                          email,
+                          phone,
+                          presenter_phone,
+                          2,
+                          1,
+                          0,
+                          1,
+                          randomNumberCodeVerfify(),
+                        ],
+                        (err, data) => {
+                          if (err) {
+                            throw err;
+                          }
+                          if (data) {
+                            pool.query(
+                              ServicePayment.addpayment(),
+                              [0, 0, 0, 0, data.insertId],
+                              (err, result) => {
+                                if (err) {
+                                  throw err;
+                                }
+                                if (result) {
+                                  pool.query(
+                                    "DELETE FROM temp_collaborator WHERE id_temp_collaborator = ?",
+                                    [id_temp_collaborator],
+                                    (err, data) => {
+                                      if (err) {
+                                        throw err;
+                                      }
+                                      if (data) {
+                                        return res
+                                          .status(200)
+                                          .json({ message: "success" });
+                                      }
+                                    }
+                                  );
+                                }
+                              }
+                            );
+                          }
+                        }
+                      );
+                    }
+                  });
+                }
+              }
+            );
+            // ton tai
+          } else {
+            pool.query(
+              ServiceCollaborator.check(),
+              [email, phone],
+              (err, result) => {
+                if (err) {
+                  throw err;
+                }
+                if (result.length > 0) {
+                  return res
+                    .status(400)
+                    .json({ message: "Email hoặc số điện thoại đã tồn tại!" });
+                } else {
+                  bcrypt.hash(password, salt, (err, hash) => {
+                    if (err) {
+                      throw er;
+                    }
+                    if (hash) {
+                      pool.query(
+                        ServiceCollaborator.register(),
+                        [
+                          name,
+                          hash,
+                          email,
+                          phone,
+
+                          1,
+                          1,
+                          0,
+                          1,
+                          randomNumberCodeVerfify(),
+                        ],
+                        (err, result) => {
+                          if (err) {
+                            throw err;
+                          }
+                          if (result) {
+                            pool.query(
+                              ServicePayment.addpayment(),
+                              [0, 0, 0, 0, result.insertId],
+                              (err, result) => {
+                                if (err) {
+                                  throw err;
+                                }
+                                if (result) {
+                                  return res
+                                    .status(200)
+                                    .json({ message: "success" });
+                                }
+                              }
+                            );
+                          }
+                        }
+                      );
+                    }
+                  });
+                }
+              }
+            );
+          }
         }
-      });
+      );
     }
   } catch (error) {
     console.error("Error fetching orders:", error);
@@ -292,7 +379,7 @@ const presenterPhone = (req, res) => {
                                         ServiceCollaborator.createTeam(),
                                         [
                                           0,
-                                          `https://test-website-affiliate.mysapo.net/?bwaf=`,
+                                          `https://demo-affiliate-apec.mysapo.net/?bwaf=`,
                                         ],
                                         (err, data) => {
                                           if (err) {
@@ -324,7 +411,6 @@ const presenterPhone = (req, res) => {
                                                               throw err;
                                                             }
                                                             if (data) {
-                                                              
                                                               pool.query(
                                                                 ServiceCollaborator.updateQuantity(),
                                                                 [
@@ -429,7 +515,6 @@ const updateInformation = (req, res) => {
             [name, email, emailData],
             (err, result) => {
               if (err) {
-                
                 return res.status(500).json({ message: "fails" });
               }
               if (result) {
@@ -581,7 +666,7 @@ const updateInformation = (req, res) => {
                                             ServiceCollaborator.createTeam(),
                                             [
                                               0,
-                                              `https://test-website-affiliate.mysapo.net/?bwaf=`,
+                                              `https://demo-affiliate-apec.mysapo.net/?bwaf=`,
                                             ],
                                             (err, data) => {
                                               if (err) {

@@ -33,3 +33,34 @@
 {"level":"info","message":{"date":"01-08-2024","method":"POST","name":"N/A","status":200,"time":"10:53:17","url":"/collaborator/login"},"timestamp":"2024-08-01T03:53:17.832Z"}
 {"level":"info","message":{"date":"01-08-2024","method":"POST","name":"N/A","status":200,"time":"10:53:17","url":"/collaborator/send-email"},"timestamp":"2024-08-01T03:53:17.992Z"}
 {"level":"info","message":{"date":"01-08-2024","method":"POST","name":"Nhân viên truy cập hệ thống","status":200,"time":"11:30:00","url":"/employee/login"},"timestamp":"2024-08-01T04:30:00.363Z"}
+{"level":"info","message":{"date":"01-08-2024","id":"hahoanglong08082001@gmail.com","method":"POST","name":"Nhân viên truy cập hệ thống","status":200,"time":"15:51:39","url":"/employee/login"},"timestamp":"2024-08-01T08:51:39.606Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":500,"time":"09:59:01","url":"/collaborator/login"},"timestamp":"2024-08-02T02:59:01.571Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":500,"time":"10:00:18","url":"/collaborator/login"},"timestamp":"2024-08-02T03:00:18.561Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:02:00","url":"/collaborator/login"},"timestamp":"2024-08-02T03:02:00.154Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:02:00","url":"/collaborator/send-email"},"timestamp":"2024-08-02T03:02:00.193Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:06:42","url":"/collaborator/login"},"timestamp":"2024-08-02T03:06:42.050Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:06:42","url":"/collaborator/send-email"},"timestamp":"2024-08-02T03:06:42.098Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":400,"time":"10:07:09","url":"/collaborator/login"},"timestamp":"2024-08-02T03:07:09.281Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:07:22","url":"/collaborator/login"},"timestamp":"2024-08-02T03:07:22.939Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"N/A","status":200,"time":"10:07:22","url":"/collaborator/send-email"},"timestamp":"2024-08-02T03:07:22.983Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0969889569 thực hiện lệnh rút","name_action":"0969889569","status":200,"time":"10:07:26","url":"/commission/draw"},"timestamp":"2024-08-02T03:07:26.220Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0969889569 thực hiện lệnh rút","name_action":"0969889569","status":200,"time":"11:02:27","url":"/collaborator/login"},"timestamp":"2024-08-02T04:02:27.923Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0969889569 thực hiện lệnh rút","name_action":"0969889569","status":200,"time":"11:02:28","url":"/collaborator/send-email"},"timestamp":"2024-08-02T04:02:28.139Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0969889569 thực hiện lệnh rút","name_action":"0969889569","status":200,"time":"11:49:29","url":"/collaborator/login"},"timestamp":"2024-08-02T04:49:29.408Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0969889569 thực hiện lệnh rút","name_action":"0969889569","status":200,"time":"11:49:29","url":"/collaborator/send-email"},"timestamp":"2024-08-02T04:49:29.541Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0966335336 thực hiện lệnh rút","name_action":"0966335336","status":200,"time":"11:53:44","url":"/commission/draw"},"timestamp":"2024-08-02T04:53:44.767Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0966335336 thực hiện lệnh rút","name_action":"0966335336","status":200,"time":"11:53:44","url":"/commission/draw"},"timestamp":"2024-08-02T04:53:44.802Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0966335336 thực hiện lệnh rút","name_action":"0966335336","status":200,"time":"11:53:44","url":"/commission/draw"},"timestamp":"2024-08-02T04:53:44.805Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0966335336 thực hiện lệnh rút","name_action":"0966335336","status":200,"time":"11:53:44","url":"/commission/draw"},"timestamp":"2024-08-02T04:53:44.810Z"}
+{"level":"info","message":{"date":"02-08-2024","method":"POST","name":"0966335336 thực hiện lệnh rút","name_action":"0966335336","status":200,"time":"11:53:44","url":"/commission/draw"},"timestamp":"2024-08-02T04:53:44.827Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"12:51:17","url":"/collaborator/login"},"timestamp":"2024-08-04T05:51:17.087Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"12:51:17","url":"/collaborator/send-email"},"timestamp":"2024-08-04T05:51:17.144Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"18:46:46","url":"/collaborator/register"},"timestamp":"2024-08-04T11:46:46.794Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"19:07:27","url":"/collaborator/login"},"timestamp":"2024-08-04T12:07:27.393Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"19:07:27","url":"/collaborator/send-email"},"timestamp":"2024-08-04T12:07:27.446Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"19:11:29","url":"/collaborator/register"},"timestamp":"2024-08-04T12:11:29.191Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"19:56:09","url":"/collaborator/login"},"timestamp":"2024-08-04T12:56:09.046Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"19:56:09","url":"/collaborator/send-email"},"timestamp":"2024-08-04T12:56:09.099Z"}
+{"level":"info","message":{"date":"04-08-2024","method":"POST","name":"N/A","status":200,"time":"20:01:29","url":"/collaborator/register"},"timestamp":"2024-08-04T13:01:29.936Z"}
+{"level":"info","message":{"date":"06-08-2024","method":"POST","name":"N/A","status":200,"time":"14:05:51","url":"/collaborator/login"},"timestamp":"2024-08-06T07:05:51.333Z"}
+{"level":"info","message":{"date":"06-08-2024","method":"POST","name":"N/A","status":200,"time":"14:05:51","url":"/collaborator/send-email"},"timestamp":"2024-08-06T07:05:51.559Z"}

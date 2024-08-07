@@ -36,7 +36,7 @@ const createCampaign = (req, res) => {
         ServiceCampaign.create(),
         [
           image,
-          "https://test-website-affiliate.mysapo.net/",
+          "https://demo-affiliate-apec.mysapo.net/",
           name,
           commission,
           description,

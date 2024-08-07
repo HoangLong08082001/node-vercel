@@ -5,10 +5,10 @@ async function getProducts(req, res) {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-website-affiliate.mysapo.net/admin/products.json`, {
+      .get(`https://demo-affiliate-apec.mysapo.net/admin/products.json`, {
         auth: {
-          username: "cf3cd0aedda14fbda861e4cf5700f73f", // API Key
-          password: "377504ca04e94900bea5e8c0591bc65a", // API Secret
+          username: "681591ec1cf54f2da2e59d4d04de0edd", // API Key
+          password: "0a61d242301e40cb8e30054ba0274fc7", // API Secret
         },
       })
       .then((response) => {

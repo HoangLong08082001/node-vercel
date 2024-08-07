@@ -78,10 +78,10 @@ async function getOrders() {
   try {
     // Thực hiện yêu cầu HTTP sử dụng axios
     await axios
-      .get(`https://test-website-affiliate.mysapo.net/admin/orders.json`, {
+      .get(`https://demo-affiliate-apec.mysapo.net/admin/orders.json`, {
         auth: {
-          username: "cf3cd0aedda14fbda861e4cf5700f73f", // API Key
-          password: "377504ca04e94900bea5e8c0591bc65a", // API Secret
+          username: "681591ec1cf54f2da2e59d4d04de0edd", // API Key
+          password: "0a61d242301e40cb8e30054ba0274fc7", // API Secret
         },
       })
       .then(async (response) => {
@@ -608,6 +608,32 @@ async function getOrders() {
                                                                                           if (
                                                                                             data
                                                                                           ) {
+                                                                                            pool.query(
+                                                                                              "INSERT INTO temp_collaborator (email_temp_collaborator, name_temp_collaborator, phone_temp_collaborator, id_collaborator) VALUES (?,?,?,?)",
+                                                                                              [
+                                                                                                customer?.email,
+                                                                                                customer?.last_name +
+                                                                                                  " " +
+                                                                                                  customer?.first_name,
+                                                                                                customer?.phone.replace("+84", "0"),
+                                                                                                secondNumber,
+                                                                                              ],
+                                                                                              (
+                                                                                                err,
+                                                                                                data
+                                                                                              ) => {
+                                                                                                if (
+                                                                                                  err
+                                                                                                ) {
+                                                                                                  throw err;
+                                                                                                }
+                                                                                                if (
+                                                                                                  data
+                                                                                                ) {
+                                                                                                  return;
+                                                                                                }
+                                                                                              }
+                                                                                            );
                                                                                           }
                                                                                         }
                                                                                       );
@@ -817,13 +843,38 @@ async function getOrders() {
                                                                               if (
                                                                                 data
                                                                               ) {
-                                                                                setItem(
-                                                                                  "Thông báo đơn hàng",
-                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
-                                                                                );
-                                                                                sendNotificationToAll(
-                                                                                  "Thông báo đơn hàng",
-                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                pool.query(
+                                                                                  "INSERT INTO temp_collaborator (email_temp_collaborator, name_temp_collaborator, phone_temp_collaborator, id_collaborator) VALUES (?,?,?,?)",
+                                                                                  [
+                                                                                    customer?.email,
+                                                                                    customer?.last_name +
+                                                                                      " " +
+                                                                                      customer?.first_name,
+                                                                                    customer?.phone.replace("+84", "0"),
+                                                                                    bwafValue,
+                                                                                  ],
+                                                                                  (
+                                                                                    err,
+                                                                                    data
+                                                                                  ) => {
+                                                                                    if (
+                                                                                      err
+                                                                                    ) {
+                                                                                      throw err;
+                                                                                    }
+                                                                                    if (
+                                                                                      data
+                                                                                    ) {
+                                                                                      setItem(
+                                                                                        "Thông báo đơn hàng",
+                                                                                        `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                      );
+                                                                                      sendNotificationToAll(
+                                                                                        "Thông báo đơn hàng",
+                                                                                        `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                      );
+                                                                                    }
+                                                                                  }
                                                                                 );
                                                                               }
                                                                             }
@@ -1370,6 +1421,39 @@ async function getOrders() {
                                                                                                         if (
                                                                                                           data
                                                                                                         ) {
+                                                                                                          pool.query(
+                                                                                                            "INSERT INTO temp_collaborator (email_temp_collaborator, name_temp_collaborator, phone_temp_collaborator, id_collaborator) VALUES (?,?,?,?)",
+                                                                                                            [
+                                                                                                              customer?.email,
+                                                                                                              customer?.last_name +
+                                                                                                                " " +
+                                                                                                                customer?.first_name,
+                                                                                                              customer?.phone.replace("+84", "0"),
+                                                                                                              secondNumber,
+                                                                                                            ],
+                                                                                                            (
+                                                                                                              err,
+                                                                                                              data
+                                                                                                            ) => {
+                                                                                                              if (
+                                                                                                                err
+                                                                                                              ) {
+                                                                                                                throw err;
+                                                                                                              }
+                                                                                                              if (
+                                                                                                                data
+                                                                                                              ) {
+                                                                                                                setItem(
+                                                                                                                  "Thông báo đơn hàng",
+                                                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                                                );
+                                                                                                                sendNotificationToAll(
+                                                                                                                  "Thông báo đơn hàng",
+                                                                                                                  `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                                                );
+                                                                                                              }
+                                                                                                            }
+                                                                                                          );
                                                                                                         }
                                                                                                       }
                                                                                                     );
@@ -1612,13 +1696,38 @@ async function getOrders() {
                                                                                             if (
                                                                                               data
                                                                                             ) {
-                                                                                              setItem(
-                                                                                                "Thông báo đơn hàng",
-                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
-                                                                                              );
-                                                                                              sendNotificationToAll(
-                                                                                                "Thông báo đơn hàng",
-                                                                                                `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                              pool.query(
+                                                                                                "INSERT INTO temp_collaborator (email_temp_collaborator, name_temp_collaborator, phone_temp_collaborator, id_collaborator) VALUES (?,?,?,?)",
+                                                                                                [
+                                                                                                  customer?.email,
+                                                                                                  customer?.last_name +
+                                                                                                    " " +
+                                                                                                    customer?.first_name,
+                                                                                                  customer?.phone.replace("+84", "0"),
+                                                                                                  bwafValue,
+                                                                                                ],
+                                                                                                (
+                                                                                                  err,
+                                                                                                  data
+                                                                                                ) => {
+                                                                                                  if (
+                                                                                                    err
+                                                                                                  ) {
+                                                                                                    throw err;
+                                                                                                  }
+                                                                                                  if (
+                                                                                                    data
+                                                                                                  ) {
+                                                                                                    setItem(
+                                                                                                      "Thông báo đơn hàng",
+                                                                                                      `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                                    );
+                                                                                                    sendNotificationToAll(
+                                                                                                      "Thông báo đơn hàng",
+                                                                                                      `Đơn hàng ${id_order_sapo} vừa thanh toán thành công`
+                                                                                                    );
+                                                                                                  }
+                                                                                                }
                                                                                               );
                                                                                             }
                                                                                           }

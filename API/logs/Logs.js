@@ -31,7 +31,9 @@ const readLog = (req, res, next) => {
     ) {
       const newLogMessages = {
         url: req.originalUrl,
+        
         name: req.app.get("name") || "N/A",
+        name_action:req.app.get("id"),
         date: formatDate1(new Date()),
         time:getCurrentTimeFormatted(),
         status: res.statusCode,
